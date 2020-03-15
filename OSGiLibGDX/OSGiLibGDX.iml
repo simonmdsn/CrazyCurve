@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration manifestGenerationMode="Manually" manifestLocation="osgi.bnd" jarfileLocation="OSGiLibGDX-1.0-SNAPSHOT.jar" outputPathType="CompilerOutputPath" bndFileLocation="" bundlorFileLocation="" bundleActivator="" bundleSymbolicName="sdu.cbse.group2.build.OSGiLibGDX" bundleVersion="1.0.0.SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false" doNotSynchronizeWithMaven="false">
+        <additionalProperties>
+          <property key="Bundle-Description" value="Generated using Pax-Construct" />
+          <property key="Export-Package" value="com.badlogic.gdx.*" />
+          <property key="Import-Package" value="!com.apple.eio,!com.sun.*,!org.objectweb.*,*" />
+          <property key="Embed-Dependency" value="*" />
+          <property key="Embed-Transitive" value="true" />
+          <property key="Bundle-Name" value="OSGiLibGDX" />
+          <property key="Bundle-ClassPath" value=".,gdx-platform-1.5.0.jar,gdx-1.5.0.jar,jinput-platform-2.0.5-natives-osx.jar,jorbis-0.0.17.jar,org.osgi.core-4.3.0.jar,gdx-backend-lwjgl-1.5.0.jar,gdx-box2d-1.5.0.jar,gdx-freetype-1.5.0.jar,gdx-box2d-platform-1.5.0-natives-desktop.jar,jutils-1.0.0.jar,javaparser-1.0.8.jar,lwjgl_util-2.9.1.jar,lwjgl-platform-2.9.1-natives-linux.jar,gdx-freetype-platform-1.5.0-natives-desktop.jar,lwjgl-platform-2.9.1-natives-windows.jar,lwjgl-2.9.1.jar,com.diffplug.osgi.extension.sun.misc-0.0.0.jar,gdx-jnigen-1.5.0.jar,jinput-2.0.5.jar,lwjgl-platform-2.9.1-natives-osx.jar,jinput-platform-2.0.5-natives-windows.jar,gdx-platform-1.5.0-natives-desktop.jar,jinput-platform-2.0.5-natives-linux.jar,com.diffplug.osgi.extension.sun.reflect-0.0.0.jar,jlayer-1.0.1-gdx.jar" />
+          <property key="Include-Resource" value="gdx-platform-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-platform/1.5.0/gdx-platform-1.5.0.jar,gdx-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx/1.5.0/gdx-1.5.0.jar,jinput-platform-2.0.5-natives-osx.jar=$MAVEN_REPOSITORY$/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-osx.jar,jorbis-0.0.17.jar=$MAVEN_REPOSITORY$/org/jcraft/jorbis/0.0.17/jorbis-0.0.17.jar,org.osgi.core-4.3.0.jar=$MAVEN_REPOSITORY$/org/osgi/org.osgi.core/4.3.0/org.osgi.core-4.3.0.jar,gdx-backend-lwjgl-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-backend-lwjgl/1.5.0/gdx-backend-lwjgl-1.5.0.jar,gdx-box2d-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-box2d/1.5.0/gdx-box2d-1.5.0.jar,gdx-freetype-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-freetype/1.5.0/gdx-freetype-1.5.0.jar,gdx-box2d-platform-1.5.0-natives-desktop.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-box2d-platform/1.5.0/gdx-box2d-platform-1.5.0-natives-desktop.jar,jutils-1.0.0.jar=$MAVEN_REPOSITORY$/net/java/jutils/jutils/1.0.0/jutils-1.0.0.jar,javaparser-1.0.8.jar=$MAVEN_REPOSITORY$/com/google/code/javaparser/javaparser/1.0.8/javaparser-1.0.8.jar,lwjgl_util-2.9.1.jar=$MAVEN_REPOSITORY$/org/lwjgl/lwjgl/lwjgl_util/2.9.1/lwjgl_util-2.9.1.jar,lwjgl-platform-2.9.1-natives-linux.jar=$MAVEN_REPOSITORY$/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-linux.jar,gdx-freetype-platform-1.5.0-natives-desktop.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-freetype-platform/1.5.0/gdx-freetype-platform-1.5.0-natives-desktop.jar,lwjgl-platform-2.9.1-natives-windows.jar=$MAVEN_REPOSITORY$/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-windows.jar,lwjgl-2.9.1.jar=$MAVEN_REPOSITORY$/org/lwjgl/lwjgl/lwjgl/2.9.1/lwjgl-2.9.1.jar,com.diffplug.osgi.extension.sun.misc-0.0.0.jar=$MAVEN_REPOSITORY$/com/diffplug/osgi/com.diffplug.osgi.extension.sun.misc/0.0.0/com.diffplug.osgi.extension.sun.misc-0.0.0.jar,gdx-jnigen-1.5.0.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-jnigen/1.5.0/gdx-jnigen-1.5.0.jar,jinput-2.0.5.jar=$MAVEN_REPOSITORY$/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar,lwjgl-platform-2.9.1-natives-osx.jar=$MAVEN_REPOSITORY$/org/lwjgl/lwjgl/lwjgl-platform/2.9.1/lwjgl-platform-2.9.1-natives-osx.jar,jinput-platform-2.0.5-natives-windows.jar=$MAVEN_REPOSITORY$/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-windows.jar,gdx-platform-1.5.0-natives-desktop.jar=$MAVEN_REPOSITORY$/com/badlogicgames/gdx/gdx-platform/1.5.0/gdx-platform-1.5.0-natives-desktop.jar,jinput-platform-2.0.5-natives-linux.jar=$MAVEN_REPOSITORY$/net/java/jinput/jinput-platform/2.0.5/jinput-platform-2.0.5-natives-linux.jar,com.diffplug.osgi.extension.sun.reflect-0.0.0.jar=$MAVEN_REPOSITORY$/com/diffplug/osgi/com.diffplug.osgi.extension.sun.reflect/0.0.0/com.diffplug.osgi.extension.sun.reflect-0.0.0.jar,jlayer-1.0.1-gdx.jar=$MAVEN_REPOSITORY$/com/badlogicgames/jlayer/jlayer/1.0.1-gdx/jlayer-1.0.1-gdx.jar" />
+          <property key="Embedded-Artifacts" value="gdx-platform-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-platform&quot;;v=&quot;1.5.0&quot;,gdx-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx&quot;;v=&quot;1.5.0&quot;,jinput-platform-2.0.5-natives-osx.jar;g=&quot;net.java.jinput&quot;;a=&quot;jinput-platform&quot;;v=&quot;2.0.5&quot;;c=&quot;natives-osx&quot;,jorbis-0.0.17.jar;g=&quot;org.jcraft&quot;;a=&quot;jorbis&quot;;v=&quot;0.0.17&quot;,org.osgi.core-4.3.0.jar;g=&quot;org.osgi&quot;;a=&quot;org.osgi.core&quot;;v=&quot;4.3.0&quot;,gdx-backend-lwjgl-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-backend-lwjgl&quot;;v=&quot;1.5.0&quot;,gdx-box2d-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-box2d&quot;;v=&quot;1.5.0&quot;,gdx-freetype-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-freetype&quot;;v=&quot;1.5.0&quot;,gdx-box2d-platform-1.5.0-natives-desktop.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-box2d-platform&quot;;v=&quot;1.5.0&quot;;c=&quot;natives-desktop&quot;,jutils-1.0.0.jar;g=&quot;net.java.jutils&quot;;a=&quot;jutils&quot;;v=&quot;1.0.0&quot;,javaparser-1.0.8.jar;g=&quot;com.google.code.javaparser&quot;;a=&quot;javaparser&quot;;v=&quot;1.0.8&quot;,lwjgl_util-2.9.1.jar;g=&quot;org.lwjgl.lwjgl&quot;;a=&quot;lwjgl_util&quot;;v=&quot;2.9.1&quot;,lwjgl-platform-2.9.1-natives-linux.jar;g=&quot;org.lwjgl.lwjgl&quot;;a=&quot;lwjgl-platform&quot;;v=&quot;2.9.1&quot;;c=&quot;natives-linux&quot;,gdx-freetype-platform-1.5.0-natives-desktop.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-freetype-platform&quot;;v=&quot;1.5.0&quot;;c=&quot;natives-desktop&quot;,lwjgl-platform-2.9.1-natives-windows.jar;g=&quot;org.lwjgl.lwjgl&quot;;a=&quot;lwjgl-platform&quot;;v=&quot;2.9.1&quot;;c=&quot;natives-windows&quot;,lwjgl-2.9.1.jar;g=&quot;org.lwjgl.lwjgl&quot;;a=&quot;lwjgl&quot;;v=&quot;2.9.1&quot;,com.diffplug.osgi.extension.sun.misc-0.0.0.jar;g=&quot;com.diffplug.osgi&quot;;a=&quot;com.diffplug.osgi.extension.sun.misc&quot;;v=&quot;0.0.0&quot;,gdx-jnigen-1.5.0.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-jnigen&quot;;v=&quot;1.5.0&quot;,jinput-2.0.5.jar;g=&quot;net.java.jinput&quot;;a=&quot;jinput&quot;;v=&quot;2.0.5&quot;,lwjgl-platform-2.9.1-natives-osx.jar;g=&quot;org.lwjgl.lwjgl&quot;;a=&quot;lwjgl-platform&quot;;v=&quot;2.9.1&quot;;c=&quot;natives-osx&quot;,jinput-platform-2.0.5-natives-windows.jar;g=&quot;net.java.jinput&quot;;a=&quot;jinput-platform&quot;;v=&quot;2.0.5&quot;;c=&quot;natives-windows&quot;,gdx-platform-1.5.0-natives-desktop.jar;g=&quot;com.badlogicgames.gdx&quot;;a=&quot;gdx-platform&quot;;v=&quot;1.5.0&quot;;c=&quot;natives-desktop&quot;,jinput-platform-2.0.5-natives-linux.jar;g=&quot;net.java.jinput&quot;;a=&quot;jinput-platform&quot;;v=&quot;2.0.5&quot;;c=&quot;natives-linux&quot;,com.diffplug.osgi.extension.sun.reflect-0.0.0.jar;g=&quot;com.diffplug.osgi&quot;;a=&quot;com.diffplug.osgi.extension.sun.reflect&quot;;v=&quot;0.0.0&quot;,jlayer-1.0.1-gdx.jar;g=&quot;com.badlogicgames.jlayer&quot;;a=&quot;jlayer&quot;;v=&quot;1.0.1-gdx&quot;" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="osgiBundleFacet" name="OSGi Bundle">
+      <configuration />
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.osgi:org.osgi.core:4.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-platform:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-backend-lwjgl:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.lwjgl.lwjgl:lwjgl:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.lwjgl.lwjgl:lwjgl-platform:natives-windows:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.lwjgl.lwjgl:lwjgl-platform:natives-linux:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.lwjgl.lwjgl:lwjgl-platform:natives-osx:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: net.java.jinput:jinput:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: net.java.jutils:jutils:1.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-linux:2.0.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-windows:2.0.5" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: net.java.jinput:jinput-platform:natives-osx:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: org.lwjgl.lwjgl:lwjgl_util:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.jlayer:jlayer:1.0.1-gdx" level="project" />
+    <orderEntry type="library" name="Maven: org.jcraft:jorbis:0.0.17" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-box2d:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-freetype:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.badlogicgames.gdx:gdx-jnigen:1.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.javaparser:javaparser:1.0.8" level="project" />
+    <orderEntry type="library" name="Maven: com.diffplug.osgi:com.diffplug.osgi.extension.sun.misc:0.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.diffplug.osgi:com.diffplug.osgi.extension.sun.reflect:0.0.0" level="project" />
+  </component>
+</module>
