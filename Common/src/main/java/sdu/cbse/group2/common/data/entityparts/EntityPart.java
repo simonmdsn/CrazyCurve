@@ -8,10 +8,7 @@ package sdu.cbse.group2.common.data.entityparts;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
-/**
- *
- * @author Alexander
- */
+
 public interface EntityPart {
     void process(GameData gameData, Entity entity);
 }

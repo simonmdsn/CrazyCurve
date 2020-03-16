@@ -1,30 +1,24 @@
 package sdu.cbse.group2.common.data;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- *
- * @author jcs
- */
+
 public class World {
 
-    private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private final Map<UUID, Entity> entityMap = new ConcurrentHashMap<>();
 
-    public String addEntity(Entity entity) {
-        entityMap.put(entity.getID(), entity);
-        return entity.getID();
+    public UUID addEntity(Entity entity) {
+        entityMap.put(entity.getUuid(), entity);
+        return entity.getUuid();
     }
 
-    public void removeEntity(String entityID) {
-        entityMap.remove(entityID);
+    public void removeEntity(UUID uuid) {
+        entityMap.remove(uuid);
     }
 
     public void removeEntity(Entity entity) {
-        entityMap.remove(entity.getID());
+        entityMap.remove(entity.getUuid());
     }
     
     public Collection<Entity> getEntities() {
@@ -43,8 +37,7 @@ public class World {
         return r;
     }
 
-    public Entity getEntity(String ID) {
-        return entityMap.get(ID);
+    public Entity getEntity(UUID uuid) {
+        return entityMap.get(uuid);
     }
-
 }

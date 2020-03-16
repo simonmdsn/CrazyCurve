@@ -6,10 +6,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
+import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
@@ -18,10 +22,11 @@ import sdu.cbse.group2.core.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+
 public class Game implements ApplicationListener {
 
+    private Batch batch;
     private static OrthographicCamera cam;
-    private ShapeRenderer sr;
     private final GameData gameData = new GameData();
     private static World world = new World();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
@@ -52,10 +57,9 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
-        sr = new ShapeRenderer();
+        batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
     }
 
     @Override
@@ -85,22 +89,23 @@ public class Game implements ApplicationListener {
 
     private void draw() {
         for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
+            drawSprite(entity.getGameSprite(),entity.getPart(PositionPart.class));
         }
+    }
+
+    private void drawSprite(GameSprite gameSprite, PositionPart positionPart) {
+        //TODO sprite needs things
+        //                GameImage image = entity.getImage();
+        //                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
+        //                PositionPart p = entity.getPart(PositionPart.class);
+        //                drawSprite(new Sprite(tex), image, p);
+        Sprite sprite = new Sprite();
+        sprite.setOrigin(gameSprite.getWidth() / 2, gameSprite.getHeight() / 2);
+        sprite.rotate((float) Math.toDegrees(positionPart.getRadians()));
+        sprite.setX(positionPart.getX());
+        sprite.setY(positionPart.getY());
+        sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
+        sprite.draw(batch);
     }
 
     @Override
