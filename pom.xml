@@ -54,6 +54,7 @@
     <module>LibGDX</module>
     <module>poms</module>
     <module>provision</module>
+    <module>CommonSnake</module>
   </modules>
 
   <build>
