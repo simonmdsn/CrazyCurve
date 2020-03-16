@@ -5,27 +5,19 @@
  */
 package sdu.cbse.group2.common.data.entityparts;
 
+import lombok.Getter;
+import lombok.Setter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
-/**
- *
- * @author Alexander
- */
-public class TimerPart
-        implements EntityPart {
 
+public class TimerPart implements EntityPart {
+
+    @Setter
+    @Getter
     private float expiration;
 
     public TimerPart(float expiration) {
-        this.expiration = expiration;
-    }
-
-    public float getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(float expiration) {
         this.expiration = expiration;
     }
 
@@ -39,5 +31,4 @@ public class TimerPart
             reduceExpiration(gameData.getDelta());
         }
     }
-
 }
