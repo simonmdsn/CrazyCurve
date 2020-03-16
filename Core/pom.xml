@@ -13,11 +13,11 @@
     </properties>
   
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>OSGiCore</artifactId>
+    <artifactId>Core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>OSGiCore</name>
+    <name>Core</name>
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiLibGDX</artifactId>
+            <artifactId>LibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

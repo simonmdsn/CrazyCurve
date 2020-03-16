@@ -1,2 +1,2 @@
-Bundle-SymbolicName: OSGiCore
+Bundle-SymbolicName: Core
 Service-Component: META-INF/core.xml

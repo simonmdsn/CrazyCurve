@@ -50,8 +50,8 @@
 
   <modules>
     <module>Common</module>
-    <module>OSGiCore</module>
-    <module>OSGiLibGDX</module>
+    <module>Core</module>
+    <module>LibGDX</module>
     <module>poms</module>
     <module>provision</module>
   </modules>
