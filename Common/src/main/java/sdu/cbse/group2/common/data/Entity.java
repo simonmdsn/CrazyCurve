@@ -15,7 +15,7 @@ public class Entity implements Serializable {
 
     private final UUID uuid;
 
-    private final GameSprite gameSprite;
+    private GameSprite gameSprite;
     private final Map<Class<? extends EntityPart>, EntityPart> parts = new ConcurrentHashMap<>();
 
     public Entity(GameSprite gameSprite) {

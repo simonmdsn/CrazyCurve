@@ -54,6 +54,8 @@
     <module>LibGDX</module>
     <module>poms</module>
     <module>provision</module>
+    <module>Weapon</module>
+    <module>CommonItem</module>
   </modules>
 
   <build>

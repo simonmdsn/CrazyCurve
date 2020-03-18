@@ -5,11 +5,13 @@
  */
 package sdu.cbse.group2.common.data.entityparts;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
 @Data
+@AllArgsConstructor
 public class PositionPart implements EntityPart {
 
     private float x, y, radians;
