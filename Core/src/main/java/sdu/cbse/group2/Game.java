@@ -88,6 +88,7 @@ public class Game implements ApplicationListener {
     }
 
     private void draw() {
+
         for (Entity entity : world.getEntities()) {
             drawSprite(entity.getGameSprite(),entity.getPart(PositionPart.class));
         }
