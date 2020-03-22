@@ -15,11 +15,10 @@
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>sdu.cbse.group2</groupId>
     <artifactId>player</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>${bundle.symbolicName} [${bundle.namespace}]</name>
+    <name>Player</name>
 
     <packaging>bundle</packaging>
 
@@ -33,11 +32,6 @@
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.compendium</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>sdu.cbse.group2.build</groupId>
-            <artifactId>Common</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>sdu.cbse.group2</groupId>

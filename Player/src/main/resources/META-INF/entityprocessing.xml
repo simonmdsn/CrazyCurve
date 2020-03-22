@@ -1,8 +1,0 @@
-
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="crazycurve.player.PlayerControlSystem">
-    <implementation class="crazycurve.player.PlayerControlSystem"/>
-    <service>
-        <provide interface="crazycurve.common.services.IEntityProcessingService"/>
-    </service>
-</scr:component>

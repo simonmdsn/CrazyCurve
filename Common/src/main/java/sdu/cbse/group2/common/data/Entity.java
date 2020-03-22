@@ -13,18 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Setter
 public class Entity implements Serializable {
 
-    private final UUID uuid;
+    private final UUID uuid = UUID.randomUUID();
 
     private final GameSprite gameSprite;
     private final Map<Class<? extends EntityPart>, EntityPart> parts = new ConcurrentHashMap<>();
 
     public Entity(GameSprite gameSprite) {
-        this(UUID.randomUUID(), gameSprite);
-    }
-
-    public Entity(UUID uuid, GameSprite gameSprite) {
         this.gameSprite = gameSprite;
-        this.uuid = uuid;
     }
 
     public void add(EntityPart part) {
