@@ -5,6 +5,7 @@ import lombok.Setter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.ItemPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
 import java.util.LinkedList;
@@ -26,6 +27,7 @@ public class CommonSnake extends Entity {
         this.head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
         this.world = world;
+        this.add(new ItemPart());
         startTask();
     }
 

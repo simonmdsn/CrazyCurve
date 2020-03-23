@@ -15,9 +15,4 @@ public class Weapon extends Item {
     public Weapon(GameSprite gameSprite) {
         super(gameSprite);
     }
-
-    public Weapon(UUID uuid, GameSprite gameSprite) {
-        super(uuid, gameSprite);
-    }
-
 }

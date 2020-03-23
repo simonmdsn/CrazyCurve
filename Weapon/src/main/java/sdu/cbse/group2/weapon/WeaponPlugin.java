@@ -9,22 +9,27 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.data.entityparts.ShootingPart;
 import sdu.cbse.group2.common.data.entityparts.TimerPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
+import sdu.cbse.group2.commonsnake.CommonSnake;
+
 import java.util.List;
 
 public class WeaponPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        //TODO change to Snake.class
-        List<Entity> entities = world.getEntities(Weapon.class);
+        List<Entity> entities = world.getEntities(CommonSnake.class);
         entities.forEach(snake -> {
+            System.out.println(snake.getUuid());
             snake.getParts().put(ShootingPart.class, new ShootingPart());
             ItemPart itemPart = snake.getPart(ItemPart.class);
-            itemPart.addItem(createTongue(snake, gameData));
+            Weapon weapon = createTongue(snake);
+            world.addEntity(weapon);
+            itemPart.addItem(weapon);
+            System.out.println(itemPart.getItems());
         });
     }
 
-    public Entity createTongue(Entity shooter, GameData gameData) {
+    public Weapon createTongue(Entity shooter) {
         PositionPart shooterPosition = shooter.getPart(PositionPart.class);
         GameSprite shooterGameSprite = shooter.getGameSprite();
 
@@ -45,8 +50,7 @@ public class WeaponPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        //TODO should be Snake.class
-        world.getEntities(Weapon.class).forEach(snake -> {
+        world.getEntities(CommonSnake.class).forEach(snake -> {
             ItemPart itemPart = snake.getPart(ItemPart.class);
             itemPart.removeItems(Weapon.class);
         });
