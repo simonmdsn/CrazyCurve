@@ -24,13 +24,23 @@ public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
             shootingPart.process(gameData, entity);
 
             if (weaponTimerPart.getExpiration() <= 0) {
-                weapon.setGameSprite(new GameSprite("items/tongue.png", 36, 26));
+                weapon.setGameSprite(new GameSprite("items/tongue.png", 30, 30));
             }
+            PositionPart shooterPosition = entity.getPart(PositionPart.class);
+            PositionPart weaponPosition = weapon.getPart(PositionPart.class);
+
+            GameSprite shooterGameSprite = entity.getGameSprite();
+            float bx = (float) (shooterPosition.getX() + (shooterGameSprite.getWidth()) * Math.cos(shooterPosition.getRadians()));
+            float by = (float) (shooterPosition.getY() + (shooterGameSprite.getHeight()) * Math.sin(shooterPosition.getRadians()));
+
+            weaponPosition.setX(shooterPosition.getX());
+            weaponPosition.setY(shooterPosition.getY());
+            weaponPosition.setRadians(shooterPosition.getRadians());
         });
     }
 
     private void spawnTongueAttack(Entity weapon) {
-        weapon.setGameSprite(new GameSprite("items/tongue-long.png", 58, 26));
+        weapon.setGameSprite(new GameSprite("items/tongue-long.png", 65, 65));
     }
 
     @Override

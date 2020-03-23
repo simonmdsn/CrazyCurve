@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemPart implements EntityPart {
-    Map<UUID, Entity> itemMap = new ConcurrentHashMap<>();
+    private Map<UUID, Entity> itemMap = new ConcurrentHashMap<>();
 
     @Override
     public void process(GameData gameData, Entity entity) {
