@@ -9,6 +9,12 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
+
+  <properties>
+    <bundle.symbolicName>sdu.cbse.group2.CommonItem</bundle.symbolicName>
+    <bundle.namespace>sdu.cbse.group2</bundle.namespace>
+  </properties>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>sdu.cbse.group2</groupId>
   <artifactId>commonItem</artifactId>

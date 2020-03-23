@@ -9,7 +9,7 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>sdu.cbse.group2.Weapon</bundle.symbolicName>
+        <bundle.symbolicName>sdu.cbse.group2.weapon.Weapon</bundle.symbolicName>
         <bundle.namespace>sdu.cbse.group2</bundle.namespace>
     </properties>
 
@@ -19,16 +19,6 @@
     <packaging>bundle</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <optional>true</optional>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
