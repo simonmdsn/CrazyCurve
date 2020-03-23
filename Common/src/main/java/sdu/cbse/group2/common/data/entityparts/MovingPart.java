@@ -10,6 +10,9 @@ import lombok.Setter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
+import static java.lang.Math.cos;
+import static java.lang.StrictMath.sin;
+
 @Getter
 @Setter
 public class MovingPart implements EntityPart {
@@ -41,14 +44,14 @@ public class MovingPart implements EntityPart {
         }
 
         // set position
-        x += dx * dt;
+        x += cos(radians) * maxSpeed * dt;
         if (x > gameData.getDisplayWidth()) {
             x = 0;
         } else if (x < 0) {
             x = gameData.getDisplayWidth();
         }
 
-        y += dy * dt;
+        y += sin(radians) * maxSpeed * dt;
         if (y > gameData.getDisplayHeight()) {
             y = 0;
         } else if (y < 0) {

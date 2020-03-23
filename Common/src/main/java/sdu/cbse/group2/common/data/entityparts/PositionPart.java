@@ -16,12 +16,8 @@ public class PositionPart implements EntityPart {
 
     private float x, y, radians;
 
-    public void setPosition(float newX, float newY) {
-        this.x = newX;
-        this.y = newY;
-    }
-
     @Override
     public void process(GameData gameData, Entity entity) {
     }
+
 }
