@@ -34,9 +34,9 @@ public class CommonSnake extends Entity {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
             Entity entity = new Entity(tailSprite);
             PositionPart part = getPart(PositionPart.class);
-            entity.add(new PositionPart(part.getX(),part.getY(),part.getRadians()));
+            entity.add(new PositionPart(part.getX(), part.getY(), part.getRadians()));
             tail.add(entity);
             world.addEntity(entity);
-        },0,200, TimeUnit.MILLISECONDS);
+        }, 0, 150, TimeUnit.MILLISECONDS);
     }
 }
