@@ -2,10 +2,12 @@ package sdu.cbse.group2;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +15,7 @@ import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
@@ -25,7 +28,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game implements ApplicationListener {
 
-    private Batch batch;
+    private Assets assets;
+
     private static OrthographicCamera cam;
     private final GameData gameData = new GameData();
     private static World world = new World();
@@ -38,6 +42,7 @@ public class Game implements ApplicationListener {
     }
 
     public void init() {
+
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Crazy Curve";
         cfg.width = 800;
@@ -50,6 +55,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+        assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -57,7 +63,6 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
-        batch = new SpriteBatch();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
     }
@@ -88,24 +93,28 @@ public class Game implements ApplicationListener {
     }
 
     private void draw() {
+        assets.getBatch().begin();
         for (Entity entity : world.getEntities()) {
-            drawSprite(entity.getGameSprite(),entity.getPart(PositionPart.class));
+            GameSprite gameSprite = entity.getGameSprite();
+            Texture texture = assets.getAssetManager().get(gameSprite.getImagePath(), Texture.class);
+            drawSprite(gameSprite,entity.getPart(PositionPart.class), texture);
         }
+        assets.getBatch().end();
     }
 
-    private void drawSprite(GameSprite gameSprite, PositionPart positionPart) {
+    private void drawSprite(GameSprite gameSprite, PositionPart positionPart, Texture texture) {
         //TODO sprite needs things
         //                GameImage image = entity.getImage();
         //                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
         //                PositionPart p = entity.getPart(PositionPart.class);
         //                drawSprite(new Sprite(tex), image, p);
-        Sprite sprite = new Sprite();
+        Sprite sprite = new Sprite(texture);
         sprite.setOrigin(gameSprite.getWidth() / 2, gameSprite.getHeight() / 2);
         sprite.rotate((float) Math.toDegrees(positionPart.getRadians()));
         sprite.setX(positionPart.getX());
         sprite.setY(positionPart.getY());
         sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
-        sprite.draw(batch);
+        sprite.draw(assets.getBatch());
     }
 
     @Override

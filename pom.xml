@@ -52,8 +52,10 @@
     <module>Common</module>
     <module>Core</module>
     <module>LibGDX</module>
+    <module>CommonSnake</module>
     <module>poms</module>
     <module>provision</module>
+    <module>player</module>
   </modules>
 
   <build>
