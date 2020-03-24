@@ -42,5 +42,4 @@ public class CommonSnake extends Entity {
             world.addEntity(entity);
         }, 10, 150, TimeUnit.MILLISECONDS);
     }
-
 }
