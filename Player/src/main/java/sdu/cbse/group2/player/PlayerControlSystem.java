@@ -13,6 +13,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
+        //TODO make for loop allow multi player on same keyboard, or remove for loop
         for (Entity player : world.getEntities(CommonSnake.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);

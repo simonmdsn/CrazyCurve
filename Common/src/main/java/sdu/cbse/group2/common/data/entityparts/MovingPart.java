@@ -45,18 +45,7 @@ public class MovingPart implements EntityPart {
 
         // set position
         x += cos(radians) * maxSpeed * dt;
-        if (x > gameData.getDisplayWidth()) {
-            x = 0;
-        } else if (x < 0) {
-            x = gameData.getDisplayWidth();
-        }
-
         y += sin(radians) * maxSpeed * dt;
-        if (y > gameData.getDisplayHeight()) {
-            y = 0;
-        } else if (y < 0) {
-            y = gameData.getDisplayHeight();
-        }
 
         positionPart.setX(x);
         positionPart.setY(y);
