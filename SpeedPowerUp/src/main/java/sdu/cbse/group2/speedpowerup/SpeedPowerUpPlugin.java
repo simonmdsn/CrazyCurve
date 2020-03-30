@@ -23,7 +23,6 @@ public class SpeedPowerUpPlugin implements IGamePluginService, PowerUpSPI {
 
     @Override
     public CommonPowerUp spawn() {
-        System.out.println("SPAWN!!!");
         return new SpeedPowerUp(gameData);
     }
 }
