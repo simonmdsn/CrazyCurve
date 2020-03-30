@@ -32,7 +32,7 @@ public class WeaponPlugin implements IGamePluginService {
         float y = shooterPosition.getY();
         float radians = shooterPosition.getRadians();
 
-        Weapon tongue = new Weapon(new GameSprite("items/tongue.png", 30, 30));
+        Weapon tongue = new Weapon(new GameSprite("items/tongue.png", 60, 60));
 
         float bx = (float) (x + (shooterGameSprite.getWidth()) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getWidth()) * Math.sin(radians));
@@ -40,7 +40,7 @@ public class WeaponPlugin implements IGamePluginService {
         //Sets weapons position
         MovingPart movingPart = shooter.getPart(MovingPart.class);
         tongue.add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
-        tongue.add(new PositionPart(shooterPosition.getX(),  shooterPosition.getY(), radians));
+        tongue.add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2),  by - (shooterGameSprite.getHeight() / 2), radians));
         tongue.add(new TimerPart(2));
         return tongue;
     }
@@ -51,6 +51,6 @@ public class WeaponPlugin implements IGamePluginService {
             ItemPart itemPart = snake.getPart(ItemPart.class);
             itemPart.removeItems(Weapon.class);
         });
-        //TODO delete from world
+        world.getEntities(Weapon.class).forEach(world::removeEntity);
     }
 }

@@ -8,10 +8,11 @@ import sdu.cbse.group2.common.services.IEntityProcessingService;
 public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
     @Override
     public void process(GameData gameData, World world) {
-        world.getEntities().stream().filter(entity -> entity.getPart(ShootingPart.class) != null).forEach(entity -> {
-            ShootingPart shootingPart = entity.getPart(ShootingPart.class);
-            ItemPart itemPart = entity.getPart(ItemPart.class);
-            Entity weapon = itemPart.getItems(Weapon.class).get(0);
+        world.getEntities().stream().filter(entity -> entity.getPart(ShootingPart.class) != null).forEach(shooter -> {
+            ItemPart shooterItemPart = shooter.getPart(ItemPart.class);
+            Entity weapon = shooterItemPart.getItems(Weapon.class).get(0);
+            /*
+            ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
             TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
 
             if (shootingPart.isShooting()) {
@@ -20,21 +21,23 @@ public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
                 weaponTimerPart.setExpiration(2);
                 shootingPart.setShooting(false);
             }
-            weaponTimerPart.process(gameData, entity);
-            shootingPart.process(gameData, entity);
+            weaponTimerPart.process(gameData, shooter);
+            shootingPart.process(gameData, shooter);
 
             if (weaponTimerPart.getExpiration() <= 0) {
                 weapon.setGameSprite(new GameSprite("items/tongue.png", 30, 30));
-            }
-            PositionPart shooterPosition = entity.getPart(PositionPart.class);
+            }*/
+
+            PositionPart shooterPosition = shooter.getPart(PositionPart.class);
             PositionPart weaponPosition = weapon.getPart(PositionPart.class);
 
-            GameSprite shooterGameSprite = entity.getGameSprite();
+            GameSprite shooterGameSprite = shooter.getGameSprite();
             float bx = (float) (shooterPosition.getX() + (shooterGameSprite.getWidth()) * Math.cos(shooterPosition.getRadians()));
             float by = (float) (shooterPosition.getY() + (shooterGameSprite.getHeight()) * Math.sin(shooterPosition.getRadians()));
 
-            weaponPosition.setX(shooterPosition.getX());
-            weaponPosition.setY(shooterPosition.getY());
+            System.out.println(shooterPosition.getX() + " " + shooterPosition.getY());
+            weaponPosition.setX(bx - (shooterGameSprite.getWidth() / 2));
+            weaponPosition.setY(by - (shooterGameSprite.getHeight() / 2));
             weaponPosition.setRadians(shooterPosition.getRadians());
         });
     }
