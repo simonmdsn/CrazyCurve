@@ -25,7 +25,6 @@ public class PowerUpSpawner implements IEntityProcessingService {
     }
 
     public void register(PowerUpSPI powerUpSPI) {
-        System.out.println("REGISTER!!!");
         commonPowerUps.add(powerUpSPI);
     }
 
