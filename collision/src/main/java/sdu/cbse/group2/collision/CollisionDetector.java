@@ -24,7 +24,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
             if(((CommonSnake)e).isAlive()) {
                 //Check e for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
                 for (Entity f : world.getEntities(CommonSnake.class)) {
-                    List<Entity> tail = new LinkedList<>(((CommonSnake) f).getTail());
+                    List<Entity> tail = ((CommonSnake) f).getTail();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && checkForCollision(e, tailPart)) {
                             hasCollided = true;
