@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class SpeedPowerUp extends CommonPowerUp {
 
@@ -26,18 +27,17 @@ public class SpeedPowerUp extends CommonPowerUp {
 
     @Override
     public void applyPowerUp(CommonSnake commonSnake) {
-        if (((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).contains(SpeedPowerUp.class)) {
-            schedule.cancel(true);
-            removePowerUp(commonSnake);
-        }
+        PowerUpPart powerUpPart = commonSnake.getPart(PowerUpPart.class);
+        powerUpPart.getOfType(SpeedPowerUp.class).stream().map(SpeedPowerUp.class::cast).collect(Collectors.toList()).forEach(commonPowerUp -> removePowerUp(commonSnake));
         MovingPart movingPart = commonSnake.getPart(MovingPart.class);
         movingPart.setMaxSpeed((float) (movingPart.getMaxSpeed() * SPEED_MULTIPLIER));
         schedule = Executors.newSingleThreadScheduledExecutor().schedule(() -> removePowerUp(commonSnake), DURATION, TimeUnit.SECONDS);
-        ((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).addPowerUp(this);
+        (powerUpPart).addPowerUp(this);
     }
 
     @Override
     public void removePowerUp(CommonSnake commonSnake) {
+        schedule.cancel(true);
         ((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).removePowerUp(this);
         MovingPart movingPart = commonSnake.getPart(MovingPart.class);
         movingPart.setMaxSpeed((float) (movingPart.getMaxSpeed() / SPEED_MULTIPLIER));
