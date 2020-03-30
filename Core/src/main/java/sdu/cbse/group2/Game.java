@@ -21,6 +21,8 @@ import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.core.managers.GameInputProcessor;
+import sdu.cbse.group2.gamestates.GameStateManager;
+import sdu.cbse.group2.gamestates.MenuState;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,6 +35,8 @@ public class Game implements ApplicationListener {
     private static OrthographicCamera cam;
     private final GameData gameData = new GameData();
     private static World world = new World();
+    private GameStateManager gameStateManager = new GameStateManager();
+    private SpriteBatch spriteBatch = new SpriteBatch();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
@@ -55,6 +59,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -63,6 +68,7 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
+        gameStateManager.push(new MenuState(gameStateManager));
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
     }
@@ -75,7 +81,8 @@ public class Game implements ApplicationListener {
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
-
+        gameStateManager.update(Gdx.graphics.getDeltaTime());
+        gameStateManager.render(spriteBatch);
         update();
         draw();
     }
