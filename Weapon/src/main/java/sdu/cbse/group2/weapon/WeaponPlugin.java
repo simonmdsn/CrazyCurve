@@ -32,7 +32,7 @@ public class WeaponPlugin implements IGamePluginService {
         float y = shooterPosition.getY();
         float radians = shooterPosition.getRadians();
 
-        Weapon tongue = new Weapon(new GameSprite("items/tongue.png", 60, 60));
+        Weapon tongue = new Weapon(new GameSprite("items/tongue-long.png", 60, 60));
 
         float bx = (float) (x + (shooterGameSprite.getWidth()) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getWidth()) * Math.sin(radians));
