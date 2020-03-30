@@ -26,7 +26,6 @@ public class SpeedPowerUp extends CommonPowerUp {
 
     @Override
     public void applyPowerUp(CommonSnake commonSnake) {
-        ((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).addPowerUp(this);
         if (((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).contains(SpeedPowerUp.class)) {
             schedule.cancel(true);
             removePowerUp(commonSnake);
@@ -34,6 +33,7 @@ public class SpeedPowerUp extends CommonPowerUp {
         MovingPart movingPart = commonSnake.getPart(MovingPart.class);
         movingPart.setMaxSpeed((float) (movingPart.getMaxSpeed() * SPEED_MULTIPLIER));
         schedule = Executors.newSingleThreadScheduledExecutor().schedule(() -> removePowerUp(commonSnake), DURATION, TimeUnit.SECONDS);
+        ((PowerUpPart) commonSnake.getPart(PowerUpPart.class)).addPowerUp(this);
     }
 
     @Override
