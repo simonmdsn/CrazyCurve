@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.speedpowerup">
-    <implementation class="sdu.cbse.group2.speedpowerup.SpeedPowerUp"/>
-
-    <reference bind="setPowerUpSPI" cardinality="0..1"
-               interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"
-               name="PowerUpSPI" policy="dynamic" unbind="removePowerUpSPI"/>
-</scr:component>

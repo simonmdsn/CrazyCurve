@@ -33,7 +33,7 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
         float y = 200;
         float radians = 5;
 
-        CommonSnake playerSnake = new CommonSnake(new GameSprite("Player/player.png", 30, 30),new GameSprite("Player/tail.png",30,30),world);
+        CommonSnake playerSnake = new CommonSnake(new GameSprite("player/player.png", 30, 30),new GameSprite("player/tail.png",30,30),world);
         playerSnake.add(new MovingPart(maxSpeed, rotationSpeed));
         playerSnake.add(new PositionPart(x, y, radians));
 
