@@ -56,7 +56,10 @@
     <module>poms</module>
     <module>provision</module>
     <module>player</module>
-      <module>collision</module>
+    <module>CommonPowerUp</module>
+    <module>PowerUpSpawner</module>
+    <module>SpeedPowerUp</module>
+    <module>collision</module>
   </modules>
 
   <build>
