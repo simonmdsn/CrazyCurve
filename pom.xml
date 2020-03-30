@@ -56,8 +56,9 @@
     <module>poms</module>
     <module>provision</module>
     <module>player</module>
-    <module>common-power-up</module>
-    <module>common-power-up</module>
+    <module>CommonPowerUp</module>
+    <module>PowerUpSpawner</module>
+    <module>SpeedPowerUp</module>
   </modules>
 
   <build>
