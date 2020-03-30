@@ -8,7 +8,7 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
-import sdu.cbse.group2.weapon.Weapon;
+import sdu.cbse.group2.commonweapon.CommonWeapon;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,11 +38,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         break;
                 }
 
-                for (Entity weapon : world.getEntities(Weapon.class)) {
+                for (Entity weapon : world.getBoundedEntities(CommonWeapon.class)) {
                     List<Entity> tail = ((CommonSnake) commonSnakeOuter).getTail();
                     for (Entity tailPart : tail) {
-                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((Weapon) weapon).isShooting()) {
-                            if(!((Weapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
+                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((CommonWeapon) weapon).isShooting()) {
+                            if(!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
                                 hasCollided = true;
                                 killSnake(commonSnakeOuter);
                                 break;
@@ -50,7 +50,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
                             if(checkForCollision(weapon, tailPart)) {
                                 hasCollided = true;
                                 world.removeEntity(tailPart);
-                                tail.remove(tail.indexOf(tailPart) - 1);
                                 tail.remove(tailPart);
                                 break;
                             }

@@ -6,32 +6,36 @@ import sdu.cbse.group2.common.item.ItemSPI;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sun.corba.EncapsInputStreamFactory;
 
-public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
+public class WeaponProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity weaponEntity : world.getEntities(Weapon.class)) {
             Weapon weapon = (Weapon) weaponEntity;
             Entity shooter = world.getEntity(weapon.getShooterUUID());
-            ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
-            shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
+            if (shooter != null){
+                ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
+                shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
 
-            TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
+                TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
 
-            if (shootingPart.isShooting() && shootingPart.getCoolDown() <= 0) {
-                spawnAttack(weapon);
-                shootingPart.setCoolDown(5);
-                weaponTimerPart.setExpiration(2);
+                if (shootingPart.isShooting() && shootingPart.getCoolDown() <= 0) {
+                    spawnAttack(weapon);
+                    shootingPart.setCoolDown(5);
+                    weaponTimerPart.setExpiration(2);
+                }
+
+                if (weaponTimerPart.getExpiration() <= 0) {
+                    weapon.setGameSprite(new GameSprite("items/tongue-short.png", 60, 60));
+                    weapon.setShooting(false);
+                }
+
+                weaponTimerPart.process(gameData, shooter);
+                shootingPart.process(gameData, shooter);
+
+                processPosition(shooter, weapon);
+            } else {
+                world.removeEntity(weaponEntity);
             }
-
-            if (weaponTimerPart.getExpiration() <= 0) {
-                weapon.setGameSprite(new GameSprite("items/tongue-short.png", 60, 60));
-                weapon.setShooting(false);
-            }
-
-            weaponTimerPart.process(gameData, shooter);
-            shootingPart.process(gameData, shooter);
-
-            processPosition(shooter, weapon);
         }
     }
 
@@ -63,10 +67,5 @@ public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
     private void spawnAttack(Weapon weapon) {
         weapon.setGameSprite(new GameSprite("items/tongue-long.png", 60, 60));
         weapon.setShooting(true);
-    }
-
-    @Override
-    public void affectEntity(Entity e) {
-
     }
 }

@@ -62,7 +62,7 @@
     <module>TurtlePowerUp</module>
     <module>collision</module>
     <module>Weapon</module>
-    <module>CommonItem</module>
+    <module>CommonWeapon</module>
   </modules>
 
   <build>
