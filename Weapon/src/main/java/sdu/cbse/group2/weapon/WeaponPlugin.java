@@ -18,13 +18,13 @@ public class WeaponPlugin implements IGamePluginService {
         entities.forEach(snake -> {
             snake.getParts().put(ShootingPart.class, new ShootingPart());
             ItemPart itemPart = snake.getPart(ItemPart.class);
-            Weapon weapon = createTongue(snake);
+            Weapon weapon = createWeapon(snake);
             world.addEntity(weapon);
             itemPart.addItem(weapon);
         });
     }
 
-    public Weapon createTongue(Entity shooter) {
+    public Weapon createWeapon(Entity shooter) {
         PositionPart shooterPosition = shooter.getPart(PositionPart.class);
         GameSprite shooterGameSprite = shooter.getGameSprite();
 
@@ -32,24 +32,17 @@ public class WeaponPlugin implements IGamePluginService {
         float y = shooterPosition.getY();
         float radians = shooterPosition.getRadians();
 
-        /*
-        Weapon tongue = new Weapon(new GameSprite("items/tongue-long.png", 60, 60));
-
-        float bx = (float) (x + (shooterGameSprite.getWidth()) * Math.cos(radians));
-        float by = (float) (y + (shooterGameSprite.getHeight()) * Math.sin(radians));
-        */
-
-        Weapon tongue = new Weapon(new GameSprite("items/tongue-short.png", 60, 60));
+        Weapon weapon = new Weapon(new GameSprite("items/tongue-short.png", 60, 60));
 
         float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
 
         //Sets weapons position
         MovingPart movingPart = shooter.getPart(MovingPart.class);
-        tongue.add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
-        tongue.add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2),  by - (shooterGameSprite.getHeight() / 2), radians));
-        tongue.add(new TimerPart(2));
-        return tongue;
+        weapon.add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
+        weapon.add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2),  by - (shooterGameSprite.getHeight() / 2), radians));
+        weapon.add(new TimerPart(2));
+        return weapon;
     }
 
     @Override

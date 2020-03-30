@@ -12,15 +12,9 @@ import java.util.UUID;
 @Setter
 public class Weapon extends Item {
 
+    private boolean shooting;
     public Weapon(GameSprite gameSprite) {
         super(gameSprite);
     }
 
-    public void increaseSize() {
-
-    }
-
-    public void decreaseSize() {
-
-    }
 }
