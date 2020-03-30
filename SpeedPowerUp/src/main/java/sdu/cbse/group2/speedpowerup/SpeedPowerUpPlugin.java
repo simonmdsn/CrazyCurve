@@ -9,29 +9,24 @@ public class SpeedPowerUpPlugin implements IGamePluginService {
 
     private PowerUpSPI powerUpSPI;
 
-    public SpeedPowerUpPlugin(PowerUpSPI powerUpSPI) {
-        this.powerUpSPI = powerUpSPI;
-    }
-
     @Override
     public void start(GameData gameData, World world) {
-        System.out.println("YOOOOOOOOOOOOOOOOOOOOOO");
         System.out.print(powerUpSPI);
-        //powerUpSPI.register(SpeedPowerUp.class);
+        powerUpSPI.register(SpeedPowerUp.class);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
         world.getEntities(SpeedPowerUp.class).forEach(world::removeEntity);
-//        powerUpSPI.unregister(SpeedPowerUp.class);
+        powerUpSPI.unregister(SpeedPowerUp.class);
     }
 
-//    public void removePowerUpSPI() {
-//        powerUpSPI = null;
-//    }
+    public void removePowerUpSPI() {
+        powerUpSPI = null;
+    }
 
-//    public void setPowerUpSPI(PowerUpSPI powerUpSPI) {
-//        this.powerUpSPI = powerUpSPI;
-//        System.out.println(powerUpSPI);
-//    }
+    public void setPowerUpSPI(PowerUpSPI powerUpSPI) {
+        this.powerUpSPI = powerUpSPI;
+        System.out.println(powerUpSPI);
+    }
 }

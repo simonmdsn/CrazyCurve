@@ -5,12 +5,7 @@
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
     </service>
 
-    <reference name="PowerUpSPI"
+    <reference bind="setPowerUpSPI" cardinality="0..1"
                interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"
-               parameter="0"
-    />
-
-<!--    <reference bind="setPowerUpSPI" cardinality="0..1"-->
-<!--               interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"-->
-<!--               name="PowerUpSPI" policy="dynamic" unbind="removePowerUpSPI"/>-->
+               name="PowerUpSPI" policy="dynamic" unbind="removePowerUpSPI"/>
 </scr:component>
