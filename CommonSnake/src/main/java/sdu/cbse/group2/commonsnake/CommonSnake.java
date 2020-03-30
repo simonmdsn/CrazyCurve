@@ -31,7 +31,6 @@ public class CommonSnake extends Entity {
         this.head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
         this.world = world;
-        this.add(new ItemPart());
         this.isAlive = true;
         startTailTask();
     }

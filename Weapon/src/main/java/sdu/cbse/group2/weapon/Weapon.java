@@ -13,6 +13,7 @@ import java.util.UUID;
 public class Weapon extends Item {
 
     private boolean shooting;
+    private UUID shooterUUID;
     public Weapon(GameSprite gameSprite) {
         super(gameSprite);
     }

@@ -3,12 +3,16 @@ package sdu.cbse.group2.collision;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.ItemPart;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.item.Item;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
+import sdu.cbse.group2.weapon.Weapon;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -21,13 +25,38 @@ public class CollisionDetector implements IPostEntityProcessingService {
             boolean hasCollided = false;
             if (((CommonSnake) commonSnakeOuter).isAlive()) {
                 //Check commonSnakeOuter for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
+
                 for (Entity commonSnakeInner : world.getEntities(CommonSnake.class)) {
                     List<Entity> tail = ((CommonSnake) commonSnakeInner).getTail();
                     for (Entity tailPart : tail) {
-                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && checkForCollision(commonSnakeOuter, tailPart)) {
-                            hasCollided = true;
-                            killSnake(commonSnakeOuter);
-                            break;
+                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
+                            if(checkForCollision(commonSnakeOuter, tailPart)) {
+                                hasCollided = true;
+                                killSnake(commonSnakeOuter);
+                                break;
+                            }
+                        }
+                    }
+                    if (hasCollided)
+                        break;
+                }
+
+                for (Entity weapon : world.getEntities(Weapon.class)) {
+                    List<Entity> tail = ((CommonSnake) commonSnakeOuter).getTail();
+                    for (Entity tailPart : tail) {
+                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((Weapon) weapon).isShooting()) {
+                            if(!((Weapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
+                                hasCollided = true;
+                                killSnake(commonSnakeOuter);
+                                break;
+                            }
+                            if(checkForCollision(weapon, tailPart)) {
+                                hasCollided = true;
+                                world.removeEntity(tailPart);
+                                tail.remove(tail.indexOf(tailPart) - 1);
+                                tail.remove(tailPart);
+                                break;
+                            }
                         }
                     }
                     if (hasCollided)
@@ -52,7 +81,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     float headY = ((PositionPart) commonSnakeOuter.getPart(PositionPart.class)).getY();
                     if (headX > gameWidth || headX < 0 || headY > gameHeight || headY < 0) {
                         killSnake(commonSnakeOuter);
-
                     }
                 }
             }

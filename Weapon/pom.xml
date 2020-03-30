@@ -14,6 +14,7 @@
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
+    <groupId>sdu.cbse.group2</groupId>
     <artifactId>weapon</artifactId>
     <name>Weapon</name>
     <packaging>bundle</packaging>

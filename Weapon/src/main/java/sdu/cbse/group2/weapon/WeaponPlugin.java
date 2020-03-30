@@ -17,10 +17,8 @@ public class WeaponPlugin implements IGamePluginService {
         List<Entity> entities = world.getEntities(CommonSnake.class);
         entities.forEach(snake -> {
             snake.getParts().put(ShootingPart.class, new ShootingPart());
-            ItemPart itemPart = snake.getPart(ItemPart.class);
             Weapon weapon = createWeapon(snake);
             world.addEntity(weapon);
-            itemPart.addItem(weapon);
         });
     }
 
@@ -33,6 +31,7 @@ public class WeaponPlugin implements IGamePluginService {
         float radians = shooterPosition.getRadians();
 
         Weapon weapon = new Weapon(new GameSprite("items/tongue-short.png", 60, 60));
+        weapon.setShooterUUID(shooter.getUuid());
 
         float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
@@ -47,10 +46,6 @@ public class WeaponPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.getEntities(CommonSnake.class).forEach(snake -> {
-            ItemPart itemPart = snake.getPart(ItemPart.class);
-            itemPart.removeItems(Weapon.class);
-        });
         world.getEntities(Weapon.class).forEach(world::removeEntity);
     }
 }
