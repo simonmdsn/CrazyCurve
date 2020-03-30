@@ -6,11 +6,9 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
+import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -19,16 +17,16 @@ public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity e : world.getEntities(CommonSnake.class)) {
+        for (Entity commonSnakeOuter : world.getEntities(CommonSnake.class)) {
             boolean hasCollided = false;
-            if(((CommonSnake)e).isAlive()) {
-                //Check e for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
-                for (Entity f : world.getEntities(CommonSnake.class)) {
-                    List<Entity> tail = ((CommonSnake) f).getTail();
+            if (((CommonSnake) commonSnakeOuter).isAlive()) {
+                //Check commonSnakeOuter for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
+                for (Entity commonSnakeInner : world.getEntities(CommonSnake.class)) {
+                    List<Entity> tail = ((CommonSnake) commonSnakeInner).getTail();
                     for (Entity tailPart : tail) {
-                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && checkForCollision(e, tailPart)) {
+                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && checkForCollision(commonSnakeOuter, tailPart)) {
                             hasCollided = true;
-                            killSnake(e);
+                            killSnake(commonSnakeOuter);
                             break;
                         }
                     }
@@ -37,13 +35,24 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 //Check for collision with edge of screen
-                if(!hasCollided) {
+                if (!hasCollided) {
+                    for (Entity commonPowerUp : world.getBoundedEntities(CommonPowerUp.class)) {
+                        if (checkForCollision(commonSnakeOuter, commonPowerUp)) {
+                            ((CommonPowerUp) commonPowerUp).applyPowerUp((CommonSnake) commonSnakeOuter);
+                            world.removeEntity(commonPowerUp);
+                            hasCollided = true;
+                            break;
+                        }
+                    }
+                }
+                if (!hasCollided) {
                     int gameWidth = gameData.getDisplayWidth();
                     int gameHeight = gameData.getDisplayHeight();
-                    float headX = ((PositionPart) e.getPart(PositionPart.class)).getX();
-                    float headY = ((PositionPart) e.getPart(PositionPart.class)).getY();
-                    if (headX > gameWidth|| headX < 0|| headY > gameHeight || headY < 0) {
-                        killSnake(e);
+                    float headX = ((PositionPart) commonSnakeOuter.getPart(PositionPart.class)).getX();
+                    float headY = ((PositionPart) commonSnakeOuter.getPart(PositionPart.class)).getY();
+                    if (headX > gameWidth || headX < 0 || headY > gameHeight || headY < 0) {
+                        killSnake(commonSnakeOuter);
+
                     }
                 }
             }
@@ -62,11 +71,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
         return false;
     }
 
-    private void killSnake(Entity e){
-        ((CommonSnake)e).setAlive(false);
+    private void killSnake(Entity e) {
+        ((CommonSnake) e).setAlive(false);
         ((CommonSnake) e).getTailTask().cancel(true);
-        ((MovingPart)e.getPart(MovingPart.class)).setMaxSpeed(0);
-        ((MovingPart)e.getPart(MovingPart.class)).setRotationSpeed(0);
+        ((MovingPart) e.getPart(MovingPart.class)).setMaxSpeed(0);
+        ((MovingPart) e.getPart(MovingPart.class)).setRotationSpeed(0);
     }
 
 }

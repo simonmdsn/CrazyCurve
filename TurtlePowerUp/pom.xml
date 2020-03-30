@@ -9,12 +9,12 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>sdu.cbse.group2.SpeedPowerUp</bundle.symbolicName>
+        <bundle.symbolicName>sdu.cbse.group2.TurtlePowerUp</bundle.symbolicName>
         <bundle.namespace>sdu.cbse.group2</bundle.namespace>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>SpeedPowerUp</artifactId>
+    <artifactId>TurtlePowerUp</artifactId>
 
     <name>${bundle.symbolicName} [${bundle.namespace}]</name>
 
