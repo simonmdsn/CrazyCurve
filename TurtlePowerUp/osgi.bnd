@@ -1,0 +1,2 @@
+Bundle-SymbolicName: TurtlePowerUp
+Service-Component: META-INF/turtlepowerupplugin.xml

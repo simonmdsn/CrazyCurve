@@ -56,6 +56,11 @@
     <module>poms</module>
     <module>provision</module>
     <module>player</module>
+    <module>CommonPowerUp</module>
+    <module>PowerUpSpawner</module>
+    <module>SpeedPowerUp</module>
+    <module>TurtlePowerUp</module>
+    <module>collision</module>
     <module>Weapon</module>
     <module>CommonItem</module>
   </modules>

@@ -1,6 +1,5 @@
 package sdu.cbse.group2.player;
 
-import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
@@ -13,7 +12,7 @@ import sdu.cbse.group2.commonsnake.SnakeSPI;
 
 public class PlayerPlugin implements SnakeSPI, IGamePluginService {
 
-    private Entity player;
+    private CommonSnake player;
 
     @Override
     public void start(GameData gameData, World world) {
@@ -24,14 +23,18 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(player);
+        player.getTailTask().cancel(true);
+        player.getTail().forEach(world::removeEntity);
     }
 
-    private Entity createPlayerSnake(World world) {
-        float maxSpeed = 50;
+    private CommonSnake createPlayerSnake(World world) {
+        float maxSpeed = 100;
         float rotationSpeed = 3;
-        float x = 200, y = 200, radians = 0;
+        float x = 200;
+        float y = 200;
+        float radians = 5;
 
-        Entity playerSnake = new CommonSnake(new GameSprite("Player/player.png", 30, 30),new GameSprite("Player/tail.png",30,30),world);
+        CommonSnake playerSnake = new CommonSnake(new GameSprite("player/player.png", 30, 30),new GameSprite("player/tail.png",30,30),world);
         playerSnake.add(new MovingPart(maxSpeed, rotationSpeed));
         playerSnake.add(new PositionPart(x, y, radians));
 
