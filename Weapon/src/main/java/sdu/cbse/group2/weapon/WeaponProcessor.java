@@ -31,9 +31,18 @@ public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
             PositionPart shooterPosition = shooter.getPart(PositionPart.class);
             PositionPart weaponPosition = weapon.getPart(PositionPart.class);
 
+            float x = shooterPosition.getX();
+            float y = shooterPosition.getY();
+            float radians = shooterPosition.getRadians();
+
             GameSprite shooterGameSprite = shooter.getGameSprite();
-            float bx = (float) (shooterPosition.getX() + (shooterGameSprite.getWidth()) * Math.cos(shooterPosition.getRadians()));
-            float by = (float) (shooterPosition.getY() + (shooterGameSprite.getHeight()) * Math.sin(shooterPosition.getRadians()));
+            /*
+            float bx = (float) (x + (shooterGameSprite.getWidth()) * Math.cos(radians));
+            float by = (float) (y + (shooterGameSprite.getHeight()) * Math.sin(radians));
+            */
+
+            float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
+            float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
 
             System.out.println(shooterPosition.getX() + " " + shooterPosition.getY());
             weaponPosition.setX(bx - (shooterGameSprite.getWidth() / 2));
@@ -43,7 +52,7 @@ public class WeaponProcessor implements IEntityProcessingService, ItemSPI {
     }
 
     private void spawnTongueAttack(Entity weapon) {
-        weapon.setGameSprite(new GameSprite("items/tongue-long.png", 65, 65));
+        weapon.setGameSprite(new GameSprite("items/tongue-short.png", 65, 65));
     }
 
     @Override

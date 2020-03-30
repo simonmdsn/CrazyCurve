@@ -15,4 +15,12 @@ public class Weapon extends Item {
     public Weapon(GameSprite gameSprite) {
         super(gameSprite);
     }
+
+    public void increaseSize() {
+
+    }
+
+    public void decreaseSize() {
+
+    }
 }
