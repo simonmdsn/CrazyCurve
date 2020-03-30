@@ -22,6 +22,7 @@ public class CommonSnake extends Entity {
     private final List<Entity> tail = new LinkedList<>();
     private final World world;
     private ScheduledFuture<?> tailTask;
+    private boolean isAlive;
 
 
     public CommonSnake(GameSprite gameSprite, GameSprite tailSprite, World world) {
@@ -29,6 +30,7 @@ public class CommonSnake extends Entity {
         this.head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
         this.world = world;
+        this.isAlive = true;
         startTailTask();
     }
 
@@ -42,5 +44,4 @@ public class CommonSnake extends Entity {
             world.addEntity(entity);
         }, 10, 150, TimeUnit.MILLISECONDS);
     }
-
 }
