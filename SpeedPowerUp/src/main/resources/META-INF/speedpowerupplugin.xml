@@ -3,9 +3,6 @@
     <implementation class="sdu.cbse.group2.speedpowerup.SpeedPowerUpPlugin"/>
     <service>
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
+        <provide interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"/>
     </service>
-
-    <reference bind="setPowerUpSPI" cardinality="0..1"
-               interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"
-               name="PowerUpSPI" policy="dynamic" unbind="removePowerUpSPI"/>
 </scr:component>

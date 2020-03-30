@@ -4,4 +4,8 @@
     <service>
         <provide interface="sdu.cbse.group2.common.services.IEntityProcessingService"/>
     </service>
+
+    <reference bind="register" cardinality="0..n"
+               interface="sdu.cbse.group2.commonpowerup.PowerUpSPI"
+               name="PowerUpSPI" policy="dynamic" unbind="unregister"/>
 </scr:component>

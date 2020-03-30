@@ -1,13 +1,16 @@
 package sdu.cbse.group2.speedpowerup;
 
+import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonpowerup.PowerUpPart;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class SpeedPowerUp extends CommonPowerUp {
@@ -16,8 +19,9 @@ public class SpeedPowerUp extends CommonPowerUp {
     private static final double SPEED_MULTIPLIER = 2;
     private ScheduledFuture<?> schedule;
 
-    public SpeedPowerUp() {
+    public SpeedPowerUp(GameData gameData) {
         super(new GameSprite("powerup/speed.png", 30, 30));
+        this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
     }
 
     @Override

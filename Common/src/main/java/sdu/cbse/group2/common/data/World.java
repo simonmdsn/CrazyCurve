@@ -37,6 +37,18 @@ public class World {
         return r;
     }
 
+    public <E extends Entity> List<Entity> getBoundedEntities(Class<E>... entityTypes) {
+        List<Entity> r = new ArrayList<>();
+        for (Entity e : getEntities()) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.isAssignableFrom(e.getClass())) {
+                    r.add(e);
+                }
+            }
+        }
+        return r;
+    }
+
     public Entity getEntity(UUID uuid) {
         return entityMap.get(uuid);
     }
