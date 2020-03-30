@@ -3,16 +3,13 @@ package sdu.cbse.group2.collision;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.ItemPart;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
-import sdu.cbse.group2.common.item.Item;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 import sdu.cbse.group2.weapon.Weapon;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

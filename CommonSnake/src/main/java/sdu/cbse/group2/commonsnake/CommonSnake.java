@@ -5,7 +5,6 @@ import lombok.Setter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.ItemPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
 import java.util.LinkedList;
