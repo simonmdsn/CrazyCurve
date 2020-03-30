@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Entity implements Serializable {
 
     private final UUID uuid = UUID.randomUUID();
+    private double radius = 9;
 
     private final GameSprite gameSprite;
     private final Map<Class<? extends EntityPart>, EntityPart> parts = new ConcurrentHashMap<>();
