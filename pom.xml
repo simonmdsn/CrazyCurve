@@ -59,6 +59,7 @@
     <module>CommonPowerUp</module>
     <module>PowerUpSpawner</module>
     <module>SpeedPowerUp</module>
+    <module>TurtlePowerUp</module>
     <module>collision</module>
   </modules>
 

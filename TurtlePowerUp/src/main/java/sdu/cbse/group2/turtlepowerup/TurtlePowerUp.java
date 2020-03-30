@@ -1,4 +1,4 @@
-package sdu.cbse.group2.speedpowerup;
+package sdu.cbse.group2.turtlepowerup;
 
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
@@ -14,14 +14,14 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class SpeedPowerUp extends CommonPowerUp {
+public class TurtlePowerUp extends CommonPowerUp {
 
     private static final long DURATION = 3;
-    private static final double SPEED_MULTIPLIER = 50;
+    private static final double SPEED_MULTIPLIER = -50;
     private ScheduledFuture<?> schedule;
 
-    public SpeedPowerUp(GameData gameData) {
-        super(new GameSprite("powerup/speed.png", 30, 30));
+    public TurtlePowerUp(GameData gameData) {
+        super(new GameSprite("powerup/turtle.png", 30, 30));
         this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
     }
 
@@ -29,7 +29,7 @@ public class SpeedPowerUp extends CommonPowerUp {
     public void applyPowerUp(CommonSnake commonSnake) {
         super.applyPowerUp(commonSnake);
         PowerUpPart powerUpPart = commonSnake.getPart(PowerUpPart.class);
-        powerUpPart.getOfType(SpeedPowerUp.class).stream().map(SpeedPowerUp.class::cast).collect(Collectors.toList()).forEach(commonPowerUp -> commonPowerUp.removePowerUp(commonSnake));
+        powerUpPart.getOfType(TurtlePowerUp.class).stream().map(TurtlePowerUp.class::cast).collect(Collectors.toList()).forEach(commonPowerUp -> commonPowerUp.removePowerUp(commonSnake));
         MovingPart movingPart = commonSnake.getPart(MovingPart.class);
         movingPart.setMaxSpeed((float) (movingPart.getMaxSpeed() + SPEED_MULTIPLIER));
         schedule = Executors.newSingleThreadScheduledExecutor().schedule(() -> removePowerUp(commonSnake), DURATION, TimeUnit.SECONDS);

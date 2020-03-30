@@ -1,3 +1,2 @@
 Bundle-SymbolicName: SpeedPowerUp
-Bundle-ActivationPolicy: lazy
 Service-Component: META-INF/speedpowerupplugin.xml

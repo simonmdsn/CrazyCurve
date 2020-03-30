@@ -10,7 +10,11 @@ public abstract class CommonPowerUp extends Entity {
         super(gameSprite);
     }
 
-    public abstract void applyPowerUp(CommonSnake commonSnake);
+    public void applyPowerUp(CommonSnake commonSnake) {
+        if(commonSnake.getPart(PowerUpPart.class) == null) {
+            commonSnake.add(new PowerUpPart());
+        }
+    }
 
     public abstract void removePowerUp(CommonSnake commonSnake);
 }
