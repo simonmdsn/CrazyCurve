@@ -23,6 +23,7 @@ public class Assets {
     public void loadAssets() {
         assetManager.load("player/player.png", Texture.class);
         assetManager.load("player/tail.png", Texture.class);
+        assetManager.load("powerup/speed.png", Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).
