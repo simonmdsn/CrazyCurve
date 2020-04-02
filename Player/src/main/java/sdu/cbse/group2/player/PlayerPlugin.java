@@ -15,25 +15,24 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        player = createPlayerSnake(world);
+        player = createPlayerSnake();
         world.addEntity(player);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(player);
-        player.getTailTask().cancel(true);
-        player.getTail().forEach(world::removeEntity);
+        player.getTailList().forEach(world::removeEntity);
     }
 
-    private CommonSnake createPlayerSnake(World world) {
+    private CommonSnake createPlayerSnake() {
         float maxSpeed = 100;
         float rotationSpeed = 3;
         float x = 200;
         float y = 200;
         float radians = 5;
 
-        CommonSnake playerSnake = new CommonSnake(new GameSprite("Player/player.png", 30, 30),new GameSprite("Player/tail.png",30,30),world);
+        CommonSnake playerSnake = new CommonSnake(new GameSprite("player/player.png", 30, 30),new GameSprite("player/tail.png",30,30));
         playerSnake.add(new MovingPart(maxSpeed, rotationSpeed));
         playerSnake.add(new PositionPart(x, y, radians));
 

@@ -1,0 +1,2 @@
+Bundle-SymbolicName: PowerUpSpawner
+Service-Component: META-INF/powerupprocessor.xml

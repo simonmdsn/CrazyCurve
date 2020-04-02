@@ -27,6 +27,8 @@ public class Assets {
         assetManager.load("MenuState/quit button.PNG", Texture.class);
         assetManager.load("MenuState/settings button.PNG", Texture.class);
         assetManager.load("MenuState/title.png", Texture.class);
+        assetManager.load("powerup/speed.png", Texture.class);
+        assetManager.load("powerup/turtle.png", Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).

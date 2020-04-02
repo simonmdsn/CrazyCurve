@@ -1,0 +1,2 @@
+Bundle-SymbolicName: SpeedPowerUp
+Service-Component: META-INF/speedpowerupplugin.xml
