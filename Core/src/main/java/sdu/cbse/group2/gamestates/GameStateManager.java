@@ -2,11 +2,15 @@ package sdu.cbse.group2.gamestates;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.util.Random;
 import java.util.Stack;
+import lombok.Getter;
 
+@Getter
 public class GameStateManager {
-
-    Stack<State> states;
+    Random random = new Random();
+    private int id = random.nextInt();
+    private Stack<State> states;
 
     public GameStateManager(){
         states = new Stack<State>();

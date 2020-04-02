@@ -18,14 +18,11 @@ import sdu.cbse.group2.core.managers.GameInputProcessor;
 
 public class PlayState extends State {
 
-    World world;
-    Game game;
-
-    public PlayState(GameStateManager gameStateManager, GameData gameData, Assets assets, World world){
-        super(gameStateManager, gameData, assets);
-        this.world = world;
+    public PlayState(Game game){
+        super(game);
         //To enable button pressing
-        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+        Gdx.input.setInputProcessor(new GameInputProcessor(game.getGameData()));
+
     }
 
     @Override
@@ -34,27 +31,25 @@ public class PlayState extends State {
 
     @Override
     public void update(float dt) {
-        //Check how to entities are initialised etc
-        System.out.println("updating play state");
         update();
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        System.out.println("rendering play state");
+        game.getGameData().getKeys().update();
         draw(spriteBatch);
     }
 
     @Override
     public void dispose() {
-
+        //Reset everything in the game
     }
 
     private void draw(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        for (Entity entity : world.getEntities()) {
+        for (Entity entity : game.getWorld().getEntities()) {
             GameSprite gameSprite = entity.getGameSprite();
-            Texture texture = assets.getAssetManager().get(gameSprite.getImagePath(), Texture.class);
+            Texture texture = game.getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
             drawSprite(gameSprite, entity.getPart(PositionPart.class), texture);
         }
         spriteBatch.end();
@@ -72,18 +67,18 @@ public class PlayState extends State {
         sprite.setX(positionPart.getX());
         sprite.setY(positionPart.getY());
         sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
-        sprite.draw(assets.getBatch());
+        sprite.draw(game.getAssets().getBatch());
     }
 
     private void update() {
         // Update
-        for (IEntityProcessingService entityProcessorService : game.getEntityProcessorList()) {
-            entityProcessorService.process(gameData, world);
-        }
 
+        for (IEntityProcessingService entityProcessorService : game.getEntityProcessorList()) {
+            entityProcessorService.process(game.getGameData(), game.getWorld());
+        }
         // Post Update
         for (IPostEntityProcessingService postEntityProcessorService : game.getPostEntityProcessorList()) {
-            postEntityProcessorService.process(gameData, world);
+            postEntityProcessorService.process(game.getGameData(), game.getWorld());
         }
     }
 }

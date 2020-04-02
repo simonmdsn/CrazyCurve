@@ -16,7 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import sdu.cbse.group2.Assets;
+import sdu.cbse.group2.Game;
 import sdu.cbse.group2.common.data.GameData;
+import sdu.cbse.group2.common.data.World;
 
 public class MenuState extends State{
 
@@ -27,15 +29,15 @@ public class MenuState extends State{
     private Button startBtn, settingsBtn, quitBtn;
     private Stage stage;
 
-    public MenuState(GameStateManager gameStateManager, GameData gameData, Assets assets) {
-        super(gameStateManager, gameData, assets);
+    public MenuState(Game game) {
+        super(game);
         //Create stage
         stage = new Stage();
         //Create textures from asset manager
-        startBtnTexture = assets.getAssetManager().get("MenuState/start button.png");
-        settingsBtnTexture = assets.getAssetManager().get("MenuState/settings button.PNG");
-        quitBtnTexture = assets.getAssetManager().get("MenuState/quit button.PNG");
-        titleTexture = assets.getAssetManager().get("MenuState/title.png");
+        startBtnTexture = game.getAssets().getAssetManager().get("MenuState/start button.png");
+        settingsBtnTexture = game.getAssets().getAssetManager().get("MenuState/settings button.PNG");
+        quitBtnTexture = game.getAssets().getAssetManager().get("MenuState/quit button.PNG");
+        titleTexture = game.getAssets().getAssetManager().get("MenuState/title.png");
         //Initiate buttons
         Drawable startDrawable = new TextureRegionDrawable(new TextureRegion(startBtnTexture));
         Drawable settingsDrawable = new TextureRegionDrawable(new TextureRegion(settingsBtnTexture));
@@ -46,14 +48,14 @@ public class MenuState extends State{
         startBtn.setSize(200, 80);
         settingsBtn.setSize(200, 80);
         quitBtn.setSize(200, 80);
-        startBtn.setPosition(((gameData.getDisplayWidth() / 2) - startBtn.getWidth() / 2), gameData.getDisplayHeight() / 2);
-        settingsBtn.setPosition(((gameData.getDisplayWidth() / 2) - quitBtnTexture.getWidth() / 2), gameData.getDisplayHeight() / 2 - 100);
-        quitBtn.setPosition(((gameData.getDisplayWidth() / 2) - settingsBtnTexture.getWidth() / 2), gameData.getDisplayHeight() / 2 - 200);
+        startBtn.setPosition(((game.getGameData().getDisplayWidth() / 2) - startBtn.getWidth() / 2), game.getGameData().getDisplayHeight() / 2);
+        settingsBtn.setPosition(((game.getGameData().getDisplayWidth() / 2) - quitBtnTexture.getWidth() / 2), game.getGameData().getDisplayHeight() / 2 - 100);
+        quitBtn.setPosition(((game.getGameData().getDisplayWidth() / 2) - settingsBtnTexture.getWidth() / 2), game.getGameData().getDisplayHeight() / 2 - 200);
+        //Add listeners
         startBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                //push instead?
-                gameStateManager.push(new MenuState(gameStateManager, gameData, assets));
+                game.getGameStateManager().set(new PlayState(game));
                 dispose();
             }
         });
@@ -80,7 +82,6 @@ public class MenuState extends State{
 
     @Override
     public void handleInput() {
-
     }
 
     @Override
@@ -92,7 +93,7 @@ public class MenuState extends State{
     public void render(SpriteBatch spriteBatch) {
         stage.draw();
         spriteBatch.begin();
-        spriteBatch.draw(titleTexture, ((gameData.getDisplayWidth() / 2) - titleTexture.getWidth() / 2), gameData.getDisplayHeight() / 2 + 125);
+        spriteBatch.draw(titleTexture, ((game.getGameData().getDisplayWidth() / 2) - titleTexture.getWidth() / 2), game.getGameData().getDisplayHeight() / 2 + 125);
         spriteBatch.end();
     }
 

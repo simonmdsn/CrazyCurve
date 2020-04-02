@@ -68,8 +68,7 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
-        gameStateManager.push(new MenuState(gameStateManager, gameData, assets));
-
+        gameStateManager.push(new MenuState(this));
     }
 
     @Override

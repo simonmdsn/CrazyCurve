@@ -4,19 +4,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import sdu.cbse.group2.Assets;
+import sdu.cbse.group2.Game;
 import sdu.cbse.group2.common.data.GameData;
+import sdu.cbse.group2.common.data.World;
 
 public abstract class State {
     protected OrthographicCamera cam;
     protected Vector3 mouse;
-    GameStateManager gameStateManager;
-    protected GameData gameData;
-    protected Assets assets;
+    protected Game game;
 
-    protected State(GameStateManager gameStateManager, GameData gameData, Assets assets){
-        this.gameStateManager = gameStateManager;
-        this.gameData = gameData;
-        this.assets = assets;
+    protected State(Game game){
+        this.game = game;
         mouse = new Vector3();
         cam = new OrthographicCamera();
     }
