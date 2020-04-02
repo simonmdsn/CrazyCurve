@@ -1,4 +1,4 @@
-package sdu.cbse.group2.assets;
+package sdu.cbse.group2;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,11 +12,9 @@ import java.io.File;
 public class Assets {
 
     private final Batch batch = new SpriteBatch();
-    private final AssetManager assetManager;
-
+    private final AssetManager assetManager = new AssetManager();
 
     public Assets() {
-        assetManager = new AssetManager();
         loadAssets();
         assetManager.finishLoading();
         System.out.println("Assets: " + assetManager.getAssetNames());
@@ -27,7 +25,8 @@ public class Assets {
         assetManager.load("player/tail.png", Texture.class);
         assetManager.load("powerup/speed.png", Texture.class);
         assetManager.load("powerup/turtle.png", Texture.class);
-        assetManager.load("powerup/eraser.png", Texture.class);
+        assetManager.load("enemy/enemy.png", Texture.class);
+        assetManager.load("enemy/tail.png", Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).

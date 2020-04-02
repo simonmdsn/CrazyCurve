@@ -61,7 +61,7 @@
     <module>SpeedPowerUp</module>
     <module>TurtlePowerUp</module>
     <module>collision</module>
-      <module>EraserPowerUp</module>
+    <module>Enemy</module>
   </modules>
 
   <build>
