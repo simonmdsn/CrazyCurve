@@ -17,12 +17,11 @@ public class Assets {
     public Assets() {
         loadAssets();
         assetManager.finishLoading();
-        System.out.println("Assets: " + assetManager.getAssetNames());
     }
 
     public void loadAssets() {
-        assetManager.load("Player/player.png", Texture.class);
-        assetManager.load("Player/tail.png", Texture.class);
+        assetManager.load("player/player.png", Texture.class);
+        assetManager.load("player/tail.png", Texture.class);
         assetManager.load("MenuState/start button.png", Texture.class);
         assetManager.load("MenuState/quit button.PNG", Texture.class);
         assetManager.load("MenuState/settings button.PNG", Texture.class);

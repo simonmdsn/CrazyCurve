@@ -21,7 +21,6 @@ import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
 
 public class MenuState extends State{
-
     private Texture startBtnTexture;
     private Texture settingsBtnTexture;
     private Texture quitBtnTexture;
