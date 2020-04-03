@@ -1,1 +1,3 @@
-Export-Package: sdu.cbse.group2.commonsnake.*
+Bundle-SymbolicName: CommonSnake
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/tailprocessor.xml
