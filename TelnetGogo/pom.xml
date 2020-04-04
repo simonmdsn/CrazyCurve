@@ -20,10 +20,11 @@
 
     <packaging>bundle</packaging>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
         <dependency>
-            <groupId>org.crashub</groupId>
-            <artifactId>crash.connectors.telnet</artifactId>
-            <version>1.3.0</version>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
         </dependency>
     </dependencies>
 

@@ -57,7 +57,7 @@ public class MenuState extends State {
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 TelnetGogo telnetGogo = new TelnetGogo();
                 telnetGogo.write("lb");
-                telnetGogo.read();
+                telnetGogo.readAndWrite();
                 System.out.println("Take me to settings!");
             }
         });
