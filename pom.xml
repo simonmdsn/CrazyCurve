@@ -56,12 +56,13 @@
     <module>provision</module>
     <module>CommonSnake</module>
     <module>player</module>
+    <module>Enemy</module>
     <module>CommonPowerUp</module>
     <module>PowerUpSpawner</module>
     <module>SpeedPowerUp</module>
     <module>TurtlePowerUp</module>
     <module>collision</module>
-      <module>EraserPowerUp</module>
+    <module>EraserPowerUp</module>
     <module>Weapon</module>
     <module>CommonWeapon</module>
   </modules>

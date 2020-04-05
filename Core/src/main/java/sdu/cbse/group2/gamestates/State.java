@@ -3,10 +3,7 @@ package sdu.cbse.group2.gamestates;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import sdu.cbse.group2.Assets;
 import sdu.cbse.group2.Game;
-import sdu.cbse.group2.common.data.GameData;
-import sdu.cbse.group2.common.data.World;
 
 public abstract class State {
     protected OrthographicCamera cam;

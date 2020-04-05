@@ -13,16 +13,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class EraserPowerUp extends CommonPowerUp {
 
-    public EraserPowerUp(GameData gameData) {
-        super(new GameSprite("powerup/eraser.png",30,30));
+    private World world;
+
+    public EraserPowerUp(GameData gameData, World world) {
+        super(new GameSprite("powerup/eraser.png", 30, 30));
         this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
+        this.world = world;
     }
 
+    @Override
     public void applyPowerUp(CommonSnake commonSnake) {
-        World world = commonSnake.getWorld();
-        List<Entity> commonSnakes = commonSnake.getWorld().getEntities(CommonSnake.class);
-        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTail().forEach( tail -> world.removeEntity(tail)));
-        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTail().clear());
+        List<Entity> commonSnakes = world.getEntities(CommonSnake.class);
+        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTailList().forEach(tail -> world.removeEntity(tail)));
+        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTailList().clear());
     }
 
     @Override

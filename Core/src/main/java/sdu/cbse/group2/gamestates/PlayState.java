@@ -4,21 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import sdu.cbse.group2.Assets;
 import sdu.cbse.group2.Game;
 import sdu.cbse.group2.common.data.Entity;
-import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
-import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
-import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.core.managers.GameInputProcessor;
 
 public class PlayState extends State {
 
-    public PlayState(Game game){
+    public PlayState(Game game) {
         super(game);
         //To enable button pressing
         Gdx.input.setInputProcessor(new GameInputProcessor(game.getGameData()));

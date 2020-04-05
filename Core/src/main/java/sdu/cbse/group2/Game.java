@@ -6,20 +6,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import sdu.cbse.group2.assets.Assets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
-import sdu.cbse.group2.common.data.Entity;
+import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
-import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
-import sdu.cbse.group2.core.managers.GameInputProcessor;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
@@ -29,17 +23,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Getter
 public class Game implements ApplicationListener {
 
-    private Assets assets;
-
-    private OrthographicCamera cam;
     private final GameData gameData = new GameData();
-    private World world = new World();
-    private GameStateManager gameStateManager = new GameStateManager();
     private final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private Assets assets;
+    private OrthographicCamera cam;
+    private World world = new World();
+    private GameStateManager gameStateManager = new GameStateManager();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
+    public Game() {
         init();
     }
 
@@ -78,7 +71,7 @@ public class Game implements ApplicationListener {
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
         gameStateManager.update(Gdx.graphics.getDeltaTime());
-        gameStateManager.render((SpriteBatch)assets.getBatch());
+        gameStateManager.render((SpriteBatch) assets.getBatch());
 //        update();
 //        draw();
     }

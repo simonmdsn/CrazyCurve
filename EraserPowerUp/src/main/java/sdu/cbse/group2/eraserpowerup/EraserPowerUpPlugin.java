@@ -9,10 +9,12 @@ import sdu.cbse.group2.commonpowerup.PowerUpSPI;
 public class EraserPowerUpPlugin implements IGamePluginService, PowerUpSPI {
 
     private GameData gameData;
+    private World world;
 
     @Override
     public void start(GameData gameData, World world) {
         this.gameData = gameData;
+        this.world = world;
     }
 
     @Override
@@ -22,6 +24,6 @@ public class EraserPowerUpPlugin implements IGamePluginService, PowerUpSPI {
 
     @Override
     public CommonPowerUp spawn() {
-        return new EraserPowerUp(gameData);
+        return new EraserPowerUp(gameData, world);
     }
 }
