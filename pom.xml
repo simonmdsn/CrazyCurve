@@ -52,15 +52,18 @@
     <module>Common</module>
     <module>Core</module>
     <module>LibGDX</module>
-    <module>CommonSnake</module>
     <module>poms</module>
     <module>provision</module>
+    <module>CommonSnake</module>
     <module>player</module>
     <module>CommonPowerUp</module>
     <module>PowerUpSpawner</module>
     <module>SpeedPowerUp</module>
     <module>TurtlePowerUp</module>
     <module>collision</module>
+      <module>EraserPowerUp</module>
+    <module>Weapon</module>
+    <module>CommonWeapon</module>
   </modules>
 
   <build>

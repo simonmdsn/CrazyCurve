@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sdu.cbse.group2.assets.Assets;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import lombok.Getter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
@@ -17,21 +20,24 @@ import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.core.managers.GameInputProcessor;
+import sdu.cbse.group2.gamestates.GameStateManager;
+import sdu.cbse.group2.gamestates.MenuState;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+@Getter
 public class Game implements ApplicationListener {
 
     private Assets assets;
 
-    private static OrthographicCamera cam;
+    private OrthographicCamera cam;
     private final GameData gameData = new GameData();
-    private static World world = new World();
-    private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
-    private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private World world = new World();
+    private GameStateManager gameStateManager = new GameStateManager();
+    private final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
+    private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     public Game(){
         init();
@@ -51,6 +57,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -59,8 +66,7 @@ public class Game implements ApplicationListener {
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
 
-
-        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+        gameStateManager.push(new MenuState(this));
     }
 
     @Override
@@ -71,47 +77,12 @@ public class Game implements ApplicationListener {
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
-
-        update();
-        draw();
+        gameStateManager.update(Gdx.graphics.getDeltaTime());
+        gameStateManager.render((SpriteBatch)assets.getBatch());
+//        update();
+//        draw();
     }
 
-    private void update() {
-        // Update
-        for (IEntityProcessingService entityProcessorService : entityProcessorList) {
-            entityProcessorService.process(gameData, world);
-        }
-
-        // Post Update
-        for (IPostEntityProcessingService postEntityProcessorService : postEntityProcessorList) {
-            postEntityProcessorService.process(gameData, world);
-        }
-    }
-
-    private void draw() {
-        assets.getBatch().begin();
-        for (Entity entity : world.getEntities()) {
-            GameSprite gameSprite = entity.getGameSprite();
-            Texture texture = assets.getAssetManager().get(gameSprite.getImagePath(), Texture.class);
-            drawSprite(gameSprite,entity.getPart(PositionPart.class), texture);
-        }
-        assets.getBatch().end();
-    }
-
-    private void drawSprite(GameSprite gameSprite, PositionPart positionPart, Texture texture) {
-        //TODO sprite needs things
-        //                GameImage image = entity.getImage();
-        //                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
-        //                PositionPart p = entity.getPart(PositionPart.class);
-        //                drawSprite(new Sprite(tex), image, p);
-        Sprite sprite = new Sprite(texture);
-        sprite.setOrigin(gameSprite.getWidth() / 2, gameSprite.getHeight() / 2);
-        sprite.rotate((float) Math.toDegrees(positionPart.getRadians()));
-        sprite.setX(positionPart.getX());
-        sprite.setY(positionPart.getY());
-        sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
-        sprite.draw(assets.getBatch());
-    }
 
     @Override
     public void resize(int width, int height) {
