@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import sdu.cbse.group2.assets.Assets;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
 import sdu.cbse.group2.common.data.Entity;
