@@ -18,7 +18,7 @@ public class PlayState extends State {
         super(game);
         //To enable button pressing
         Gdx.input.setInputProcessor(new GameInputProcessor(game.getGameData()));
-
+        game.getGamePluginList().forEach(iGamePluginService -> iGamePluginService.start(game.getGameData(), game.getWorld()));
     }
 
     @Override
