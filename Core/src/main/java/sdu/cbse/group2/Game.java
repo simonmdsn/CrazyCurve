@@ -72,8 +72,6 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
         gameStateManager.update(Gdx.graphics.getDeltaTime());
         gameStateManager.render((SpriteBatch) assets.getBatch());
-//        update();
-//        draw();
     }
 
 
@@ -111,7 +109,6 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        plugin.start(gameData, world);
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {

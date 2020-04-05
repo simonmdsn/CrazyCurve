@@ -15,12 +15,16 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
 
     private CommonSnake player;
     private Random random;
-    GameData gameData;
+    private GameData gameData;
 
     @Override
     public void start(GameData gameData, World world) {
         random = new Random();
+        System.out.println("random done");
         this.gameData = gameData;
+        System.out.println("gameData done");
+        System.out.println(gameData.getDisplayWidth());
+        System.out.println(gameData.getDelta());
         player = createPlayerSnake();
         world.addEntity(player);
     }

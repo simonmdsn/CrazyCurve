@@ -2,7 +2,6 @@ package sdu.cbse.group2.weapon;
 
 import sdu.cbse.group2.common.data.*;
 import sdu.cbse.group2.common.data.entityparts.*;
-import sdu.cbse.group2.common.item.ItemSPI;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sun.corba.EncapsInputStreamFactory;
 
