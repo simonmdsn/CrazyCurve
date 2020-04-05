@@ -9,6 +9,7 @@ import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 import sdu.cbse.group2.commonweapon.CommonWeapon;
+import sdu.cbse.group2.commonsnake.Tail;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 //Check commonSnakeOuter for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
 
                 for (Entity commonSnakeInner : world.getEntities(CommonSnake.class)) {
-                    List<Entity> tail = ((CommonSnake) commonSnakeInner).getTail();
+                    List<Tail> tail = ((CommonSnake) commonSnakeInner).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
                             if(checkForCollision(commonSnakeOuter, tailPart)) {
@@ -97,7 +98,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
     private void killSnake(Entity e) {
         ((CommonSnake) e).setAlive(false);
-        ((CommonSnake) e).getTailTask().cancel(true);
         ((MovingPart) e.getPart(MovingPart.class)).setMaxSpeed(0);
         ((MovingPart) e.getPart(MovingPart.class)).setRotationSpeed(0);
     }
