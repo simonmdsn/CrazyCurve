@@ -19,12 +19,15 @@ public class Assets {
         assetManager = new AssetManager();
         loadAssets();
         assetManager.finishLoading();
-        System.out.println("Assets: " + assetManager.getAssetNames());
     }
 
     public void loadAssets() {
         assetManager.load("player/player.png", Texture.class);
         assetManager.load("player/tail.png", Texture.class);
+        assetManager.load("MenuState/start button.png", Texture.class);
+        assetManager.load("MenuState/quit button.PNG", Texture.class);
+        assetManager.load("MenuState/settings button.PNG", Texture.class);
+        assetManager.load("MenuState/title.png", Texture.class);
         assetManager.load("powerup/speed.png", Texture.class);
         assetManager.load("powerup/turtle.png", Texture.class);
         assetManager.load("powerup/eraser.png", Texture.class);
