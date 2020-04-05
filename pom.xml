@@ -62,6 +62,8 @@
     <module>TurtlePowerUp</module>
     <module>collision</module>
       <module>EraserPowerUp</module>
+    <module>Weapon</module>
+    <module>CommonWeapon</module>
   </modules>
 
   <build>
