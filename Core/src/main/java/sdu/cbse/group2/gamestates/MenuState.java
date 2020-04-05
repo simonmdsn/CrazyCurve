@@ -2,25 +2,18 @@ package sdu.cbse.group2.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import sdu.cbse.group2.Assets;
 import sdu.cbse.group2.Game;
-import sdu.cbse.group2.common.data.GameData;
-import sdu.cbse.group2.common.data.World;
 
-public class MenuState extends State{
+public class MenuState extends State {
     private Texture startBtnTexture;
     private Texture settingsBtnTexture;
     private Texture quitBtnTexture;
@@ -103,5 +96,5 @@ public class MenuState extends State{
         startBtnTexture.dispose();
         settingsBtnTexture.dispose();
         quitBtnTexture.dispose();
-        }
+    }
 }

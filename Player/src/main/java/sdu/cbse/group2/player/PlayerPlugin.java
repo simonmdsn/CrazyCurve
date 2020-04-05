@@ -5,7 +5,6 @@ import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
-import sdu.cbse.group2.common.data.entityparts.ShootingPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 import sdu.cbse.group2.commonsnake.SnakeSPI;
@@ -20,10 +19,10 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        player = createPlayerSnake();
-        world.addEntity(player);
         random = new Random();
         this.gameData = gameData;
+        player = createPlayerSnake();
+        world.addEntity(player);
     }
 
     @Override

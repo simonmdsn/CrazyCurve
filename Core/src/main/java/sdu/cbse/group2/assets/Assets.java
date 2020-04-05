@@ -31,6 +31,8 @@ public class Assets {
         assetManager.load("powerup/speed.png", Texture.class);
         assetManager.load("powerup/turtle.png", Texture.class);
         assetManager.load("powerup/eraser.png", Texture.class);
+        assetManager.load("items/tongue-long.png", Texture.class);
+        assetManager.load("items/tongue-short.png", Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).

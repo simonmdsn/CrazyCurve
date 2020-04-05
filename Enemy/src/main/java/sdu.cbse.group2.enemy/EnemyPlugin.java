@@ -27,7 +27,7 @@ public class EnemyPlugin implements SnakeSPI, IGamePluginService {
         float y = 200;
         float radians = 5;
 
-        CommonSnake enemySnake = new CommonSnake(new GameSprite("enemy/enemy.png", 30, 30), new GameSprite("enemy/tail.png", 30, 30), world);
+        CommonSnake enemySnake = new CommonSnake(new GameSprite("enemy/enemy.png", 30, 30), new GameSprite("enemy/tail.png", 30, 30));
         enemySnake.add(new MovingPart(maxSpeed, rotationSpeed));
         enemySnake.add(new PositionPart(x, y, radians));
 
@@ -37,8 +37,6 @@ public class EnemyPlugin implements SnakeSPI, IGamePluginService {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(enemy);
-        enemy.getTailTask().cancel(true);
-        enemy.getTail().forEach(world::removeEntity);
     }
 
     @Override

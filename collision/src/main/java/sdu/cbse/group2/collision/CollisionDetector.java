@@ -8,8 +8,8 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
 import sdu.cbse.group2.commonsnake.CommonSnake;
-import sdu.cbse.group2.commonweapon.CommonWeapon;
 import sdu.cbse.group2.commonsnake.Tail;
+import sdu.cbse.group2.commonweapon.CommonWeapon;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +40,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 for (Entity weapon : world.getBoundedEntities(CommonWeapon.class)) {
-                    List<Entity> tail = ((CommonSnake) commonSnakeOuter).getTail();
+                    List<Tail> tail = ((CommonSnake) commonSnakeOuter).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((CommonWeapon) weapon).isShooting()) {
                             if(!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
