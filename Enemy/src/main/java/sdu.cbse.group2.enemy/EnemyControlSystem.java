@@ -29,8 +29,8 @@ public class EnemyControlSystem implements IEntityProcessingService {
                 movingPart.setRight(false);
             }
 
-            movingPart.process(gameData, player);
-            positionPart.process(gameData, player);
+            movingPart.process(gameData, enemy);
+            positionPart.process(gameData, enemy);
         }
     }
 }
