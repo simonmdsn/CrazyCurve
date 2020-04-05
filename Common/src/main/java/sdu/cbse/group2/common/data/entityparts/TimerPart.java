@@ -5,21 +5,18 @@
  */
 package sdu.cbse.group2.common.data.entityparts;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
-
+@Setter
+@Getter
+@AllArgsConstructor
 public class TimerPart implements EntityPart {
 
-    @Setter
-    @Getter
     private float expiration;
-
-    public TimerPart(float expiration) {
-        this.expiration = expiration;
-    }
 
     public void reduceExpiration(float delta) {
         this.expiration -= delta;

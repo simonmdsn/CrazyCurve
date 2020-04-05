@@ -4,7 +4,6 @@ import lombok.Getter;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 
-@Getter
 public class Tail extends Entity {
 
     public Tail(GameSprite gameSprite) {
