@@ -4,7 +4,10 @@ import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.*;
+import sdu.cbse.group2.common.data.entityparts.MovingPart;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.data.entityparts.ShootingPart;
+import sdu.cbse.group2.common.data.entityparts.TimerPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 
@@ -14,7 +17,7 @@ public class WeaponPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        List<Entity> entities = world.getEntities(CommonSnake.class);
+        List<Entity> entities = world.getBoundedEntities(CommonSnake.class);
         entities.forEach(snake -> {
             snake.getParts().put(ShootingPart.class, new ShootingPart());
             Weapon weapon = createWeapon(snake);

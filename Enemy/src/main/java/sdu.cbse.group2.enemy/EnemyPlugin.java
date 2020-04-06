@@ -3,44 +3,27 @@ package sdu.cbse.group2.enemy;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.MovingPart;
-import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
-import sdu.cbse.group2.commonsnake.CommonSnake;
-import sdu.cbse.group2.commonsnake.SnakeSPI;
 
-public class EnemyPlugin implements SnakeSPI, IGamePluginService {
+public class EnemyPlugin implements IGamePluginService {
 
-    private CommonSnake enemy;
+    private Enemy enemy;
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemySnake(world);
+        this.enemy = createEnemySnake();
         world.addEntity(enemy);
+        world.addEntity(createEnemySnake());
+        world.addEntity(createEnemySnake());
     }
 
     // TODO Add Random Spawn
-    private CommonSnake createEnemySnake(World world) {
-        float maxSpeed = 100;
-        float rotationSpeed = 3;
-        float x = 200;
-        float y = 200;
-        float radians = 5;
-
-        CommonSnake enemySnake = new CommonSnake(new GameSprite("enemy/enemy.png", 30, 30), new GameSprite("enemy/tail.png", 30, 30));
-        enemySnake.add(new MovingPart(maxSpeed, rotationSpeed));
-        enemySnake.add(new PositionPart(x, y, radians));
-
-        return enemySnake;
+    private Enemy createEnemySnake() {
+        return new Enemy(new GameSprite("enemy/enemy.png", 30, 30), new GameSprite("enemy/tail.png", 30, 30));
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(enemy);
-    }
-
-    @Override
-    public CommonSnake create(GameData gameData, World world) {
-        return null;
+        world.getEntities(Enemy.class).forEach(world::removeEntity);
     }
 }

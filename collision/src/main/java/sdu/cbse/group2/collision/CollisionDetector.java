@@ -19,12 +19,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity commonSnakeOuter : world.getEntities(CommonSnake.class)) {
+        for (Entity commonSnakeOuter : world.getBoundedEntities(CommonSnake.class)) {
             boolean hasCollided = false;
             if (((CommonSnake) commonSnakeOuter).isAlive()) {
                 //Check commonSnakeOuter for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
 
-                for (Entity commonSnakeInner : world.getEntities(CommonSnake.class)) {
+                for (Entity commonSnakeInner : world.getBoundedEntities(CommonSnake.class)) {
                     List<Tail> tail = ((CommonSnake) commonSnakeInner).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {

@@ -28,7 +28,7 @@ public class TailProcess implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity commonSnake : world.getEntities(CommonSnake.class)) {
+        for (Entity commonSnake : world.getBoundedEntities(CommonSnake.class)) {
             CommonSnake snake = ((CommonSnake) commonSnake);
             if (snake.getTailList().isEmpty()) {
                 createTail(world, snake);
