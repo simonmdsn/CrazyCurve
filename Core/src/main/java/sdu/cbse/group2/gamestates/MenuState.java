@@ -15,12 +15,12 @@ import sdu.cbse.group2.Game;
 import sdu.cbse.group2.telnetgogo.TelnetGogo;
 
 public class MenuState extends State {
-    private Texture startBtnTexture;
-    private Texture settingsBtnTexture;
-    private Texture quitBtnTexture;
-    private Texture titleTexture;
-    private Button startBtn, settingsBtn, quitBtn;
-    private Stage stage;
+    private final Texture startBtnTexture;
+    private final Texture settingsBtnTexture;
+    private final Texture quitBtnTexture;
+    private final Texture titleTexture;
+    private final Button startBtn, settingsBtn, quitBtn;
+    private final Stage stage;
 
     public MenuState(Game game) {
         super(game);
@@ -53,11 +53,13 @@ public class MenuState extends State {
             }
         });
         settingsBtn.addListener(new ChangeListener() {
+            private final TelnetGogo telnetGogo = new TelnetGogo();
+
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                TelnetGogo telnetGogo = new TelnetGogo();
-                telnetGogo.write("lb");
-                telnetGogo.readAndWrite();
+                telnetGogo.execute("lb", response -> {
+                    response.forEach(System.out::println);
+                });
                 System.out.println("Take me to settings!");
             }
         });
