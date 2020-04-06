@@ -5,6 +5,9 @@ import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class TailProcess implements IEntityProcessingService {
 
@@ -33,8 +36,22 @@ public class TailProcess implements IEntityProcessingService {
             if (snake.getTailList().isEmpty()) {
                 createTail(world, snake);
             } else if (distance(snake, snake.getTailList().get(snake.getTailList().size() - 1)) > DRAW_DISTANCE) {
-                createTail(world, snake);
+                if (snake.isActiveTail()) {
+                    if (ThreadLocalRandom.current().nextInt(1000) > 950) {
+                        disableActiveTail(snake);
+                    } else {
+                        createTail(world, snake);
+                    }
+                }
             }
         }
+    }
+
+    //Temporarily disables a snakes tail
+    private void disableActiveTail(CommonSnake snake){
+        snake.setActiveTail(false);
+        Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+            snake.setActiveTail(true);
+        }, 255, TimeUnit.MILLISECONDS);
     }
 }
