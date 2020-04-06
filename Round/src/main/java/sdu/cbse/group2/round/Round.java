@@ -3,6 +3,7 @@ package sdu.cbse.group2.round;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
@@ -47,11 +48,11 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
         List<Entity> commonSnakeList = world.getBoundedEntities(CommonSnake.class);
         if (commonSnakeList.stream().allMatch(entity -> !((CommonSnake) entity).isAlive())) {
             commonSnakeList.forEach(entity -> {
+                MovingPart movingPart = entity.getPart(MovingPart.class);
+                movingPart.setMaxSpeed(100);
+                movingPart.setRotationSpeed(3);
                 ((CommonSnake) entity).deleteAndEmptyTails(world);
                 ((CommonSnake) entity).setAlive(true);
-                ((CommonSnake) entity).setMaxSpeed(100);
-                ((CommonSnake) entity).setRotationSpeed(3);
-                System.out.println(((CommonSnake) entity).getMaxSpeed());
             });
             setSpawnLocations(commonSnakeList, gameData);
         }

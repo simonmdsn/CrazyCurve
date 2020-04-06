@@ -1,9 +1,10 @@
 package sdu.cbse.group2.weapon;
 
 import sdu.cbse.group2.common.data.*;
-import sdu.cbse.group2.common.data.entityparts.*;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.data.entityparts.ShootingPart;
+import sdu.cbse.group2.common.data.entityparts.TimerPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
-import sun.corba.EncapsInputStreamFactory;
 
 public class WeaponProcessor implements IEntityProcessingService {
     @Override

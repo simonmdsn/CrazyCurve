@@ -28,7 +28,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     List<Tail> tail = ((CommonSnake) commonSnakeInner).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
-                            if(checkForCollision(commonSnakeOuter, tailPart)) {
+                            if (checkForCollision(commonSnakeOuter, tailPart)) {
                                 hasCollided = true;
                                 killSnake(commonSnakeOuter);
                                 break;
@@ -43,12 +43,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     List<Tail> tail = ((CommonSnake) commonSnakeOuter).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((CommonWeapon) weapon).isShooting()) {
-                            if(!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
+                            if (!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, commonSnakeOuter)) {
                                 hasCollided = true;
                                 killSnake(commonSnakeOuter);
                                 break;
                             }
-                            if(checkForCollision(weapon, tailPart)) {
+                            if (checkForCollision(weapon, tailPart)) {
                                 hasCollided = true;
                                 world.removeEntity(tailPart);
                                 tail.remove(tailPart);
