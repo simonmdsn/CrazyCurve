@@ -6,6 +6,8 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 
+import java.util.stream.Collectors;
+
 public class TailProcess implements IEntityProcessingService {
 
     private static final float DRAW_DISTANCE = 16;
@@ -28,12 +30,9 @@ public class TailProcess implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity commonSnake : world.getBoundedEntities(CommonSnake.class)) {
-            CommonSnake snake = ((CommonSnake) commonSnake);
-            if (snake.getTailList().isEmpty()) {
-                createTail(world, snake);
-            } else if (distance(snake, snake.getTailList().get(snake.getTailList().size() - 1)) > DRAW_DISTANCE) {
-                createTail(world, snake);
+        for (CommonSnake commonSnake : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
+            if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE ) {
+                createTail(world, commonSnake);
             }
         }
     }

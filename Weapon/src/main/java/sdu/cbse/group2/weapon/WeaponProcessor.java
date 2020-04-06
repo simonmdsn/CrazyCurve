@@ -1,6 +1,9 @@
 package sdu.cbse.group2.weapon;
 
-import sdu.cbse.group2.common.data.*;
+import sdu.cbse.group2.common.data.Entity;
+import sdu.cbse.group2.common.data.GameData;
+import sdu.cbse.group2.common.data.GameSprite;
+import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.data.entityparts.ShootingPart;
 import sdu.cbse.group2.common.data.entityparts.TimerPart;
@@ -14,7 +17,6 @@ public class WeaponProcessor implements IEntityProcessingService {
             Entity shooter = world.getEntity(weapon.getShooterUUID());
             if (shooter != null){
                 ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
-                shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
 
                 TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
 
