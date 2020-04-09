@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
@@ -17,6 +19,9 @@ import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -33,7 +38,21 @@ public class Game implements ApplicationListener {
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
+    @Activate
+    public void activate(BundleContext bundleContext) {
+//        Arrays.stream(bundleContext.getBundles()).filter(bundle -> bundle.getLocation().contains("org.apache.felix.gogo.shell")).findFirst().ifPresent(bundle -> {
+//            try {  //TODO Replace instance with actual instance. Where is it stored?
+//                final Class<?> aClass = bundle.loadClass("org.apache.felix.gogo.shell.Telnet");
+//                final Method method = aClass.getMethod("telnetd", String[].class);
+//                final Object instance = aClass.getConstructors()[0].newInstance((Object) null);
+//                method.invoke(instance, (Object) new String[]{"start"});
+//            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+//                e.printStackTrace();
+//            }
+//        });
+    }
+
+    public Game() {
         init();
     }
 
@@ -72,7 +91,7 @@ public class Game implements ApplicationListener {
         gameData.setDelta(Gdx.graphics.getDeltaTime());
         gameData.getKeys().update();
         gameStateManager.update(Gdx.graphics.getDeltaTime());
-        gameStateManager.render((SpriteBatch)assets.getBatch());
+        gameStateManager.render((SpriteBatch) assets.getBatch());
 //        update();
 //        draw();
     }
