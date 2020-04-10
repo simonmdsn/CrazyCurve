@@ -8,20 +8,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
+import sdu.cbse.group2.common.services.TelnetSPI;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -38,19 +34,7 @@ public class Game implements ApplicationListener {
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    @Activate
-    public void activate(BundleContext bundleContext) {
-//        Arrays.stream(bundleContext.getBundles()).filter(bundle -> bundle.getLocation().contains("org.apache.felix.gogo.shell")).findFirst().ifPresent(bundle -> {
-//            try {  //TODO Replace instance with actual instance. Where is it stored?
-//                final Class<?> aClass = bundle.loadClass("org.apache.felix.gogo.shell.Telnet");
-//                final Method method = aClass.getMethod("telnetd", String[].class);
-//                final Object instance = aClass.getConstructors()[0].newInstance((Object) null);
-//                method.invoke(instance, (Object) new String[]{"start"});
-//            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
-//                e.printStackTrace();
-//            }
-//        });
-    }
+    private TelnetSPI telnetSPI;
 
     public Game() {
         init();
@@ -70,7 +54,6 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        System.out.println("create");
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -139,4 +122,11 @@ public class Game implements ApplicationListener {
         plugin.stop(gameData, world);
     }
 
+    public TelnetSPI getTelnetSPI() {
+        return telnetSPI;
+    }
+
+    public void setTelnetSPI(final TelnetSPI telnetSPI) {
+        this.telnetSPI = telnetSPI;
+    }
 }

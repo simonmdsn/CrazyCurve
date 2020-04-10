@@ -1,1 +1,2 @@
-Import-Package: org.apache.commons.net.telnet
+Bundle-SymbolicName: TelnetGogo
+Service-Component: META-INF/telnetgogo.xml

@@ -1,5 +1,10 @@
 package sdu.cbse.group2.telnetgogo;
 
+import org.apache.felix.gogo.runtime.CommandNotFoundException;
+import org.apache.felix.service.command.CommandProcessor;
+import org.apache.felix.service.command.CommandSession;
+import sdu.cbse.group2.common.services.TelnetSPI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,18 +14,16 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-public class TelnetGogo {
+public class TelnetGogo implements TelnetSPI {
 
     private static final String HOST = "localhost";
     private static final int PORT = 2019;
     private static final int TIME_OUT_MILLIS = 500;
 
-    public TelnetGogo() {
-        //TODO Execute "telnetd start" somehow.
-    }
-
+    @Override
     public synchronized void execute(String command, Consumer<List<String>> consumer) {
         Executors.newSingleThreadScheduledExecutor(runnable -> {
             Thread thread = new Thread(runnable);
@@ -67,5 +70,17 @@ public class TelnetGogo {
                 socket.close();
             }
         });
+    }
+
+    // Invoked via Declarative Services.
+    public void telnetStarter(CommandProcessor commandProcessor) {
+        try (CommandSession commandSession = commandProcessor.createSession(System.in, System.out, System.err)) {
+            commandSession.execute("telnetd start");
+        } catch (CommandNotFoundException e) {
+            // Retry if the framework isn't fully initialized.
+            Executors.newSingleThreadScheduledExecutor().schedule(() -> telnetStarter(commandProcessor), 100, TimeUnit.MILLISECONDS);
+        } catch (Exception ignored) {
+            // Execute throws a StackOverFlow exception. This does not interfere with the actual execution i.e. we can ignore it.
+        }
     }
 }

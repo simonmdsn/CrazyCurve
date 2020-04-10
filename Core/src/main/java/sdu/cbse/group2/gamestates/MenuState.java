@@ -12,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import sdu.cbse.group2.Game;
-import sdu.cbse.group2.telnetgogo.TelnetGogo;
 
 public class MenuState extends State {
+
     private final Texture startBtnTexture;
     private final Texture settingsBtnTexture;
     private final Texture quitBtnTexture;
@@ -53,11 +53,9 @@ public class MenuState extends State {
             }
         });
         settingsBtn.addListener(new ChangeListener() {
-            private final TelnetGogo telnetGogo = new TelnetGogo();
-
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                telnetGogo.execute("lb", response -> {
+                game.getTelnetSPI().execute("lb", response -> {
                     response.forEach(System.out::println);
                 });
                 System.out.println("Take me to settings!");
