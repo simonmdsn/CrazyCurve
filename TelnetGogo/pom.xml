@@ -20,12 +20,6 @@
 
     <packaging>bundle</packaging>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
-        <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>3.6</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.gogo.runtime</artifactId>
