@@ -23,6 +23,8 @@ public class Entity implements Serializable {
         this.gameSprite = gameSprite;
     }
 
+    public Entity() {}
+
     public void add(EntityPart part) {
         parts.put(part.getClass(), part);
     }

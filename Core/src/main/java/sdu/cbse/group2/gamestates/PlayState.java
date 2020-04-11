@@ -2,11 +2,13 @@ package sdu.cbse.group2.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sdu.cbse.group2.Game;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
+import sdu.cbse.group2.common.data.Text;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
@@ -48,6 +50,9 @@ public class PlayState extends State {
             Texture texture = game.getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
             drawSprite(gameSprite, entity.getPart(PositionPart.class), texture);
         }
+        for (Text text :  game.getWorld().getTextList()) {
+            drawText(text);
+        }
         spriteBatch.end();
     }
 
@@ -64,6 +69,11 @@ public class PlayState extends State {
         sprite.setY(positionPart.getY());
         sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
         sprite.draw(game.getAssets().getBatch());
+    }
+
+    private void drawText(Text text) {
+        BitmapFont.TextBounds bounds = game.getAssets().getBitmapFont().getBounds(text.getText());
+        game.getAssets().getBitmapFont().draw(game.getAssets().getBatch(),text.getText(),text.getX() - bounds.width / 2,text.getY());
     }
 
     private void update() {
