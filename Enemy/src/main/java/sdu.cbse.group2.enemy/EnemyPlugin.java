@@ -15,6 +15,9 @@ public class EnemyPlugin implements IGamePluginService {
         world.addEntity(enemy);
         world.addEntity(createEnemySnake());
         world.addEntity(createEnemySnake());
+        world.addEntity(createEnemySnake());
+        world.addEntity(createEnemySnake());
+        world.addEntity(createEnemySnake());
     }
 
     // TODO Add Random Spawn

@@ -17,40 +17,20 @@ import java.util.stream.Collectors;
 //TODO create background for scores.
 public class Round implements IGamePluginService, IPostEntityProcessingService {
 
-    private static final int[] POINTS_ARRAY = new int[]{10, 6, 4, 3};
     //TODO review correct data structure, stack.
     private final Stack<CommonSnake> positionStack = new Stack<>();
     private final Map<CommonSnake, Integer> pointDistributionMap = new HashMap<>();
     private boolean pointsDrawn;
-
-    private PositionPart getEntityPositionPart(Entity entity) {
-        return entity.getPart(PositionPart.class);
-    }
-
-    private void setSpawnLocations(List<CommonSnake> commonSnakeList, GameData gameData) {
-        int x = gameData.getDisplayWidth() / 4;
-        int y = gameData.getDisplayHeight() / 4;
-        int xx = x;
-        int yy = y;
-        for (int i = 0; i < commonSnakeList.size(); i++) {
-            PositionPart positionPart = getEntityPositionPart(commonSnakeList.get(i));
-            positionPart.setX(x);
-            positionPart.setY(y);
-            if (i % 2 == 0) {
-                y += yy;
-            } else {
-                x += xx;
-            }
-        }
-    }
+    private final Spawn spawn = new Spawn();
 
     private void distributePoints() {
         while (!positionStack.isEmpty()) {
-            for (int i = 0; i < POINTS_ARRAY.length; i++) {
+            int size = positionStack.size();
+            for (int i = 0; i < size; i++) {
                 CommonSnake commonSnake = positionStack.pop();
                 int currentPoints = pointDistributionMap.get(commonSnake);
-                System.out.println(commonSnake + " : " + currentPoints + " +" + POINTS_ARRAY[i]);
-                pointDistributionMap.replace(commonSnake, currentPoints + POINTS_ARRAY[i]);
+                System.out.println(commonSnake + " : " + currentPoints + " +" + (size - i));
+                pointDistributionMap.replace(commonSnake, currentPoints + (size - i));
             }
         }
     }
@@ -98,7 +78,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
     @Override
     public void start(GameData gameData, World world) {
         List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(entity -> (CommonSnake) entity).collect(Collectors.toList());
-        setSpawnLocations(commonSnakeList, gameData);
+        spawn.spawn(commonSnakeList, gameData);
         commonSnakeList.forEach(this::populateMap);
     }
 
@@ -124,7 +104,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
             drawPointsInOrder(world, gameData);
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 startNewRound(world, commonSnakeList);
-                setSpawnLocations(commonSnakeList, gameData);
+                spawn.spawn(commonSnakeList, gameData);
                 removeScores(world);
             }, 5, TimeUnit.SECONDS);
         }
