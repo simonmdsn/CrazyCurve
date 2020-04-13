@@ -66,6 +66,7 @@
         <module>CommonWeapon</module>
         <module>Weapon</module>
         <module>Round</module>
+        <module>spawn</module>
     </modules>
 
     <build>

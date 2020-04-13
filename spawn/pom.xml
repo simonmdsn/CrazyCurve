@@ -8,18 +8,19 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <properties>
-        <bundle.symbolicName>sdu.cbse.group2.Round</bundle.symbolicName>
+        <bundle.symbolicName>sdu.cbse.group2.spawn</bundle.symbolicName>
         <bundle.namespace>sdu.cbse.group2</bundle.namespace>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>sdu.cbse.group2</groupId>
-    <artifactId>round</artifactId>
+    <artifactId>spawn</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>${bundle.symbolicName} [${bundle.namespace}]</name>
 
     <packaging>bundle</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -33,17 +34,6 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>sdu.cbse.group2</groupId>
-            <artifactId>common-snake</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>sdu.cbse.group2</groupId>
-            <artifactId>spawn</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
+
 </project>

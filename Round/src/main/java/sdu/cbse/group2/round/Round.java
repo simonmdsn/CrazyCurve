@@ -8,6 +8,8 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
+import sdu.cbse.group2.spawn.Spawn;
+import sdu.cbse.group2.spawn.SpawnPoint;
 
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -21,7 +23,8 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
     private final Stack<CommonSnake> positionStack = new Stack<>();
     private final Map<CommonSnake, Integer> pointDistributionMap = new HashMap<>();
     private boolean pointsDrawn;
-    private final Spawn spawn = new Spawn();
+    private List<SpawnPoint> spawnPoints;
+    private Spawn spawn = new Spawn();
 
     private void distributePoints() {
         while (!positionStack.isEmpty()) {
@@ -78,8 +81,9 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
     @Override
     public void start(GameData gameData, World world) {
         List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(entity -> (CommonSnake) entity).collect(Collectors.toList());
-        spawn.spawn(commonSnakeList, gameData);
+        spawnPoints = spawn.createSpawnPoints(commonSnakeList.size(),gameData);
         commonSnakeList.forEach(this::populateMap);
+        spawn.spawn(spawnPoints,commonSnakeList);
     }
 
     @Override
@@ -104,7 +108,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
             drawPointsInOrder(world, gameData);
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 startNewRound(world, commonSnakeList);
-                spawn.spawn(commonSnakeList, gameData);
+                spawn.spawn(spawnPoints, commonSnakeList);
                 removeScores(world);
             }, 5, TimeUnit.SECONDS);
         }
