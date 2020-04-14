@@ -1,0 +1,2 @@
+Bundle-SymbolicName: Round
+Service-Component: META-INF/roundplugin.xml

@@ -3,6 +3,7 @@ package sdu.cbse.group2.assets;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import lombok.Getter;
 
@@ -12,6 +13,7 @@ import java.io.File;
 public class Assets {
 
     private final Batch batch = new SpriteBatch();
+    private final BitmapFont bitmapFont = new BitmapFont();
     private final AssetManager assetManager;
 
 
@@ -35,6 +37,7 @@ public class Assets {
         assetManager.load("powerup/eraser.png", Texture.class);
         assetManager.load("items/tongue-long.png", Texture.class);
         assetManager.load("items/tongue-short.png", Texture.class);
+        assetManager.load("round/scoretext_background.png",Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).

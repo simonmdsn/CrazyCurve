@@ -23,9 +23,8 @@ public class EraserPowerUp extends CommonPowerUp {
 
     @Override
     public void applyPowerUp(CommonSnake commonSnake) {
-        List<Entity> commonSnakes = world.getEntities(CommonSnake.class);
-        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTailList().forEach(tail -> world.removeEntity(tail)));
-        commonSnakes.forEach(entity -> ((CommonSnake) entity).getTailList().clear());
+        List<Entity> commonSnakes = world.getBoundedEntities(CommonSnake.class);
+        commonSnakes.forEach(entity -> ((CommonSnake) entity).deleteAndEmptyTails(world));
     }
 
     @Override
