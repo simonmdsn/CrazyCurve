@@ -19,14 +19,14 @@ public class CommonSnake extends Entity {
     private final List<Tail> tailList = new LinkedList<>();
     private final List<Float> tailCount = new LinkedList<>();
     private boolean isAlive;
-
+    private boolean activeTail;
 
     public CommonSnake(GameSprite gameSprite, GameSprite tailSprite) {
         super(gameSprite);
         this.head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
         this.isAlive = true;
-//        startTailTask();
+        this.activeTail = true;
     }
 
     private void deleteAndEmptyTails(World world) {
