@@ -3,6 +3,5 @@
     <implementation class="sdu.cbse.group2.player.PlayerPlugin"/>
     <service>
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
-        <provide interface="sdu.cbse.group2.commonsnake.SnakeSPI"/>
     </service>
 </scr:component>

@@ -1,12 +1,17 @@
 package sdu.cbse.group2.common.data;
 
+import lombok.Getter;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class World {
 
     private final Map<UUID, Entity> entityMap = new ConcurrentHashMap<>();
+    @Getter
+    private final List<Text> textList = new CopyOnWriteArrayList<>();
 
     public UUID addEntity(Entity entity) {
         entityMap.put(entity.getUuid(), entity);
@@ -20,7 +25,7 @@ public class World {
     public void removeEntity(Entity entity) {
         entityMap.remove(entity.getUuid());
     }
-    
+
     public Collection<Entity> getEntities() {
         return entityMap.values();
     }
@@ -51,5 +56,23 @@ public class World {
 
     public Entity getEntity(UUID uuid) {
         return entityMap.get(uuid);
+    }
+
+    public void draw(Text text) {
+        textList.add(text);
+    }
+
+    public void remove(Text text) {
+        textList.remove(text);
+    }
+
+    public <E extends Text> void boundedTextClear(Class<E>... textTypes) {
+        for (Text text : textList) {
+            for (Class<E> subText : textTypes) {
+                if (subText.isAssignableFrom(text.getClass())) {
+                    textList.remove(text);
+                }
+            }
+        }
     }
 }

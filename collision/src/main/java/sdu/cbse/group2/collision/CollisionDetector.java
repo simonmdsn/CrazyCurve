@@ -3,7 +3,6 @@ package sdu.cbse.group2.collision;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonpowerup.CommonPowerUp;
@@ -19,18 +18,18 @@ public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
 
-        for (Entity commonSnakeOuter : world.getEntities(CommonSnake.class)) {
+        for (Entity commonSnakeOuter : world.getBoundedEntities(CommonSnake.class)) {
             boolean hasCollided = false;
             if (((CommonSnake) commonSnakeOuter).isAlive()) {
                 //Check commonSnakeOuter for collision with tail of every snake, but not with the last 6 tail parts or if the snake is very small
 
-                for (Entity commonSnakeInner : world.getEntities(CommonSnake.class)) {
+                for (Entity commonSnakeInner : world.getBoundedEntities(CommonSnake.class)) {
                     List<Tail> tail = ((CommonSnake) commonSnakeInner).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
-                            if(checkForCollision(commonSnakeOuter, tailPart)) {
+                            if (checkForCollision(commonSnakeOuter, tailPart)) {
                                 hasCollided = true;
-                                killSnake(commonSnakeOuter);
+                                ((CommonSnake) commonSnakeOuter).kill();
                                 break;
                             }
                         }
@@ -43,12 +42,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     List<Tail> tail = ((CommonSnake) commonSnakeOuter).getTailList();
                     for (Entity tailPart : tail) {
                         if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart)) && ((CommonWeapon) weapon).isShooting()) {
-                            if(!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, ((CommonSnake) commonSnakeOuter).getHead())){
+                            if (!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, commonSnakeOuter)) {
                                 hasCollided = true;
-                                killSnake(commonSnakeOuter);
+                                ((CommonSnake) commonSnakeOuter).kill();
                                 break;
                             }
-                            if(checkForCollision(weapon, tailPart)) {
+                            if (checkForCollision(weapon, tailPart)) {
                                 hasCollided = true;
                                 world.removeEntity(tailPart);
                                 tail.remove(tailPart);
@@ -77,7 +76,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     float headX = ((PositionPart) commonSnakeOuter.getPart(PositionPart.class)).getX();
                     float headY = ((PositionPart) commonSnakeOuter.getPart(PositionPart.class)).getY();
                     if (headX > gameWidth || headX < 0 || headY > gameHeight || headY < 0) {
-                        killSnake(commonSnakeOuter);
+                        ((CommonSnake) commonSnakeOuter).kill();
                     }
                 }
             }
@@ -95,13 +94,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
         }
         return false;
     }
-
-    private void killSnake(Entity e) {
-        ((CommonSnake) e).setAlive(false);
-        ((MovingPart) e.getPart(MovingPart.class)).setMaxSpeed(0);
-        ((MovingPart) e.getPart(MovingPart.class)).setRotationSpeed(0);
-    }
-
 }
 
 
