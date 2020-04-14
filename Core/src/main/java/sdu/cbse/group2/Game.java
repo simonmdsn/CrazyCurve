@@ -11,9 +11,7 @@ import lombok.Getter;
 import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.services.IEntityProcessingService;
-import sdu.cbse.group2.common.services.IGamePluginService;
-import sdu.cbse.group2.common.services.IPostEntityProcessingService;
+import sdu.cbse.group2.common.services.*;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
@@ -31,9 +29,20 @@ public class Game implements ApplicationListener {
     private World world = new World();
     private GameStateManager gameStateManager = new GameStateManager();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private List<ObstacleService> obtaclesList = new CopyOnWriteArrayList<>();
+    private EditorService editorService;
+
 
     public Game() {
         init();
+    }
+
+    public void setEditorService(EditorService editorService) {
+        this.editorService = editorService;
+    }
+
+    public void addObstacleService(ObstacleService obstacleService) {
+        obtaclesList.add(obstacleService);
     }
 
     public void init() {

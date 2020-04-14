@@ -1,0 +1,3 @@
+Bundle-SymbolicName: MapEditor
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/mapeditor.xml
