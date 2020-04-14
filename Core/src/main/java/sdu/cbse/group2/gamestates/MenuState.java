@@ -59,12 +59,14 @@ public class MenuState extends State {
                     response.forEach(System.out::println);
                 });
                 System.out.println("Take me to settings!");
+                game.getGameStateManager().set(new SettingsState(game));
+                dispose();
             }
         });
         quitBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                System.out.println("I quit >:(!");
+                System.exit(0);
             }
         });
         //Add to stage, and let stage respond to buttons

@@ -9,12 +9,22 @@ import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 import sdu.cbse.group2.commonsnake.SnakeSPI;
 
+import java.util.Random;
+
 public class PlayerPlugin implements SnakeSPI, IGamePluginService {
 
     private CommonSnake player;
+    private Random random;
+    private GameData gameData;
 
     @Override
     public void start(GameData gameData, World world) {
+        random = new Random();
+        System.out.println("random done");
+        this.gameData = gameData;
+        System.out.println("gameData done");
+        System.out.println(gameData.getDisplayWidth());
+        System.out.println(gameData.getDelta());
         player = createPlayerSnake();
         world.addEntity(player);
     }
@@ -28,9 +38,9 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
     private CommonSnake createPlayerSnake() {
         float maxSpeed = 100;
         float rotationSpeed = 3;
-        float x = 200;
-        float y = 200;
-        float radians = 5;
+        float x = random.nextInt(gameData.getDisplayWidth());
+        float y = random.nextInt(gameData.getDisplayHeight());
+        float radians = 0;
 
         CommonSnake playerSnake = new CommonSnake(new GameSprite("player/player.png", 30, 30),new GameSprite("player/tail.png",30,30));
         playerSnake.add(new MovingPart(maxSpeed, rotationSpeed));
@@ -43,4 +53,12 @@ public class PlayerPlugin implements SnakeSPI, IGamePluginService {
     public CommonSnake create(GameData gameData, World world) {
         return null;
     }
+
+    private int getRadiansForSnake(int x, int y){
+        int centerX = gameData.getDisplayWidth() / 2;
+        int centerY = gameData.getDisplayHeight() / 2;
+        return 0;
+    }
 }
+
+

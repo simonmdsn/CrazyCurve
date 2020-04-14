@@ -24,14 +24,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Getter
 public class Game implements ApplicationListener {
 
-    private Assets assets;
-
-    private OrthographicCamera cam;
     private final GameData gameData = new GameData();
-    private World world = new World();
-    private GameStateManager gameStateManager = new GameStateManager();
     private final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private Assets assets;
+    private OrthographicCamera cam;
+    private World world = new World();
+    private GameStateManager gameStateManager = new GameStateManager();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     private TelnetSPI telnetSPI;
@@ -75,8 +74,6 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
         gameStateManager.update(Gdx.graphics.getDeltaTime());
         gameStateManager.render((SpriteBatch) assets.getBatch());
-//        update();
-//        draw();
     }
 
 
@@ -114,7 +111,6 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        plugin.start(gameData, world);
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {

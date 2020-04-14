@@ -14,11 +14,11 @@ import sdu.cbse.group2.core.managers.GameInputProcessor;
 
 public class PlayState extends State {
 
-    public PlayState(Game game){
+    public PlayState(Game game) {
         super(game);
         //To enable button pressing
         Gdx.input.setInputProcessor(new GameInputProcessor(game.getGameData()));
-
+        game.getGamePluginList().forEach(iGamePluginService -> iGamePluginService.start(game.getGameData(), game.getWorld()));
     }
 
     @Override

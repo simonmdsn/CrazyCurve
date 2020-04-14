@@ -56,6 +56,7 @@
     <module>provision</module>
     <module>CommonSnake</module>
     <module>player</module>
+    <module>Enemy</module>
     <module>CommonPowerUp</module>
     <module>PowerUpSpawner</module>
     <module>SpeedPowerUp</module>
@@ -63,6 +64,9 @@
     <module>collision</module>
     <module>Enemy</module>
     <module>TelnetGogo</module>
+    <module>EraserPowerUp</module>
+    <module>Weapon</module>
+    <module>CommonWeapon</module>
   </modules>
 
   <build>
