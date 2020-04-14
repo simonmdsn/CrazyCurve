@@ -5,10 +5,10 @@ import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
 import java.util.stream.Collectors;
 
 public class TailProcess implements IEntityProcessingService {
@@ -34,20 +34,18 @@ public class TailProcess implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (CommonSnake commonSnake : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
-            if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE ) {
-                if (snake.isActiveTail()) {
+            if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE) {
+                if (commonSnake.isActiveTail()) {
                     if (ThreadLocalRandom.current().nextInt(1000) > 950) {
-                        disableActiveTail(snake);
-                    } else {
-                createTail(world, commonSnake);
-                    }
+                        disableActiveTail(commonSnake);
+                    } else createTail(world, commonSnake);
                 }
             }
         }
     }
 
     //Temporarily disables a snakes tail
-    private void disableActiveTail(CommonSnake snake){
+    private void disableActiveTail(CommonSnake snake) {
         snake.setActiveTail(false);
         Executors.newSingleThreadScheduledExecutor().schedule(() -> {
             snake.setActiveTail(true);
