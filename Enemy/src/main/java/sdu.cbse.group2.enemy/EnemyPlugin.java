@@ -11,10 +11,6 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        this.enemy = createEnemySnake();
-        world.addEntity(enemy);
-        world.addEntity(createEnemySnake());
-        world.addEntity(createEnemySnake());
         world.addEntity(createEnemySnake());
         world.addEntity(createEnemySnake());
         world.addEntity(createEnemySnake());
