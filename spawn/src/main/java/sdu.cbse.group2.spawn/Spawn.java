@@ -23,7 +23,6 @@ public class Spawn {
         } else {
             radius = y / 3;
         }
-        System.out.println(radius);
         int degrees = 360 / numberOfSpawnPoints;
         for (int i = 0; i < numberOfSpawnPoints; i++) {
             float radians = (float) degreesToRadians(degrees * (i + 1));

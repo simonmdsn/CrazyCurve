@@ -81,9 +81,11 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
     @Override
     public void start(GameData gameData, World world) {
         List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(entity -> (CommonSnake) entity).collect(Collectors.toList());
-        spawnPoints = spawn.createSpawnPoints(commonSnakeList.size(),gameData);
+        if (world.getEntities(SpawnPoint.class).isEmpty()) {
+            spawnPoints = spawn.createSpawnPoints(commonSnakeList.size(), gameData);
+        }
         commonSnakeList.forEach(this::populateMap);
-        spawn.spawn(spawnPoints,commonSnakeList);
+        spawn.spawn(spawnPoints, commonSnakeList);
     }
 
     @Override
