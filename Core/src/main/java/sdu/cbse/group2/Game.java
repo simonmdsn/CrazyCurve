@@ -14,6 +14,7 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
+import sdu.cbse.group2.common.services.TelnetSPI;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
@@ -31,6 +32,8 @@ public class Game implements ApplicationListener {
     private World world = new World();
     private GameStateManager gameStateManager = new GameStateManager();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+
+    private TelnetSPI telnetSPI;
 
     public Game() {
         init();
@@ -50,7 +53,6 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
@@ -116,4 +118,11 @@ public class Game implements ApplicationListener {
         plugin.stop(gameData, world);
     }
 
+    public TelnetSPI getTelnetSPI() {
+        return telnetSPI;
+    }
+
+    public void setTelnetSPI(final TelnetSPI telnetSPI) {
+        this.telnetSPI = telnetSPI;
+    }
 }

@@ -1,0 +1,2 @@
+Bundle-SymbolicName: TelnetGogo
+Service-Component: META-INF/telnetgogo.xml
