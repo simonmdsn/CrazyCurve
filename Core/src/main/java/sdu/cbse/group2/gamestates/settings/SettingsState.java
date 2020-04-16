@@ -50,7 +50,6 @@ public class SettingsState extends State {
             textButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(final InputEvent event, final float x, final float y) {
-                    super.clicked(event, x, y);
                     crazyCurveModule.toggleActive();
                     getGame().getTelnetSPI().execute(crazyCurveModule.isActive() ? "start" : "stop" + " " + crazyCurveModule.getId(), ignored -> {});
                     textButtonStyle.fontColor = crazyCurveModule.isActive() ? Color.GREEN : Color.RED;
