@@ -16,7 +16,7 @@ public class EraserPowerUp extends CommonPowerUp {
     private World world;
 
     public EraserPowerUp(GameData gameData, World world) {
-        super(new GameSprite("powerup/eraser.png", 30, 30));
+        super(new GameSprite("textures/powerup/eraser.png", 30, 30));
         this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
         this.world = world;
     }

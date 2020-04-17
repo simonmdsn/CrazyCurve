@@ -27,7 +27,7 @@ public class WeaponProcessor implements IEntityProcessingService {
                 }
 
                 if (weaponTimerPart.getExpiration() <= 0) {
-                    weapon.setGameSprite(new GameSprite("items/tongue-short.png", 60, 60));
+                    weapon.setGameSprite(new GameSprite("textures/items/tongue-short.png", 60, 60));
                     weapon.setShooting(false);
                 }
 
@@ -67,7 +67,7 @@ public class WeaponProcessor implements IEntityProcessingService {
     }
 
     private void spawnAttack(Weapon weapon) {
-        weapon.setGameSprite(new GameSprite("items/tongue-long.png", 60, 60));
+        weapon.setGameSprite(new GameSprite("textures/items/tongue-long.png", 60, 60));
         weapon.setShooting(true);
     }
 }

@@ -22,8 +22,9 @@ public class CommonSnake extends Entity {
     private boolean activeTail;
     private float maxSpeed = 100;
     private float rotationSpeed = 3;
+    private String name;
 
-    public CommonSnake(GameSprite gameSprite, GameSprite tailSprite) {
+    public CommonSnake(GameSprite gameSprite, GameSprite tailSprite, String name) {
         super(gameSprite);
         this.head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
@@ -31,6 +32,7 @@ public class CommonSnake extends Entity {
         this.activeTail = true;
         add(new MovingPart(this.getMaxSpeed(), this.getRotationSpeed()));
         add(new PositionPart(0, 0, 0));
+        this.name = name;
     }
 
     public void deleteAndEmptyTails(World world) {

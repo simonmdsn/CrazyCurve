@@ -13,6 +13,4 @@ public class Text {
         this.x = x;
         this.y = y;
     }
-
-
 }

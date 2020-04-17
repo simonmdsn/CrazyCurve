@@ -66,7 +66,7 @@ public class SettingsState extends State {
     }
 
     private ImageButton createBackButton() {
-        final Texture backButtonTexture = getGame().getAssets().getAssetManager().get("MenuState/settings button.PNG"); //TODO Back image.
+        final Texture backButtonTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/settings button.PNG"); //TODO Back image.
         Drawable backDrawable = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
         final ImageButton backButton = new ImageButton(backDrawable);
         backButton.setSize(200, 80);

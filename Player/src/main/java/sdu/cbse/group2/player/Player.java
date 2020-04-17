@@ -5,7 +5,7 @@ import sdu.cbse.group2.commonsnake.CommonSnake;
 
 public class Player extends CommonSnake {
 
-    public Player(GameSprite gameSprite, GameSprite tailSprite) {
-        super(gameSprite, tailSprite);
+    public Player(GameSprite gameSprite, GameSprite tailSprite, String name) {
+        super(gameSprite, tailSprite, name);
     }
 }

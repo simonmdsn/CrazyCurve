@@ -24,30 +24,17 @@ public class Assets {
     }
 
     public void loadAssets() {
-        assetManager.load("player/player.png", Texture.class);
-        assetManager.load("player/tail.png", Texture.class);
-        assetManager.load("enemy/enemy.png", Texture.class);
-        assetManager.load("enemy/tail.png", Texture.class);
-        assetManager.load("MenuState/start button.png", Texture.class);
-        assetManager.load("MenuState/quit button.PNG", Texture.class);
-        assetManager.load("MenuState/settings button.PNG", Texture.class);
-        assetManager.load("MenuState/title.png", Texture.class);
-        assetManager.load("powerup/speed.png", Texture.class);
-        assetManager.load("powerup/turtle.png", Texture.class);
-        assetManager.load("powerup/eraser.png", Texture.class);
-        assetManager.load("items/tongue-long.png", Texture.class);
-        assetManager.load("items/tongue-short.png", Texture.class);
-        assetManager.load("round/scoretext_background.png",Texture.class);
+        iterateFiles(new File("../LibGDX/src/main/resources/textures/"));
     }
 
-    //TODO recursive iteration over the resource directory (should we do it or not).
+    //Loads all texture assets at "../LibGDX/src/main/resources/textures"
     private void iterateFiles(File file) {
         if (file.isDirectory()) {
             for (File listFile : file.listFiles()) {
                 iterateFiles(listFile);
             }
         } else {
-            assetManager.load(file.getAbsolutePath(), Texture.class);
+            assetManager.load(file.getPath().substring("../LibGDX/src/main/resources/".length()), Texture.class);
         }
     }
 }
