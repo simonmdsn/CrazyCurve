@@ -56,6 +56,7 @@ public class MenuState extends State {
         nameTextField.setSize(100, 40);
         nameTextField.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - nameTextField.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 + 100);
         nameTextField.setMessageText("Name");
+        nameTextField.getStyle().background.setLeftWidth(10);
         //Add listeners
         startBtn.addListener(new ChangeListener() {
             @Override
