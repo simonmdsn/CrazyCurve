@@ -3,6 +3,7 @@ package sdu.cbse.group2.commonsnake;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
+import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 
@@ -36,7 +37,7 @@ public class TailProcess implements IEntityProcessingService {
         for (CommonSnake commonSnake : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
             if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE) {
                 if (commonSnake.isActiveTail()) {
-                    if (ThreadLocalRandom.current().nextInt(1000) > 950) {
+                    if (ThreadLocalRandom.current().nextInt(1000) > 910) {
                         disableActiveTail(commonSnake);
                     } else createTail(world, commonSnake);
                 }
@@ -44,11 +45,13 @@ public class TailProcess implements IEntityProcessingService {
         }
     }
 
-    //Temporarily disables a snakes tail
+    //Temporarily disables a snake tail
     private void disableActiveTail(CommonSnake snake) {
         snake.setActiveTail(false);
         Executors.newSingleThreadScheduledExecutor().schedule(() -> {
             snake.setActiveTail(true);
-        }, 255, TimeUnit.MILLISECONDS);
+        }
+        //The delay is set to the normal speed divided by the current speed mupltiplied with 4 times the normal speed to get the appropriate hole sizes independently of snake speed
+        , (long)((snake.getMaxSpeed() / ((MovingPart)snake.getPart(MovingPart.class)).getMaxSpeed() * (4 * snake.getMaxSpeed()))), TimeUnit.MILLISECONDS);
     }
 }
