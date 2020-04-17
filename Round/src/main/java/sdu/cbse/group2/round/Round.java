@@ -13,15 +13,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-//TODO create background for scores.
 public class Round implements IGamePluginService, IPostEntityProcessingService {
 
     //TODO review correct data structure, stack.
     private final Stack<CommonSnake> positionStack = new Stack<>();
     private final Map<CommonSnake, Integer> pointDistributionMap = new HashMap<>();
-    private boolean pointsDrawn;
+    private final Spawn spawn = new Spawn();
+    private boolean roundEnded;
     private List<SpawnPoint> spawnPoints;
-    private Spawn spawn = new Spawn();
 
     private void distributePoints() {
         while (!positionStack.isEmpty()) {
@@ -34,19 +33,6 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
         }
     }
 
-    private void drawPointsInOrder(World world, GameData gameData) {
-        if (!pointsDrawn) {
-            int x = (int) (gameData.getDisplayWidth() / 2);
-            int y = (int) (gameData.getDisplayHeight() / 1.5);
-            ArrayList<CommonSnake> sortedSnakes = new ArrayList(pointDistributionMap.entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (integer, integer2) -> integer2, LinkedHashMap::new)).keySet());
-            for (int i = sortedSnakes.size() - 1; i >= 0; i--) {
-                drawScores(x, y, sortedSnakes.get(i), world);
-                y -= 20;
-            }
-            pointsDrawn = true;
-        }
-    }
-
     private void populateMap(CommonSnake commonSnake) {
         if (!pointDistributionMap.containsKey(commonSnake)) {
             pointDistributionMap.put(commonSnake, 0);
@@ -54,12 +40,12 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
     }
 
     private void drawScores(int x, int y, CommonSnake commonSnake, World world) {
-        world.draw(new ScoreText(pointDistributionMap.get(commonSnake).toString() + " : " + commonSnake.toString(), x, y));
+        world.addText(new ScoreText(pointDistributionMap.get(commonSnake).toString() + " : " + commonSnake.toString(), x, y));
     }
 
     private void removeScores(World world) {
         world.boundedTextClear(ScoreText.class);
-        pointsDrawn = false;
+        roundEnded = false;
     }
 
     private void startNewRound(World world, List<CommonSnake> commonSnakeList) {
@@ -84,25 +70,20 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(entity -> (CommonSnake) entity).collect(Collectors.toList());
+        List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList());
 
         //Add snake to stack if dead
-        for (CommonSnake snake : commonSnakeList) {
-            if (!positionStack.contains(snake) && !snake.isAlive() && !pointsDrawn) {
-                positionStack.push(snake);
-            }
-        }
+        commonSnakeList.stream().filter(snake -> !positionStack.contains(snake) && !snake.isAlive() && !roundEnded).forEach(positionStack::push);
 
         //Starts new round if all snakes are dead.
-        if (commonSnakeList.stream().allMatch(entity -> !entity.isAlive()) && !pointsDrawn) {
+        if (commonSnakeList.stream().noneMatch(CommonSnake::isAlive) && !roundEnded) {
+            roundEnded = true;
             distributePoints();
-            drawPointsInOrder(world, gameData);
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 startNewRound(world, commonSnakeList);
                 spawn.spawn(spawnPoints, commonSnakeList);
-                removeScores(world);
+                roundEnded = false;
             }, 5, TimeUnit.SECONDS);
         }
-
     }
 }
