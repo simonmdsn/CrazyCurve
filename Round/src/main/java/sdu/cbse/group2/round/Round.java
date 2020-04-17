@@ -1,10 +1,7 @@
 package sdu.cbse.group2.round;
 
-import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
-import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
@@ -32,7 +29,6 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
             for (int i = 0; i < size; i++) {
                 CommonSnake commonSnake = positionStack.pop();
                 int currentPoints = pointDistributionMap.get(commonSnake);
-                System.out.println(commonSnake + " : " + currentPoints + " +" + (size - i));
                 pointDistributionMap.replace(commonSnake, currentPoints + (size - i));
             }
         }
@@ -59,12 +55,6 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
 
     private void drawScores(int x, int y, CommonSnake commonSnake, World world) {
         world.draw(new ScoreText(pointDistributionMap.get(commonSnake).toString() + " : " + commonSnake.toString(), x, y));
-    }
-
-    private void drawScoresBackground(int x, int y, World world) {
-        Entity entity = new Entity(new GameSprite("round/scoretext_background.png", 30, 30));
-        entity.add(new PositionPart(x, y, 0));
-        world.addEntity(entity);
     }
 
     private void removeScores(World world) {
@@ -105,7 +95,6 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
 
         //Starts new round if all snakes are dead.
         if (commonSnakeList.stream().allMatch(entity -> !entity.isAlive()) && !pointsDrawn) {
-            System.out.println(Arrays.asList(positionStack));
             distributePoints();
             drawPointsInOrder(world, gameData);
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {

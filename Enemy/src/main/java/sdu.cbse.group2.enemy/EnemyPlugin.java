@@ -18,7 +18,7 @@ public class EnemyPlugin implements IGamePluginService {
 
     // TODO Add Random Spawn
     private Enemy createEnemySnake() {
-        return new Enemy(new GameSprite("enemy/enemy.png", 30, 30), new GameSprite("enemy/tail.png", 30, 30));
+        return new Enemy(new GameSprite("enemy/enemy.png", 30, 30, 1), new GameSprite("enemy/tail.png", 30, 30));
     }
 
     @Override

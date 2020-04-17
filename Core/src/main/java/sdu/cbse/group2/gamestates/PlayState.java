@@ -14,6 +14,9 @@ import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.core.managers.GameInputProcessor;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 public class PlayState extends State {
 
     public PlayState(Game game) {
@@ -45,12 +48,12 @@ public class PlayState extends State {
 
     private void draw(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        for (Entity entity : getGame().getWorld().getEntities()) {
+        for (Entity entity : game.getWorld().getEntities().stream().sorted(Comparator.comparingInt(o -> o.getGameSprite().getLayer())).collect(Collectors.toList())) {
             GameSprite gameSprite = entity.getGameSprite();
             Texture texture = getGame().getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
             drawSprite(gameSprite, entity.getPart(PositionPart.class), texture);
         }
-        for (Text text : getGame().getWorld().getTextList()) {
+        for (Text text : game.getWorld().getTextList()) {
             drawText(text);
         }
         spriteBatch.end();
@@ -72,8 +75,8 @@ public class PlayState extends State {
     }
 
     private void drawText(Text text) {
-        BitmapFont.TextBounds bounds = getGame().getAssets().getBitmapFont().getBounds(text.getText());
-        getGame().getAssets().getBitmapFont().draw(getGame().getAssets().getBatch(), text.getText(), text.getX() - bounds.width / 2, text.getY());
+        BitmapFont.TextBounds bounds = game.getAssets().getBitmapFont().getBounds(text.getText());
+        game.getAssets().getBitmapFont().draw(game.getAssets().getBatch(), text.getText(), text.getX() - bounds.width / 2, text.getY());
     }
 
     private void update() {

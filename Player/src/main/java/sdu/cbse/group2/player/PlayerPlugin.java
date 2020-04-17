@@ -25,7 +25,7 @@ public class PlayerPlugin implements IGamePluginService {
     }
 
     private Player createPlayerSnake() {
-        return new Player(new GameSprite("player/player.png", 30, 30), new GameSprite("player/tail.png", 30, 30));
+        return new Player(new GameSprite("player/player.png", 30, 30,1), new GameSprite("player/tail.png", 30, 30));
 
     }
 
