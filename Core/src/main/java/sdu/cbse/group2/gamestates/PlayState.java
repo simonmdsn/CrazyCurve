@@ -48,12 +48,12 @@ public class PlayState extends State {
 
     private void draw(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        for (Entity entity : game.getWorld().getEntities().stream().sorted(Comparator.comparingInt(o -> o.getGameSprite().getLayer())).collect(Collectors.toList())) {
+        for (Entity entity : getGame().getWorld().getEntities().stream().sorted(Comparator.comparingInt(o -> o.getGameSprite().getLayer())).collect(Collectors.toList())) {
             GameSprite gameSprite = entity.getGameSprite();
             Texture texture = getGame().getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
             drawSprite(gameSprite, entity.getPart(PositionPart.class), texture);
         }
-        for (Text text : game.getWorld().getTextList()) {
+        for (Text text : getGame().getWorld().getTextList()) {
             drawText(text);
         }
         spriteBatch.end();
@@ -75,8 +75,8 @@ public class PlayState extends State {
     }
 
     private void drawText(Text text) {
-        BitmapFont.TextBounds bounds = game.getAssets().getBitmapFont().getBounds(text.getText());
-        game.getAssets().getBitmapFont().draw(game.getAssets().getBatch(), text.getText(), text.getX() - bounds.width / 2, text.getY());
+        BitmapFont.TextBounds bounds = getGame().getAssets().getBitmapFont().getBounds(text.getText());
+        getGame().getAssets().getBitmapFont().draw(getGame().getAssets().getBatch(), text.getText(), text.getX() - bounds.width / 2, text.getY());
     }
 
     private void update() {
