@@ -1,2 +1,2 @@
 Bundle-SymbolicName: Map
-Service-Component: META-INF/mapplugin.xml, META-INF/mapprocessor.xml
+Service-Component: META-INF/mapplugin.xml

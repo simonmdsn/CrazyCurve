@@ -5,10 +5,13 @@ import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
+import sdu.cbse.group2.commonsnake.CommonSnake;
 
-public class MapPlugin implements IGamePluginService {
+public class MapPlugin implements IGamePluginService, IEntityProcessingService {
 
+    private final SnakeTable snakeTable = new SnakeTable();
     private Entity map;
 
     @Override
@@ -20,7 +23,13 @@ public class MapPlugin implements IGamePluginService {
     }
 
     @Override
+    public void process(final GameData gameData, final World world) {
+        world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).forEach(commonSnake -> snakeTable.updateSnake(commonSnake, gameData, world));
+    }
+
+    @Override
     public void stop(final GameData gameData, final World world) {
         world.removeEntity(map);
+        snakeTable.clear(world);
     }
 }

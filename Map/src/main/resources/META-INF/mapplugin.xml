@@ -4,4 +4,7 @@
     <service>
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
     </service>
+    <service>
+        <provide interface="sdu.cbse.group2.common.services.IEntityProcessingService"/>
+    </service>
 </scr:component>

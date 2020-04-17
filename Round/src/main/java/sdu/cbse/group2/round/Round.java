@@ -33,25 +33,8 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
         }
     }
 
-    private void populateMap(CommonSnake commonSnake) {
-        if (!pointDistributionMap.containsKey(commonSnake)) {
-            pointDistributionMap.put(commonSnake, 0);
-        }
-    }
-
-    private void drawScores(int x, int y, CommonSnake commonSnake, World world) {
-        world.addText(new ScoreText(pointDistributionMap.get(commonSnake).toString() + " : " + commonSnake.toString(), x, y));
-    }
-
-    private void removeScores(World world) {
-        world.boundedTextClear(ScoreText.class);
-        roundEnded = false;
-    }
-
     private void startNewRound(World world, List<CommonSnake> commonSnakeList) {
-        commonSnakeList.forEach(entity -> {
-            entity.revive(world);
-        });
+        commonSnakeList.forEach(entity -> entity.revive(world));
     }
 
     @Override
@@ -60,7 +43,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
         if (world.getEntities(SpawnPoint.class).isEmpty()) {
             spawnPoints = spawn.createSpawnPoints(commonSnakeList.size(), gameData);
         }
-        commonSnakeList.forEach(this::populateMap);
+        commonSnakeList.forEach(commonSnake -> pointDistributionMap.putIfAbsent(commonSnake, 0));
         spawn.spawn(spawnPoints, commonSnakeList);
     }
 
