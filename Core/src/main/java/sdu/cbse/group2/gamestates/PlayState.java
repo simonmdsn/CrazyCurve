@@ -22,8 +22,8 @@ public class PlayState extends State {
     public PlayState(Game game) {
         super(game);
         //To enable button pressing
-        Gdx.input.setInputProcessor(new GameInputProcessor(game.getGameData()));
-        game.getGamePluginList().forEach(iGamePluginService -> iGamePluginService.start(game.getGameData(), game.getWorld()));
+        Gdx.input.setInputProcessor(new GameInputProcessor(getGame().getGameData()));
+        getGame().getGamePluginList().forEach(iGamePluginService -> iGamePluginService.start(getGame().getGameData(), getGame().getWorld()));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class PlayState extends State {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        game.getGameData().getKeys().update();
+        getGame().getGameData().getKeys().update();
         draw(spriteBatch);
     }
 
@@ -50,7 +50,7 @@ public class PlayState extends State {
         spriteBatch.begin();
         for (Entity entity : game.getWorld().getEntities().stream().sorted(Comparator.comparingInt(o -> o.getGameSprite().getLayer())).collect(Collectors.toList())) {
             GameSprite gameSprite = entity.getGameSprite();
-            Texture texture = game.getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
+            Texture texture = getGame().getAssets().getAssetManager().get(gameSprite.getImagePath(), Texture.class);
             drawSprite(gameSprite, entity.getPart(PositionPart.class), texture);
         }
         for (Text text : game.getWorld().getTextList()) {
@@ -71,7 +71,7 @@ public class PlayState extends State {
         sprite.setX(positionPart.getX());
         sprite.setY(positionPart.getY());
         sprite.setSize(gameSprite.getWidth(), gameSprite.getHeight());
-        sprite.draw(game.getAssets().getBatch());
+        sprite.draw(getGame().getAssets().getBatch());
     }
 
     private void drawText(Text text) {
@@ -82,12 +82,12 @@ public class PlayState extends State {
     private void update() {
         // Update
 
-        for (IEntityProcessingService entityProcessorService : game.getEntityProcessorList()) {
-            entityProcessorService.process(game.getGameData(), game.getWorld());
+        for (IEntityProcessingService entityProcessorService : getGame().getEntityProcessorList()) {
+            entityProcessorService.process(getGame().getGameData(), getGame().getWorld());
         }
         // Post Update
-        for (IPostEntityProcessingService postEntityProcessorService : game.getPostEntityProcessorList()) {
-            postEntityProcessorService.process(game.getGameData(), game.getWorld());
+        for (IPostEntityProcessingService postEntityProcessorService : getGame().getPostEntityProcessorList()) {
+            postEntityProcessorService.process(getGame().getGameData(), getGame().getWorld());
         }
     }
 }
