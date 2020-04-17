@@ -9,14 +9,14 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>sdu.cbse.group2.weapon.Weapon</bundle.symbolicName>
+        <bundle.symbolicName>sdu.cbse.group2.Weapon</bundle.symbolicName>
         <bundle.namespace>sdu.cbse.group2</bundle.namespace>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>sdu.cbse.group2</groupId>
     <artifactId>weapon</artifactId>
-    <name>Weapon</name>
+    <name>${bundle.symbolicName} [${bundle.namespace}]</name>
     <packaging>bundle</packaging>
 
     <dependencies>

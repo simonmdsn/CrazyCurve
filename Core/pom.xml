@@ -18,7 +18,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>Core</name>
+    <name>${bundle.symbolicName} [${bundle.namespace}]</name>
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
