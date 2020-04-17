@@ -67,7 +67,6 @@
         <module>TelnetGogo</module>
         <module>Weapon</module>
         <module>Round</module>
-        <module>spawn</module>
         <module>Map</module>
     </modules>
 

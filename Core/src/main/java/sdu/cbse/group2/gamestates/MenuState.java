@@ -87,7 +87,7 @@ public class MenuState extends State {
         stage.addActor(settingsBtn);
         stage.addActor(nameTextField);
 
-
+        getGame().getGameData().setDisplayWidth(Gdx.graphics.getWidth()); // Quadratic
         Gdx.input.setInputProcessor(stage);
     }
 

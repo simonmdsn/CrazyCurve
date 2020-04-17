@@ -5,15 +5,19 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
-import sdu.cbse.group2.spawn.Spawn;
-import sdu.cbse.group2.spawn.SpawnPoint;
+import sdu.cbse.group2.commonsnake.ScoreSPI;
+import sdu.cbse.group2.round.spawn.Spawn;
+import sdu.cbse.group2.round.spawn.SpawnPoint;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class Round implements IGamePluginService, IPostEntityProcessingService {
+public class Round implements IGamePluginService, IPostEntityProcessingService, ScoreSPI {
 
     //TODO review correct data structure, stack.
     private final Stack<CommonSnake> positionStack = new Stack<>();
@@ -68,5 +72,10 @@ public class Round implements IGamePluginService, IPostEntityProcessingService {
                 roundEnded = false;
             }, 5, TimeUnit.SECONDS);
         }
+    }
+
+    @Override
+    public int getScore(final CommonSnake commonSnake) {
+        return pointDistributionMap.get(commonSnake);
     }
 }

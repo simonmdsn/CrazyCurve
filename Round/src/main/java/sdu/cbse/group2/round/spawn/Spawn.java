@@ -1,10 +1,11 @@
-package sdu.cbse.group2.spawn;
+package sdu.cbse.group2.round.spawn;
 
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Spawn {
 
@@ -14,15 +15,13 @@ public class Spawn {
 
     public List<SpawnPoint> createSpawnPoints(int numberOfSpawnPoints, GameData gameData) {
         //TODO consider data structure
-        List<SpawnPoint> spawnPoints = new ArrayList();
+        List<SpawnPoint> spawnPoints = new ArrayList<>();
         int x = gameData.getDisplayWidth() / 2;
         int y = gameData.getDisplayHeight() / 2;
         int radius;
         if (x > y) {
             radius = x / 3;
-        } else {
-            radius = y / 3;
-        }
+        } else radius = y / 3;
         int degrees = 360 / numberOfSpawnPoints;
         for (int i = 0; i < numberOfSpawnPoints; i++) {
             float radians = (float) degreesToRadians(degrees * (i + 1));
@@ -34,10 +33,7 @@ public class Spawn {
     }
 
     public void spawn(List<SpawnPoint> spawnPoints, List<? extends Entity> entities) {
-        if(spawnPoints.size() == entities.size()) {
-            for (int i = 0; i < spawnPoints.size(); i++) {
-                spawnPoints.get(i).setSpawnPointOnEntity(entities.get(i));
-            }
-        }
+        if (spawnPoints.size() != entities.size()) return;
+        IntStream.range(0, spawnPoints.size()).forEach(i -> spawnPoints.get(i).setSpawnPointOnEntity(entities.get(i)));
     }
 }

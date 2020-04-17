@@ -2,9 +2,13 @@ package sdu.cbse.group2.map;
 
 import sdu.cbse.group2.common.data.Text;
 
-public class SnakeText extends Text {
+class SnakeText extends Text {
 
-    public SnakeText(final String text, final float x, final float y) {
-        super(text, x, y);
+    SnakeText() {
+        super("", 0, 0);
+    }
+
+    SnakeText(final String text) {
+        super(text, 0, 0);
     }
 }

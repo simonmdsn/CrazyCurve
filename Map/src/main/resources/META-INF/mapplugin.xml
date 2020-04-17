@@ -3,8 +3,9 @@
     <implementation class="sdu.cbse.group2.map.MapPlugin"/>
     <service>
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
-    </service>
-    <service>
         <provide interface="sdu.cbse.group2.common.services.IEntityProcessingService"/>
     </service>
+    <reference bind="setScoreSPI" cardinality="1..1"
+               interface="sdu.cbse.group2.commonsnake.ScoreSPI"
+               name="ScoreSPI" policy="dynamic"/>
 </scr:component>
