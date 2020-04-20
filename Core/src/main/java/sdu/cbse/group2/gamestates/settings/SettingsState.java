@@ -53,7 +53,7 @@ public class SettingsState extends State {
                 @Override
                 public void clicked(final InputEvent event, final float x, final float y) {
                     crazyCurveModule.toggleActive();
-                    getGame().getTelnetSPI().execute(crazyCurveModule.isActive() ? "start" : "stop" + " " + crazyCurveModule.getId(), ignored -> {});
+                    getGame().getTelnetSPI().execute((crazyCurveModule.isActive() ? "start" : "stop") + " " + crazyCurveModule.getId(), ignored -> {});
                     textButtonStyle.fontColor = crazyCurveModule.isActive() ? Color.GREEN : Color.RED;
                 }
             });
@@ -64,19 +64,19 @@ public class SettingsState extends State {
         Arrays.stream(table.getCells().toArray()).map(Cell::getActor).map(TextButton.class::cast).forEach(textButton -> textButton.padRight(greatestWidth - textWidth.apply(textButton)));
         table.add(createBackButton());
         stage.addActor(table);
-        if(isGamePaused()){
+        if (isGamePaused()) {
             stage.addActor(createQuitButton());
         }
         Gdx.input.setInputProcessor(stage);
     }
 
     // If there is a state beneath the settings state in the GSM stack, then there is an ongoing game
-    private boolean isGamePaused(){
+    private boolean isGamePaused() {
         Stack<State> states = getGame().getGameStateManager().getStates();
         return !states.isEmpty() && states.size() > 0 && states.get(states.size() - 1).getClass() == PlayState.class;
     }
 
-    private ImageButton createQuitButton(){
+    private ImageButton createQuitButton() {
         final Texture quitButtonTexture = getGame().getAssets().getAssetManager().get("SettingsState/quit button.png");
         Drawable quitDrawable = new TextureRegionDrawable(new TextureRegion(quitButtonTexture));
         final ImageButton quitButton = new ImageButton(quitDrawable);
@@ -87,7 +87,7 @@ public class SettingsState extends State {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 //Empty stack for good measure
-                while(!getGame().getGameStateManager().getStates().isEmpty()){
+                while (!getGame().getGameStateManager().getStates().isEmpty()) {
                     getGame().getGameStateManager().pop();
                 }
                 getGame().getGameStateManager().push(new MenuState(getGame()));
@@ -106,21 +106,19 @@ public class SettingsState extends State {
         backButton.setPosition((int) (getGame().getGameData().getDisplayWidth() / 2D - backButton.getWidth() / 2D), 150);
 
 
-
         //If game is paused then pop the setting state and return to game
         if (isGamePaused()) {
             backButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
                     getGame().getGameStateManager().pop();
-                    ((PlayState)(getGame().getGameStateManager().getStates().peek())).setPaused(false);
+                    ((PlayState) (getGame().getGameStateManager().getStates().peek())).setPaused(false);
                     Gdx.input.setInputProcessor(new GameInputProcessor(getGame().getGameData()));
                     dispose();
                 }
             });
             return backButton;
-        }
-        else {
+        } else {
             backButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent changeEvent, Actor actor) {
