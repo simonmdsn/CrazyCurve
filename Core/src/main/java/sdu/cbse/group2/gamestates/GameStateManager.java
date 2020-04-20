@@ -8,13 +8,8 @@ import lombok.Getter;
 
 @Getter
 public class GameStateManager {
-    Random random = new Random();
-    private int id = random.nextInt();
-    private Stack<State> states;
 
-    public GameStateManager(){
-        states = new Stack<State>();
-    }
+    private final Stack<State> states = new Stack<>();
 
     public void push(State state){
         states.push(state);

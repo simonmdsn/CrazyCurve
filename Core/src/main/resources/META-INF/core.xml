@@ -16,4 +16,8 @@
     <reference bind="addObstacleService" cardinality="0..n"
                interface="sdu.cbse.group2.common.services.ObstacleService"
                name="ObstacleService" policy="dynamic"/>
+
+    <reference bind="setTelnetSPI" cardinality="1..1"
+               interface="sdu.cbse.group2.common.services.TelnetSPI"
+               name="TelnetSPI" policy="dynamic"/>
 </scr:component>

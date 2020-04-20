@@ -12,7 +12,7 @@ public class PlayerPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        this.player = createPlayerSnake();
+        this.player = createPlayerSnake(gameData);
         ShootingPart shootingPart = new ShootingPart();
         player.add(shootingPart);
         world.addEntity(player);
@@ -24,15 +24,9 @@ public class PlayerPlugin implements IGamePluginService {
         player.getTailList().forEach(world::removeEntity);
     }
 
-    private Player createPlayerSnake() {
-        return new Player(new GameSprite("player/player.png", 30, 30), new GameSprite("player/tail.png", 30, 30));
+    private Player createPlayerSnake(GameData gameData) {
+        return new Player(new GameSprite("textures/player/player.png", 30, 30,1), new GameSprite("textures/player/tail.png", 30, 30), gameData.getPlayerName());
     }
-
-//    private int getRadiansForSnake(int x, int y) {
-//        int centerX = gameData.getDisplayWidth() / 2;
-//        int centerY = gameData.getDisplayHeight() / 2;
-//        return 0;
-//    }
 }
 
 

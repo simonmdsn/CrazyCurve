@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.telnetgogo" immediate="false">
+    <implementation class="sdu.cbse.group2.telnetgogo.TelnetGogo"/>
+
+    <service>
+        <provide interface="sdu.cbse.group2.common.services.TelnetSPI"/>
+    </service>
+
+    <reference immedite="" bind="telnetStarter" cardinality="1..1"
+               interface="org.apache.felix.service.command.CommandProcessor"
+               name="TelnetStarter" policy="dynamic"/>
+</scr:component>

@@ -19,7 +19,7 @@
     <artifactId>common-weapon</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>CommonWeapon</name>
+    <name>${bundle.symbolicName} [${bundle.namespace}]</name>
 
     <packaging>bundle</packaging>
     <dependencies>

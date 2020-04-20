@@ -14,7 +14,6 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.common.services.IPostEntityProcessingService;
-import sdu.cbse.group2.common.services.ObstacleService;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 
@@ -35,17 +34,18 @@ public class Game implements ApplicationListener {
     private List<ObstacleService> obstacleServiceList = new CopyOnWriteArrayList<>();
 
 
+    private TelnetSPI telnetSPI;
+
     public Game() {
         init();
     }
-
 
     public void init() {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Crazy Curve";
-        cfg.width = 1200;
-        cfg.height = 800;
+        cfg.width = 1300;
+        cfg.height = 1000;
         cfg.useGL30 = false;
         cfg.resizable = false;
 
@@ -124,4 +124,11 @@ public class Game implements ApplicationListener {
         obstacleServiceList.add(obstacleService);
     }
 
+    public TelnetSPI getTelnetSPI() {
+        return telnetSPI;
+    }
+
+    public void setTelnetSPI(final TelnetSPI telnetSPI) {
+        this.telnetSPI = telnetSPI;
+    }
 }

@@ -66,8 +66,10 @@
         <module>TurtlePowerUp</module>
         <module>EraserPowerUp</module>
         <module>CommonWeapon</module>
+        <module>TelnetGogo</module>
         <module>Weapon</module>
         <module>Round</module>
+        <module>Map</module>
     </modules>
 
     <build>
