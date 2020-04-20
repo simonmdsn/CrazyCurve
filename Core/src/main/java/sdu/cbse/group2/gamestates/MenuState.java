@@ -76,7 +76,6 @@ public class MenuState extends State {
         stage.addActor(startBtn);
         stage.addActor(quitBtn);
         stage.addActor(settingsBtn);
-
         Gdx.input.setInputProcessor(stage);
 
     }

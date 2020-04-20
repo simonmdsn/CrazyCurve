@@ -38,6 +38,8 @@ public class Assets {
         assetManager.load("items/tongue-long.png", Texture.class);
         assetManager.load("items/tongue-short.png", Texture.class);
         assetManager.load("round/scoretext_background.png",Texture.class);
+        assetManager.load("SettingsState/back button.png", Texture.class);
+        assetManager.load("SettingsState/quit button.png", Texture.class);
     }
 
     //TODO recursive iteration over the resource directory (should we do it or not).
