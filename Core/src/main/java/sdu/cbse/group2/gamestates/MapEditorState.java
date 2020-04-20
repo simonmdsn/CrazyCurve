@@ -1,6 +1,7 @@
 package sdu.cbse.group2.gamestates;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,33 +18,41 @@ import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MapEditorState extends State {
     private Stage stage;
     private ButtonGroup buttonGroup = new ButtonGroup();
+    private Map<Button, Entity> buttonEntityMap = new HashMap<>();
+
 
     protected MapEditorState(Game game) {
         super(game);
         stage = new Stage();
-        buttonGroup.add(createObstacleToggleButton(new Entity(new GameSprite("player/tail.png",30,30)),100,100),
-                createObstacleToggleButton(new Entity(new GameSprite("player/player.png",30,30)),200,100)
-
-        );
+        System.out.println(game.getObstacleServiceList().size());
+        for (int i = 0; i < game.getObstacleServiceList().size(); i++) {
+            buttonGroup.add(createObstacleToggleButton(game.getObstacleServiceList().get(i).create(100,100)));
+        }
         buttonGroup.getButtons().forEach(button -> stage.addActor(button));
+
 
         Gdx.input.setInputProcessor(stage);
     }
 
-    private Button createObstacleToggleButton(Entity entity, int x, int y) {
+    private Button createObstacleToggleButton(Entity entity) {
         Texture btnTexture = game.getAssets().getAssetManager().get(entity.getGameSprite().getImagePath());
         Button button = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTexture)));
-        button.setSize(50,50);
-        button.setPosition(x,y);
+        button.setSize(50, 50);
+        PositionPart positionPart = entity.getPart(PositionPart.class);
+        button.setPosition(positionPart.getX(), positionPart.getY());
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println(button.isChecked());
             }
         });
+        buttonEntityMap.putIfAbsent(button, entity);
         return button;
     }
 
@@ -85,6 +94,11 @@ public class MapEditorState extends State {
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && Gdx.input.getX() < game.getGameData().getDisplayHeight() && Gdx.input.getY() < game.getGameData().getDisplayHeight() - 200) {
+            Entity newEntity = new Entity(buttonEntityMap.get(buttonGroup.getChecked()).getGameSprite());
+            newEntity.add(new PositionPart(Gdx.input.getX(), game.getGameData().getDisplayHeight() - Gdx.input.getY(), 0));
+            game.getWorld().addEntity(newEntity);
+        }
     }
 
     @Override

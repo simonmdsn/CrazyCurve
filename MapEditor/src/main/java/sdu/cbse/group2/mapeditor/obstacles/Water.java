@@ -1,26 +1,32 @@
 package sdu.cbse.group2.mapeditor.obstacles;
 
+import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
+import sdu.cbse.group2.common.services.ObstacleService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Water extends Obstacle  {
+public class Water implements ObstacleService {
 
-    private String[] waterGamespriteStrings = new String[]{
-            "/obstacles/water/water1.png",
-            "/obstacles/water/water2.png",
-            "/obstacles/water/water3.png",
+    protected final String[] waterGamespriteStrings = new String[]{
+            "obstacles/water/water.png",
     };
 
-    public Water(GameSprite gameSprite, float x, float y) {
-        super(gameSprite, x, y);
+    @Override
+    public Entity create(float x, float y) {
+        return new WaterObstacle(new GameSprite(getWaterGamespriteString(), 30, 30), x, y);
     }
 
-    private String getWaterGamespriteString() {
+    public String getWaterGamespriteString() {
         return waterGamespriteStrings[ThreadLocalRandom.current().nextInt(waterGamespriteStrings.length)];
     }
 
-    public Water create(float x, float y) {
-        return new Water(new GameSprite(getWaterGamespriteString(), 30, 30), x, y);
+    private class WaterObstacle extends Obstacle {
+
+        public WaterObstacle(GameSprite gameSprite, float x, float y) {
+            super(gameSprite, x, y);
+        }
     }
+
+
 }

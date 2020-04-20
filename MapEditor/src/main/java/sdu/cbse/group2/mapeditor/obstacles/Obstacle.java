@@ -17,5 +17,6 @@ public class Obstacle extends Entity {
         this.x = x;
         this.y = y;
         this.positionPart = new PositionPart(x, y, 0);
+        add(positionPart);
     }
 }
