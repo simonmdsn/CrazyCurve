@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.gamestates.MapEditorState">
-    <implementation class="sdu.cbse.group2.Game"/>
-
-
-
-</scr:component>

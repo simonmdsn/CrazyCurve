@@ -10,9 +10,11 @@ import lombok.Data;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
-public class PositionPart implements EntityPart {
+public class PositionPart implements EntityPart, Serializable {
 
     private float x, y, radians;
 

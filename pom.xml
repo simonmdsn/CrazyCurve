@@ -51,7 +51,6 @@
     <modules>
         <module>Common</module>
         <module>MapEditor</module>
-        <module>spawn</module>
         <module>Core</module>
         <module>LibGDX</module>
         <module>poms</module>

@@ -13,6 +13,7 @@
     <reference bind="addGamePluginService" cardinality="0..n"
                interface="sdu.cbse.group2.common.services.IGamePluginService"
                name="IGamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
+
     <reference bind="addObstacleService" cardinality="0..n"
                interface="sdu.cbse.group2.common.services.ObstacleService"
                name="ObstacleService" policy="dynamic"/>
@@ -20,4 +21,8 @@
     <reference bind="setTelnetSPI" cardinality="1..1"
                interface="sdu.cbse.group2.common.services.TelnetSPI"
                name="TelnetSPI" policy="dynamic"/>
+
+    <reference bind="setEditorService" cardinality="1..1"
+               interface="sdu.cbse.group2.common.services.EditorService"
+               name="EditorService" policy="dynamic"/>
 </scr:component>

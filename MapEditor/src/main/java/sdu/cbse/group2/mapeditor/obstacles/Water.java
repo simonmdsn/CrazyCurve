@@ -6,10 +6,11 @@ import sdu.cbse.group2.common.services.ObstacleService;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+//TODO different water textures?
 public class Water implements ObstacleService {
 
-    protected final String[] waterGamespriteStrings = new String[]{
-            "obstacles/water/water.png",
+    private final String[] waterGamespriteStrings = new String[]{
+            "textures/obstacles/water/water.png",
     };
 
     @Override
@@ -17,11 +18,16 @@ public class Water implements ObstacleService {
         return new WaterObstacle(new GameSprite(getWaterGamespriteString(), 30, 30), x, y);
     }
 
-    public String getWaterGamespriteString() {
+    @Override
+    public String getObstacleName() {
+        return "Water";
+    }
+
+    private String getWaterGamespriteString() {
         return waterGamespriteStrings[ThreadLocalRandom.current().nextInt(waterGamespriteStrings.length)];
     }
 
-    private class WaterObstacle extends Obstacle {
+    private static class WaterObstacle extends Obstacle {
 
         public WaterObstacle(GameSprite gameSprite, float x, float y) {
             super(gameSprite, x, y);

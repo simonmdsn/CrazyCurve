@@ -18,8 +18,8 @@ public class MapEditorService implements EditorService {
 
     public List<File> mapFileList() {
         List<File> mapFileList = new ArrayList<>();
-        for (File file : Objects.requireNonNull(new File(FOLDER_PATH).listFiles())) {
-            if (file.isFile()) {
+        for (File file : Objects.requireNonNull(new File(".").listFiles())) {
+            if (file.isFile() && file.getName().endsWith(SER_SUFFIX)) {
                 mapFileList.add(file);
             }
         }
@@ -34,7 +34,6 @@ public class MapEditorService implements EditorService {
                 world.addEntity(entity);
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return world;
     }
@@ -59,5 +58,10 @@ public class MapEditorService implements EditorService {
     @Override
     public void deserialize(String name, GameData gameData, World world) {
         loadMap(name, world);
+    }
+
+    @Override
+    public List<File> getMaps() {
+        return mapFileList();
     }
 }
