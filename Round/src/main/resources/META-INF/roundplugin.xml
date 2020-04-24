@@ -4,5 +4,6 @@
     <service>
         <provide interface="sdu.cbse.group2.common.services.IGamePluginService"/>
         <provide interface="sdu.cbse.group2.common.services.IPostEntityProcessingService"/>
+        <provide interface="sdu.cbse.group2.commonsnake.ScoreSPI"/>
     </service>
 </scr:component>
