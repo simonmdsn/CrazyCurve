@@ -95,6 +95,8 @@ public class MapEditorState extends State {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 getGame().getGameData().setPlayerName("Player");
+                getGame().getWorld().getTextList().clear();
+                stage.dispose();
                 getGame().getGameStateManager().set(new PlayState(game));
             }
         });
