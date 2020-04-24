@@ -36,10 +36,10 @@ public class MenuState extends State {
         //Create stage
         stage = new Stage();
         //Create textures from asset manager
-        startBtnTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/start button.png");
-        settingsBtnTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/settings button.PNG");
-        quitBtnTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/quit button.PNG");
-        titleTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/title.png");
+        startBtnTexture = getGame().getAssets().getAssetManager().get("textures/menustate/start button.png");
+        settingsBtnTexture = getGame().getAssets().getAssetManager().get("textures/menustate/settings button.PNG");
+        quitBtnTexture = getGame().getAssets().getAssetManager().get("textures/menustate/quit button.PNG");
+        titleTexture = getGame().getAssets().getAssetManager().get("textures/menustate/title.png");
         //Initiate buttons
         Drawable startDrawable = new TextureRegionDrawable(new TextureRegion(startBtnTexture));
         Drawable settingsDrawable = new TextureRegionDrawable(new TextureRegion(settingsBtnTexture));
@@ -53,7 +53,7 @@ public class MenuState extends State {
         startBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - startBtn.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2);
         settingsBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - quitBtnTexture.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 - 100);
         quitBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - settingsBtnTexture.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 - 200);
-        nameTextField = new TextField("", new TextField.TextFieldStyle(new BitmapFont(), Color.WHITE, null, null, new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/MenuState/inputfield.png")))));
+        nameTextField = new TextField("", new TextField.TextFieldStyle(new BitmapFont(), Color.WHITE, null, null, new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/menustate/inputfield.png")))));
         nameTextField.setSize(100, 40);
         nameTextField.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - nameTextField.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 + 100);
         nameTextField.setMessageText("Name");

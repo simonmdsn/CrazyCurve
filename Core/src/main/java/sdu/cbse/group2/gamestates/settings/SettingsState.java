@@ -77,7 +77,7 @@ public class SettingsState extends State {
     }
 
     private ImageButton createQuitButton() {
-        final Texture quitButtonTexture = getGame().getAssets().getAssetManager().get("SettingsState/quit button.png");
+        final Texture quitButtonTexture = getGame().getAssets().getAssetManager().get("textures/settingstate/quit button.png");
         Drawable quitDrawable = new TextureRegionDrawable(new TextureRegion(quitButtonTexture));
         final ImageButton quitButton = new ImageButton(quitDrawable);
         quitButton.setSize(200, 80);
@@ -98,7 +98,7 @@ public class SettingsState extends State {
     }
 
     private ImageButton createBackButton() {
-        final Texture backButtonTexture = getGame().getAssets().getAssetManager().get("textures/MenuState/back button.PNG"); //TODO Back image.
+        final Texture backButtonTexture = getGame().getAssets().getAssetManager().get("textures/settingstate/back button.png");
         Drawable backDrawable = new TextureRegionDrawable(new TextureRegion(backButtonTexture));
         final ImageButton backButton = new ImageButton(backDrawable);
         backButton.setSize(200, 80);
