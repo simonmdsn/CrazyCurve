@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class EnemyPlugin implements IGamePluginService {
 
     private static final String[] NAMES = new String[]{"Anaconda", "Artemis", "Bandit", "Bi-Beast", "Black Lama", "Basilisk", "Bob", "Benz56", "Kraken", "Kato", "Adderboi", "Riot", "Rush", "Runner", "Corfixen", "Shrek", "Slipstream", "Speed Demon", "Spirit of 76'", "Beehive", "Queen Blossom", "Witcher's Girl", "Supermor", "Terminator", "Not a Snake", "Golden Age", "Craften", "Bettina", "Lars", "Phillip", "PDF-fil", "dot jpeg", "Knew It", "Byllefar", "Feeder", "Carole Baskin", "Joe Exotic", "Mr. Gadget"};
-    private static final Stack<String> COLORS = Stream.of("red", "blue", "yellow").collect(Collectors.toCollection(Stack::new));
+    private Stack<String> colors = new Stack<>();
 
     private final List<String> snakeNameList = new ArrayList<>();
 
@@ -34,7 +34,8 @@ public class EnemyPlugin implements IGamePluginService {
     }
 
     private GameSprite[] getSnakeGameSprites() {
-        String color = COLORS.pop();
+        if (colors.isEmpty()) colors = Stream.of("red", "blue", "yellow").collect(Collectors.toCollection(Stack::new));
+        String color = colors.pop();
         return new GameSprite[]{new GameSprite("textures/enemy/" + color + "/enemy.png", 30, 30, 1), new GameSprite("textures/enemy/" + color + "/tail.png", 30, 30)};
     }
 

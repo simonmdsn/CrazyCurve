@@ -23,6 +23,7 @@ public class SnakeTable {
     private final ScoreSPI scoreSPI;
 
     void updateSnake(final CommonSnake commonSnake, final GameData gameData, final World world) {
+        purgeInvalidSnakes(world);
         snakes.computeIfAbsent(commonSnake.getName(), snakeName -> {
             SnakeCell cell = new SnakeCell(commonSnake, new Entity(commonSnake.getGameSprite()));
             world.addEntity(cell.getHeadIcon());
@@ -30,7 +31,6 @@ public class SnakeTable {
             world.addText(cell.getSnakeTextScore());
             return cell;
         }).setScore(scoreSPI.getScore(commonSnake));
-        purgeInvalidSnakes(world);
         reposition(gameData);
     }
 

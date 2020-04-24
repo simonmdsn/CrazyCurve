@@ -67,6 +67,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService, 
 
     @Override
     public int getScore(final CommonSnake commonSnake) {
+        pointDistributionMap.putIfAbsent(commonSnake, 0);
         return pointDistributionMap.get(commonSnake);
     }
 }
