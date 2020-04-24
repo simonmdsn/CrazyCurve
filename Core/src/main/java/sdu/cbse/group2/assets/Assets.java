@@ -16,7 +16,6 @@ public class Assets {
     private final BitmapFont bitmapFont = new BitmapFont();
     private final AssetManager assetManager;
 
-
     public Assets() {
         assetManager = new AssetManager();
         loadAssets();
