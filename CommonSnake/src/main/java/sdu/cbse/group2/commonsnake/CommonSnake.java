@@ -26,16 +26,16 @@ public class CommonSnake extends Entity {
 
     public CommonSnake(GameSprite gameSprite, GameSprite tailSprite, String name) {
         super(gameSprite);
-        this.head = new Entity(gameSprite);
+        head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
-        this.isAlive = true;
-        this.activeTail = true;
-        add(new MovingPart(this.getMaxSpeed(), this.getRotationSpeed()));
+        isAlive = true;
+        activeTail = true;
+        add(new MovingPart(getMaxSpeed(), getRotationSpeed()));
         add(new PositionPart(0, 0, 0));
         this.name = name;
     }
 
-    public void deleteAndEmptyTails(World world) {
+    public void deleteTail(World world) {
         tailList.forEach(world::removeEntity);
         tailList.clear();
     }
@@ -51,7 +51,7 @@ public class CommonSnake extends Entity {
         MovingPart movingPart = getPart(MovingPart.class);
         movingPart.setMaxSpeed(100);
         movingPart.setRotationSpeed(3);
-        deleteAndEmptyTails(world);
+        deleteTail(world);
         setAlive(true);
     }
 
