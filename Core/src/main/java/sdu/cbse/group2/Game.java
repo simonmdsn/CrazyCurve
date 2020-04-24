@@ -110,9 +110,9 @@ public class Game implements ApplicationListener {
         postEntityProcessorList.remove(eps);
     }
 
-    public void addGamePluginService(IGamePluginService plugin) {
+    public synchronized void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        if (!gameStateManager.getStates().isEmpty() && gameStateManager.getStates().peek() instanceof PlayState) {
+        if (gameStateManager.getStates().stream().anyMatch(PlayState.class::isInstance)) {
             plugin.start(gameData, world);
         }
     }
