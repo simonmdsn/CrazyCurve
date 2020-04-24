@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 public class CommonSnake extends Entity {
 
-    private final Entity head;
     private final GameSprite tailSprite;
     private final List<Tail> tailList = new LinkedList<>();
     private boolean isAlive;
@@ -26,7 +25,6 @@ public class CommonSnake extends Entity {
 
     public CommonSnake(GameSprite gameSprite, GameSprite tailSprite, String name) {
         super(gameSprite);
-        head = new Entity(gameSprite);
         this.tailSprite = tailSprite;
         isAlive = true;
         activeTail = true;

@@ -13,8 +13,8 @@ import sdu.cbse.group2.commonsnake.ScoreSPI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class SnakeTable {
@@ -24,13 +24,23 @@ public class SnakeTable {
 
     void updateSnake(final CommonSnake commonSnake, final GameData gameData, final World world) {
         snakes.computeIfAbsent(commonSnake.getName(), snakeName -> {
-            SnakeCell cell = new SnakeCell(commonSnake, new Entity(commonSnake.getHead().getGameSprite()));
+            SnakeCell cell = new SnakeCell(commonSnake, new Entity(commonSnake.getGameSprite()));
             world.addEntity(cell.getHeadIcon());
             world.addText(cell.getSnakeTextName());
             world.addText(cell.getSnakeTextScore());
             return cell;
         }).setScore(scoreSPI.getScore(commonSnake));
+        purgeInvalidSnakes(world);
         reposition(gameData);
+    }
+
+    private void purgeInvalidSnakes(final World world) {
+        snakes.entrySet().stream().filter(entry -> !world.getEntities().contains(entry.getValue().getCommonSnake())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).forEach((key, value) -> {
+            world.removeEntity(value.getHeadIcon());
+            world.removeText(value.getSnakeTextName());
+            world.removeText(value.getSnakeTextScore());
+            snakes.remove(key);
+        });
     }
 
     private void reposition(final GameData gameData) {
@@ -53,7 +63,7 @@ public class SnakeTable {
 
     void clear(World world) {
         snakes.values().forEach(snakeCell -> {
-            world.removeEntity(snakeCell.getUniqueId());
+            world.removeEntity(snakeCell.getHeadIcon());
             world.removeText(snakeCell.getSnakeTextName());
             world.removeText(snakeCell.getSnakeTextScore());
         });
@@ -63,7 +73,6 @@ public class SnakeTable {
     @Setter
     public static class SnakeCell implements Comparable<SnakeCell> {
 
-        private final UUID uniqueId = UUID.randomUUID();
         private final SnakeText snakeTextScore = new SnakeText();
         private final CommonSnake commonSnake;
         private final SnakeText snakeTextName;
