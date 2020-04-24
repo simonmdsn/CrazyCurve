@@ -112,7 +112,7 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        if (gameStateManager.getStates().peek() instanceof PlayState) {
+        if (!gameStateManager.getStates().isEmpty() && gameStateManager.getStates().peek() instanceof PlayState) {
             plugin.start(gameData, world);
         }
     }
