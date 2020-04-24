@@ -2,7 +2,6 @@ package sdu.cbse.group2.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sdu.cbse.group2.Game;
@@ -23,6 +22,7 @@ public class PlayState extends State {
         super(game);
         //To enable button pressing
         Gdx.input.setInputProcessor(new GameInputProcessor(getGame().getGameData()));
+        getGame().getGameData().setDisplayWidth(getGame().getGameData().getDisplayHeight()); // Quadratic
         getGame().getGamePluginList().forEach(iGamePluginService -> iGamePluginService.start(getGame().getGameData(), getGame().getWorld()));
     }
 
@@ -60,11 +60,6 @@ public class PlayState extends State {
     }
 
     private void drawSprite(GameSprite gameSprite, PositionPart positionPart, Texture texture) {
-        //TODO sprite needs things
-        //                GameImage image = entity.getImage();
-        //                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
-        //                PositionPart p = entity.getPart(PositionPart.class);
-        //                drawSprite(new Sprite(tex), image, p);
         Sprite sprite = new Sprite(texture);
         sprite.setOrigin(gameSprite.getWidth() / 2, gameSprite.getHeight() / 2);
         sprite.rotate((float) Math.toDegrees(positionPart.getRadians()));
@@ -75,8 +70,7 @@ public class PlayState extends State {
     }
 
     private void drawText(Text text) {
-        BitmapFont.TextBounds bounds = getGame().getAssets().getBitmapFont().getBounds(text.getText());
-        getGame().getAssets().getBitmapFont().draw(getGame().getAssets().getBatch(), text.getText(), text.getX() - bounds.width / 2, text.getY());
+        getGame().getAssets().getBitmapFont().draw(getGame().getAssets().getBatch(), text.getText(), text.getX(), text.getY());
     }
 
     private void update() {

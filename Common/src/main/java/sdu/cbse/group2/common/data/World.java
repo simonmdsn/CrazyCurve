@@ -58,11 +58,11 @@ public class World {
         return entityMap.get(uuid);
     }
 
-    public void draw(Text text) {
+    public void addText(Text text) {
         textList.add(text);
     }
 
-    public void remove(Text text) {
+    public void removeText(Text text) {
         textList.remove(text);
     }
 

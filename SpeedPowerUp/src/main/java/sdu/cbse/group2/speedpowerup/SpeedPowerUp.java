@@ -21,7 +21,7 @@ public class SpeedPowerUp extends CommonPowerUp {
     private ScheduledFuture<?> schedule;
 
     public SpeedPowerUp(GameData gameData) {
-        super(new GameSprite("powerup/speed.png", 30, 30));
+        super(new GameSprite("textures/powerup/speed.png", 30, 30));
         this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
     }
 

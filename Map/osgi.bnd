@@ -1,0 +1,2 @@
+Bundle-SymbolicName: Map
+Service-Component: META-INF/mapplugin.xml

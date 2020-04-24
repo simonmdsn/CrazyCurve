@@ -43,8 +43,8 @@ public class Game implements ApplicationListener {
 
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Crazy Curve";
-        cfg.width = 1200;
-        cfg.height = 800;
+        cfg.width = 1300;
+        cfg.height = 1000;
         cfg.useGL30 = false;
         cfg.resizable = false;
 
