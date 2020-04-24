@@ -17,6 +17,7 @@ import sdu.cbse.group2.common.services.IPostEntityProcessingService;
 import sdu.cbse.group2.common.services.TelnetSPI;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
+import sdu.cbse.group2.gamestates.PlayState;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -111,6 +112,9 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
+        if (gameStateManager.getStates().peek() instanceof PlayState) {
+            plugin.start(gameData, world);
+        }
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {

@@ -18,6 +18,7 @@ import sdu.cbse.group2.Game;
 import sdu.cbse.group2.gamestates.settings.SettingsState;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MenuState extends State {
@@ -61,7 +62,7 @@ public class MenuState extends State {
         startBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
-                getGame().getGameData().setPlayerName(nameTextField.getText());
+                getGame().getGameData().setPlayerName(Optional.ofNullable(nameTextField.getText()).filter(name -> !name.isEmpty()).orElse("Anonymous"));
                 getGame().getGameStateManager().set(new PlayState(game));
                 dispose();
             }
