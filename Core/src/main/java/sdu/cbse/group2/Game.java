@@ -28,7 +28,7 @@ public class Game implements ApplicationListener {
 
     private Assets assets;
     private OrthographicCamera cam;
-    private World world = new World();
+    private World world = new World(gameData);
     private GameStateManager gameStateManager = new GameStateManager();
 
     private List<ObstacleService> obstacleServiceList = new CopyOnWriteArrayList<>();
@@ -116,6 +116,7 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
+        plugin.start(gameData,world);
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {

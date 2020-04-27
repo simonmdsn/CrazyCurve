@@ -1,6 +1,7 @@
 package sdu.cbse.group2.common.data;
 
 import lombok.Getter;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +13,21 @@ public class World {
     private final Map<UUID, Entity> entityMap = new ConcurrentHashMap<>();
     @Getter
     private final List<Text> textList = new CopyOnWriteArrayList<>();
+
+    public World(GameData gameData) {
+        fillTiles(gameData);
+        entityMap.forEach((uuid, entity) -> System.out.println(entity.getClass().getSimpleName()));
+    }
+
+    private void fillTiles(GameData gameData) {
+        int x = gameData.getDisplayWidth();
+        for (int i = 0; i < x; i += Tile.length) {
+            for (int j = 0; j < x; j += Tile.length) {
+                Tile tile = new Tile(new PositionPart(i,j,0));
+                addEntity(tile);
+            }
+        }
+    }
 
     public UUID addEntity(Entity entity) {
         entityMap.put(entity.getUuid(), entity);

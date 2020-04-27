@@ -33,7 +33,7 @@ public class MapEditorState extends State {
     private ButtonGroup buttonGroup = new ButtonGroup();
     private Map<Button, Entity> buttonEntityMap = new HashMap<>();
     private Entity latestEntity;
-    private Drawable rectangleWithWhiteCorners = new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/MenuState/inputfield.png")));
+    private Drawable rectangleWithWhiteCorners = new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/menustate/inputfield.png")));
     private String selectedMap;
 
     protected MapEditorState(Game game) {
