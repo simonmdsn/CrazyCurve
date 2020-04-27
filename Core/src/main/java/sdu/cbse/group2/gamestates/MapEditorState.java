@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -34,10 +35,12 @@ public class MapEditorState extends State {
     private Stage stage;
     private ButtonGroup buttonGroup = new ButtonGroup();
     private Map<Button, ObstacleService> buttonObstacleService = new HashMap<>();
-    private ObstacleService selectedObstacleService;
     private Entity selectedEntity;
     private Drawable rectangleWithWhiteCorners = new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/menustate/inputfield.png")));
     private String selectedMap;
+    private boolean isGridToggled;
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+
 
     protected MapEditorState(Game game) {
         super(game);
@@ -80,6 +83,9 @@ public class MapEditorState extends State {
         clearMapBtn.setSize(200, 30);
         clearMapBtn.setPosition(getGame().getGameData().getDisplayWidth() - 250, 20);
 
+        Button toggleGridBtn = new TextButton("Toggle grid", new TextButton.TextButtonStyle(rectangleWithWhiteCorners, rectangleWithWhiteCorners, rectangleWithWhiteCorners, new BitmapFont()));
+        toggleGridBtn.setSize(200, 30);
+        toggleGridBtn.setPosition(getGame().getGameData().getDisplayWidth() - 250, 430);
 
         //Button listeners...
         saveMapBtn.addListener(new ClickListener() {
@@ -108,11 +114,16 @@ public class MapEditorState extends State {
                 getGame().getGameStateManager().set(new PlayState(game));
             }
         });
-
         clearMapBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 getGame().getWorld().getEntities().forEach(entity -> getGame().getWorld().removeEntity(entity));
+            }
+        });
+        toggleGridBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                isGridToggled = !isGridToggled;
             }
         });
 
@@ -124,6 +135,7 @@ public class MapEditorState extends State {
         stage.addActor(nameTextField);
         stage.addActor(container);
         stage.addActor(clearMapBtn);
+        stage.addActor(toggleGridBtn);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -135,7 +147,7 @@ public class MapEditorState extends State {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.println(button.getText().toString());
+                    System.out.println("Loaded map: " + button.getText().toString());
                     selectedMap = button.getText().toString();
                 }
             });
@@ -152,7 +164,6 @@ public class MapEditorState extends State {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                selectedObstacleService = obstacleService;
                 selectedEntity = obstacleService.create(0, 0);
             }
         });
@@ -193,7 +204,7 @@ public class MapEditorState extends State {
     }
 
     private boolean mouseInPlayWindow() {
-        if (Gdx.input.getX() < getGame().getGameData().getDisplayHeight()) {
+        if (Gdx.input.getX() < getGame().getGameData().getDisplayHeight() + 10) {
             if (selectedEntity != null && !getGame().getWorld().getEntities().contains(selectedEntity)) {
                 getGame().getWorld().addEntity(selectedEntity);
             }
@@ -239,8 +250,18 @@ public class MapEditorState extends State {
             Tile nearestTile = getGame().getWorld().getNearestTile(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY());
             if (nearestTile != null) {
                 newEntity.add(nearestTile.getPositionPart());
+                getGame().getWorld().getTilesEntityMap().put(nearestTile, newEntity);
                 getGame().getWorld().addEntity(newEntity);
             }
+        }
+        if (isGridToggled) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(Color.WHITE);
+            for (Tile tile : getGame().getWorld().getTiles()) {
+                shapeRenderer.line(tile.getPositionPart().getX(),tile.getPositionPart().getY(),tile.getPositionPart().getX(),tile.getPositionPart().getY()+Tile.length);
+                shapeRenderer.line(tile.getPositionPart().getX(),tile.getPositionPart().getY(),tile.getPositionPart().getX() + Tile.length,tile.getPositionPart().getY());
+            }
+            shapeRenderer.end();
         }
     }
 
@@ -248,6 +269,4 @@ public class MapEditorState extends State {
     public void dispose() {
         this.dispose();
     }
-
-
 }

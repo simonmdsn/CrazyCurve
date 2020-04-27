@@ -17,7 +17,9 @@ public class World {
     //TODO should tile be list or 2d array?
     //private Tile[][] tiles;
     @Getter
-    private final List<Tile> tiles = new ArrayList<>();
+    private final Map<Tile,Entity> tilesEntityMap = new ConcurrentHashMap<>();
+    @Getter
+    private final List<Tile> tiles = new CopyOnWriteArrayList<>();
 
     public World(GameData gameData) {
         fillTiles(gameData);
