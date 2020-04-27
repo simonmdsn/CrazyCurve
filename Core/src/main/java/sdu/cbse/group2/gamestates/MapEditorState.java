@@ -20,7 +20,9 @@ import sdu.cbse.group2.Game;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.Text;
+import sdu.cbse.group2.common.data.Tile;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.services.ObstacleService;
 
 import java.io.File;
 import java.util.Comparator;
@@ -31,8 +33,9 @@ import java.util.stream.Collectors;
 public class MapEditorState extends State {
     private Stage stage;
     private ButtonGroup buttonGroup = new ButtonGroup();
-    private Map<Button, Entity> buttonEntityMap = new HashMap<>();
-    private Entity latestEntity;
+    private Map<Button, ObstacleService> buttonObstacleService = new HashMap<>();
+    private ObstacleService selectedObstacleService;
+    private Entity selectedEntity;
     private Drawable rectangleWithWhiteCorners = new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/menustate/inputfield.png")));
     private String selectedMap;
 
@@ -44,7 +47,7 @@ public class MapEditorState extends State {
 //        getGame().getWorld().addEntity(entity);
         buttonGroup.setMinCheckCount(0);
         for (int i = 0; i < game.getObstacleServiceList().size(); i++) {
-            buttonGroup.add(createObstacleToggleButton(game.getObstacleServiceList().get(i).create(getGame().getGameData().getDisplayWidth() - 250, getGame().getGameData().getDisplayHeight() - 100 * (i + 1)), game.getObstacleServiceList().get(i).getObstacleName()));
+            buttonGroup.add(createObstacleToggleButton(game.getObstacleServiceList().get(i), getGame().getGameData().getDisplayWidth() - 250, getGame().getGameData().getDisplayHeight() - 50 * (i + 1)));
         }
         buttonGroup.getButtons().forEach(button -> stage.addActor(button));
 
@@ -72,6 +75,11 @@ public class MapEditorState extends State {
         container.add(mapsScrollPane).width(200).height(200);
         container.row();
         container.setBounds(getGame().getGameData().getDisplayWidth() - 250, 230, 200, 200);
+
+        Button clearMapBtn = new TextButton("Clear map", new TextButton.TextButtonStyle(rectangleWithWhiteCorners, rectangleWithWhiteCorners, rectangleWithWhiteCorners, new BitmapFont()));
+        clearMapBtn.setSize(200, 30);
+        clearMapBtn.setPosition(getGame().getGameData().getDisplayWidth() - 250, 20);
+
 
         //Button listeners...
         saveMapBtn.addListener(new ClickListener() {
@@ -101,6 +109,13 @@ public class MapEditorState extends State {
             }
         });
 
+        clearMapBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                getGame().getWorld().getEntities().forEach(entity -> getGame().getWorld().removeEntity(entity));
+            }
+        });
+
         loadMaps(mapsTable);
 
         stage.addActor(playMapBtn);
@@ -108,6 +123,7 @@ public class MapEditorState extends State {
         stage.addActor(saveMapBtn);
         stage.addActor(nameTextField);
         stage.addActor(container);
+        stage.addActor(clearMapBtn);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -128,24 +144,20 @@ public class MapEditorState extends State {
         }
     }
 
-    private Button createObstacleToggleButton(Entity entity, String name) {
-        Texture btnTexture = getGame().getAssets().getAssetManager().get(entity.getGameSprite().getImagePath());
+    private Button createObstacleToggleButton(ObstacleService obstacleService, float x, float y) {
+        Texture btnTexture = getGame().getAssets().getAssetManager().get(obstacleService.getGameSprite().getImagePath());
         Button button = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTexture)));
         button.setSize(50, 50);
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        button.setPosition(positionPart.getX(), positionPart.getY());
+        button.setPosition(x, y);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (latestEntity != null) {
-                    getGame().getWorld().removeEntity(latestEntity);
-                }
-                getGame().getWorld().addEntity(entity);
-                latestEntity = entity;
+                selectedObstacleService = obstacleService;
+                selectedEntity = obstacleService.create(0, 0);
             }
         });
-        buttonEntityMap.putIfAbsent(button, entity);
-        getGame().getWorld().addText(new Text(name, positionPart.getX() + 80, positionPart.getY() + 30));
+        buttonObstacleService.putIfAbsent(button, obstacleService);
+        getGame().getWorld().addText(new Text(obstacleService.getObstacleName(), x + 80, y + 30));
         return button;
     }
 
@@ -171,7 +183,7 @@ public class MapEditorState extends State {
     }
 
     private void displaySelectedObstacle() {
-        PositionPart part = buttonEntityMap.get(buttonGroup.getChecked()).getPart(PositionPart.class);
+        PositionPart part = selectedEntity.getPart(PositionPart.class);
         part.setX(Gdx.input.getX());
         part.setY(getGame().getGameData().getDisplayHeight() - Gdx.input.getY());
     }
@@ -181,7 +193,17 @@ public class MapEditorState extends State {
     }
 
     private boolean mouseInPlayWindow() {
-        return Gdx.input.getX() < getGame().getGameData().getDisplayHeight();
+        if (Gdx.input.getX() < getGame().getGameData().getDisplayHeight()) {
+            if (selectedEntity != null && !getGame().getWorld().getEntities().contains(selectedEntity)) {
+                getGame().getWorld().addEntity(selectedEntity);
+            }
+            return true;
+        } else {
+            if (selectedEntity != null && getGame().getWorld().getEntities().contains(selectedEntity)) {
+                getGame().getWorld().removeEntity(selectedEntity);
+            }
+            return false;
+        }
     }
 
     private void drawSprite(GameSprite gameSprite, PositionPart positionPart, Texture texture) {
@@ -211,10 +233,14 @@ public class MapEditorState extends State {
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
+        //Check if mouse is pressed, creates new entity based on the selected obstacle toggle button, uses the selected tile to specify the position part of the newly added obstacle.
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && mouseInPlayWindow() && selected()) {
-            Entity newEntity = new Entity(buttonEntityMap.get(buttonGroup.getChecked()).getGameSprite());
-            newEntity.add(new PositionPart(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY(), 0));
-            getGame().getWorld().addEntity(newEntity);
+            Entity newEntity = new Entity(buttonObstacleService.get(buttonGroup.getChecked()).getGameSprite());
+            Tile nearestTile = getGame().getWorld().getNearestTile(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY());
+            if (nearestTile != null) {
+                newEntity.add(nearestTile.getPositionPart());
+                getGame().getWorld().addEntity(newEntity);
+            }
         }
     }
 

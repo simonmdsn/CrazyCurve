@@ -4,13 +4,16 @@ import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.services.ObstacleService;
 
-import java.io.Serializable;
-
-public class Lava implements ObstacleService, Serializable {
+public class Lava implements ObstacleService {
 
     @Override
     public Entity create(float x, float y) {
-        return new LavaObstacle(new GameSprite("textures/obstacles/lava/lava.png", 30, 30), x, y);
+        return new LavaObstacle(getGameSprite(), x, y);
+    }
+
+    @Override
+    public GameSprite getGameSprite() {
+        return new GameSprite("textures/obstacles/lava/lava.png", 30, 30);
     }
 
     @Override

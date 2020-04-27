@@ -14,19 +14,32 @@ public class World {
     @Getter
     private final List<Text> textList = new CopyOnWriteArrayList<>();
 
+    //TODO should tile be list or 2d array?
+    //private Tile[][] tiles;
+    @Getter
+    private final List<Tile> tiles = new ArrayList<>();
+
     public World(GameData gameData) {
         fillTiles(gameData);
-        entityMap.forEach((uuid, entity) -> System.out.println(entity.getClass().getSimpleName()));
     }
 
     private void fillTiles(GameData gameData) {
-        int x = gameData.getDisplayWidth();
-        for (int i = 0; i < x; i += Tile.length) {
-            for (int j = 0; j < x; j += Tile.length) {
-                Tile tile = new Tile(new PositionPart(i,j,0));
-                addEntity(tile);
+        int height = gameData.getDisplayHeight();
+        for (int i = 0; i < height; i += Tile.length) {
+            for (int j = 0; j < height; j += Tile.length) {
+                Tile tile = new Tile(new PositionPart(i,j, 0));
+                tiles.add(tile);
             }
         }
+    }
+
+    public Tile getNearestTile(int x, int y) {
+        for (Tile tile : tiles) {
+            if (tile.getPositionPart().getX() > x - Tile.length && tile.getPositionPart().getY() > y - Tile.length && tile.getPositionPart().getX() < x && tile.getPositionPart().getY() < y) {
+                return tile;
+            }
+        }
+        return null;
     }
 
     public UUID addEntity(Entity entity) {

@@ -6,11 +6,15 @@ import sdu.cbse.group2.common.services.ObstacleService;
 
 public class Rock implements ObstacleService {
 
-    private String gamespriteString = "textures/obstacles/rock/rock.png";
 
     @Override
     public Entity create(float x, float y) {
-        return new RockObstacle(new GameSprite(gamespriteString, 30, 30), x, y);
+        return new RockObstacle(getGameSprite(), x, y);
+    }
+
+    @Override
+    public GameSprite getGameSprite() {
+        return new GameSprite("textures/obstacles/rock/rock.png", 30, 30);
     }
 
     @Override

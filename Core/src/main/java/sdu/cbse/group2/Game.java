@@ -14,6 +14,7 @@ import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.services.*;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
+import sdu.cbse.group2.gamestates.PlayState;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,23 +25,18 @@ public class Game implements ApplicationListener {
     private final GameData gameData = new GameData();
     private final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
-
     private Assets assets;
     private OrthographicCamera cam;
-    private World world = new World(gameData);
+    private World world;
     private GameStateManager gameStateManager = new GameStateManager();
-
+    private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
     private List<ObstacleService> obstacleServiceList = new CopyOnWriteArrayList<>();
+
     private EditorService editorService;
     private TelnetSPI telnetSPI;
 
     public Game() {
         init();
-    }
-
-    public void setEditorService(EditorService editorService) {
-        this.editorService = editorService;
     }
 
     public void init() {
@@ -57,10 +53,10 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
+        world = new World(gameData);
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -116,16 +112,14 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
-        plugin.start(gameData,world);
+        if (gameStateManager.getStates().stream().anyMatch(PlayState.class::isInstance)) {
+            plugin.start(gameData, world);
+        }
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
-    }
-
-    public void addObstacleService(ObstacleService obstacleService) {
-        obstacleServiceList.add(obstacleService);
     }
 
     public TelnetSPI getTelnetSPI() {
@@ -134,5 +128,13 @@ public class Game implements ApplicationListener {
 
     public void setTelnetSPI(final TelnetSPI telnetSPI) {
         this.telnetSPI = telnetSPI;
+    }
+
+    public void setEditorService(final EditorService editorService) {
+        this.editorService = editorService;
+    }
+
+    public void addObstacleService(ObstacleService obstacleService) {
+        obstacleServiceList.add(obstacleService);
     }
 }

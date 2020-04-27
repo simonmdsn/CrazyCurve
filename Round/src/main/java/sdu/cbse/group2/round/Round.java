@@ -9,10 +9,7 @@ import sdu.cbse.group2.commonsnake.ScoreSPI;
 import sdu.cbse.group2.round.spawn.Spawn;
 import sdu.cbse.group2.round.spawn.SpawnPoint;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -22,18 +19,15 @@ public class Round implements IGamePluginService, IPostEntityProcessingService, 
     //TODO review correct data structure, stack.
     private final Stack<CommonSnake> positionStack = new Stack<>();
     private final Map<CommonSnake, Integer> pointDistributionMap = new HashMap<>();
-    private final Spawn spawn = new Spawn();
+    private Spawn spawn;
     private boolean roundEnded;
-    private List<SpawnPoint> spawnPoints;
 
     private void distributePoints() {
-        while (!positionStack.isEmpty()) {
-            int size = positionStack.size();
-            for (int i = 0; i < size; i++) {
-                CommonSnake commonSnake = positionStack.pop();
-                int currentPoints = pointDistributionMap.get(commonSnake);
-                pointDistributionMap.replace(commonSnake, currentPoints + (size - i));
-            }
+        int size = positionStack.size();
+        for (int i = 0; i < size; i++) {
+            CommonSnake commonSnake = positionStack.pop();
+            int currentPoints = pointDistributionMap.get(commonSnake);
+            pointDistributionMap.replace(commonSnake, currentPoints + (size - i));
         }
     }
 
@@ -43,16 +37,13 @@ public class Round implements IGamePluginService, IPostEntityProcessingService, 
 
     @Override
     public void start(GameData gameData, World world) {
-        List<CommonSnake> commonSnakeList = world.getBoundedEntities(CommonSnake.class).stream().map(entity -> (CommonSnake) entity).collect(Collectors.toList());
-        if (world.getEntities(SpawnPoint.class).isEmpty()) {
-            spawnPoints = spawn.createSpawnPoints(commonSnakeList.size(), gameData);
-        }
-        commonSnakeList.forEach(commonSnake -> pointDistributionMap.putIfAbsent(commonSnake, 0));
-        spawn.spawn(spawnPoints, commonSnakeList);
+        spawn = new Spawn(gameData);
+        spawn.spawn(world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).peek(commonSnake -> pointDistributionMap.putIfAbsent(commonSnake, 0)).collect(Collectors.toList()));
     }
 
     @Override
     public void stop(GameData gameData, World world) {
+        new ArrayList<>(world.getEntities(SpawnPoint.class)).forEach(world::removeEntity);
     }
 
     @Override
@@ -68,7 +59,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService, 
             distributePoints();
             Executors.newSingleThreadScheduledExecutor().schedule(() -> {
                 startNewRound(world, commonSnakeList);
-                spawn.spawn(spawnPoints, commonSnakeList);
+                spawn.spawn(commonSnakeList);
                 roundEnded = false;
             }, 5, TimeUnit.SECONDS);
         }
@@ -76,6 +67,7 @@ public class Round implements IGamePluginService, IPostEntityProcessingService, 
 
     @Override
     public int getScore(final CommonSnake commonSnake) {
+        pointDistributionMap.putIfAbsent(commonSnake, 0);
         return pointDistributionMap.get(commonSnake);
     }
 }
