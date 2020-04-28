@@ -247,7 +247,7 @@ public class MapEditorState extends State {
         //Check if mouse is pressed, creates new entity based on the selected obstacle toggle button, uses the selected tile to specify the position part of the newly added obstacle.
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && mouseInPlayWindow() && selected()) {
             Entity newEntity = new Entity(buttonObstacleService.get(buttonGroup.getChecked()).getGameSprite());
-            Tile nearestTile = getGame().getWorld().getNearestTile(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY());
+            Tile nearestTile = getGame().getWorld().getNearestTile(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY(),getGame().getGameData());
             if (nearestTile != null) {
                 newEntity.add(nearestTile.getPositionPart());
                 getGame().getWorld().getTilesEntityMap().put(nearestTile, newEntity);
@@ -257,9 +257,11 @@ public class MapEditorState extends State {
         if (isGridToggled) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(Color.WHITE);
-            for (Tile tile : getGame().getWorld().getTiles()) {
-                shapeRenderer.line(tile.getPositionPart().getX(),tile.getPositionPart().getY(),tile.getPositionPart().getX(),tile.getPositionPart().getY()+Tile.length);
-                shapeRenderer.line(tile.getPositionPart().getX(),tile.getPositionPart().getY(),tile.getPositionPart().getX() + Tile.length,tile.getPositionPart().getY());
+            for (Tile[] tileRow : getGame().getWorld().getTiles()) {
+                for (Tile tile : tileRow) {
+                    shapeRenderer.line(tile.getPositionPart().getX(), tile.getPositionPart().getY(), tile.getPositionPart().getX(), tile.getPositionPart().getY() + Tile.length);
+                    shapeRenderer.line(tile.getPositionPart().getX(), tile.getPositionPart().getY(), tile.getPositionPart().getX() + Tile.length, tile.getPositionPart().getY());
+                }
             }
             shapeRenderer.end();
         }

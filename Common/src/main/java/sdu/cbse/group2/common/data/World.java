@@ -13,35 +13,35 @@ public class World {
     private final Map<UUID, Entity> entityMap = new ConcurrentHashMap<>();
     @Getter
     private final List<Text> textList = new CopyOnWriteArrayList<>();
-
+    @Getter
+    private final Map<Tile, Entity> tilesEntityMap = new ConcurrentHashMap<>();
     //TODO should tile be list or 2d array?
-    //private Tile[][] tiles;
     @Getter
-    private final Map<Tile,Entity> tilesEntityMap = new ConcurrentHashMap<>();
-    @Getter
-    private final List<Tile> tiles = new CopyOnWriteArrayList<>();
+    private Tile[][] tiles;
+//    @Getter
+//    private final List<Tile> tiles = new CopyOnWriteArrayList<>();
 
     public World(GameData gameData) {
         fillTiles(gameData);
     }
 
     private void fillTiles(GameData gameData) {
-        int height = gameData.getDisplayHeight();
-        for (int i = 0; i < height; i += Tile.length) {
-            for (int j = 0; j < height; j += Tile.length) {
-                Tile tile = new Tile(new PositionPart(i,j, 0));
-                tiles.add(tile);
+        int numOfTilesInRow = (int) Math.ceil((float) gameData.getDisplayHeight() / (float) Tile.length);
+        tiles = new Tile[numOfTilesInRow][numOfTilesInRow];
+        for (int i = 0; i < numOfTilesInRow; i++) {
+            for (int j = 0; j < numOfTilesInRow; j++) {
+                System.out.println(i * Tile.length + " " + j * Tile.length);
+                Tile tile = new Tile(new PositionPart(i * Tile.length, j * Tile.length, 0));
+                tiles[i][j] = tile;
             }
         }
     }
 
-    public Tile getNearestTile(int x, int y) {
-        for (Tile tile : tiles) {
-            if (tile.getPositionPart().getX() > x - Tile.length && tile.getPositionPart().getY() > y - Tile.length && tile.getPositionPart().getX() < x && tile.getPositionPart().getY() < y) {
-                return tile;
-            }
+    public Tile getNearestTile(int x, int y, GameData gameData) {
+        if(x < 0 && y < 0 && x > gameData.getDisplayWidth() && y > gameData.getDisplayWidth()) {
+            return null;
         }
-        return null;
+        return tiles[x / Tile.length][y / Tile.length];
     }
 
     public UUID addEntity(Entity entity) {
