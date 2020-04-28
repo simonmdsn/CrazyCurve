@@ -1,21 +1,28 @@
 package sdu.cbse.group2.round.spawn;
 
-import sdu.cbse.group2.common.data.Entity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import sdu.cbse.group2.common.data.GameData;
+import sdu.cbse.group2.commonsnake.CommonSnake;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+@RequiredArgsConstructor
 public class Spawn {
+
+    @Getter
+    private final List<SpawnPoint> spawnPoints = new ArrayList<>();
+    private final GameData gameData;
 
     private double degreesToRadians(int i) {
         return i * Math.PI / 180;
     }
 
-    public List<SpawnPoint> createSpawnPoints(int numberOfSpawnPoints, GameData gameData) {
+    public void computeSpawnPoints(int numberOfSpawnPoints) {
         //TODO consider data structure
-        List<SpawnPoint> spawnPoints = new ArrayList<>();
+        spawnPoints.clear();
         int x = gameData.getDisplayWidth() / 2;
         int y = gameData.getDisplayHeight() / 2;
         int radius;
@@ -29,11 +36,10 @@ public class Spawn {
             float yy = (float) (y + radius * Math.sin(radians));
             spawnPoints.add(new SpawnPoint(xx, yy, radians));
         }
-        return spawnPoints;
     }
 
-    public void spawn(List<SpawnPoint> spawnPoints, List<? extends Entity> entities) {
-        if (spawnPoints.size() != entities.size()) return;
+    public void spawn(List<CommonSnake> entities) {
+        if (spawnPoints.size() != entities.size()) computeSpawnPoints(entities.size());
         IntStream.range(0, spawnPoints.size()).forEach(i -> spawnPoints.get(i).setSpawnPointOnEntity(entities.get(i)));
     }
 }
