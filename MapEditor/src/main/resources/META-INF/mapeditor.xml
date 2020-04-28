@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.mapeditor.Mapeditor">
+    <implementation class="sdu.cbse.group2.mapeditor.MapEditorService"/>
+    <service>
+        <provide interface="sdu.cbse.group2.common.services.EditorService"/>
+    </service>
+</scr:component>

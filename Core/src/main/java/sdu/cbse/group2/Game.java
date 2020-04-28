@@ -11,10 +11,7 @@ import lombok.Getter;
 import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.services.IEntityProcessingService;
-import sdu.cbse.group2.common.services.IGamePluginService;
-import sdu.cbse.group2.common.services.IPostEntityProcessingService;
-import sdu.cbse.group2.common.services.TelnetSPI;
+import sdu.cbse.group2.common.services.*;
 import sdu.cbse.group2.gamestates.GameStateManager;
 import sdu.cbse.group2.gamestates.MenuState;
 import sdu.cbse.group2.gamestates.PlayState;
@@ -30,10 +27,12 @@ public class Game implements ApplicationListener {
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private Assets assets;
     private OrthographicCamera cam;
-    private World world = new World();
+    private World world;
     private GameStateManager gameStateManager = new GameStateManager();
     private List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private List<ObstacleService> obstacleServiceList = new CopyOnWriteArrayList<>();
 
+    private EditorService editorService;
     private TelnetSPI telnetSPI;
 
     public Game() {
@@ -57,6 +56,7 @@ public class Game implements ApplicationListener {
         assets = new Assets();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
+        world = new World(gameData);
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
@@ -128,5 +128,13 @@ public class Game implements ApplicationListener {
 
     public void setTelnetSPI(final TelnetSPI telnetSPI) {
         this.telnetSPI = telnetSPI;
+    }
+
+    public void setEditorService(final EditorService editorService) {
+        this.editorService = editorService;
+    }
+
+    public void addObstacleService(ObstacleService obstacleService) {
+        obstacleServiceList.add(obstacleService);
     }
 }

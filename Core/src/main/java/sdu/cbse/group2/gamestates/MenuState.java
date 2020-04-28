@@ -44,6 +44,18 @@ public class MenuState extends State {
         Drawable startDrawable = new TextureRegionDrawable(new TextureRegion(startBtnTexture));
         Drawable settingsDrawable = new TextureRegionDrawable(new TextureRegion(settingsBtnTexture));
         Drawable quitDrawable = new TextureRegionDrawable(new TextureRegion(quitBtnTexture));
+        Drawable mapEditorDrawable = new TextureRegionDrawable(new TextureRegion(titleTexture));
+        ImageButton mapEditorBtn = new ImageButton(mapEditorDrawable);
+        mapEditorBtn.setSize(200, 80);
+        mapEditorBtn.setPosition(100, 100);
+        mapEditorBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.getGameStateManager().set(new MapEditorState(game));
+                dispose();
+            }
+        });
+        stage.addActor(mapEditorBtn);
         startBtn = new ImageButton(startDrawable);
         settingsBtn = new ImageButton(settingsDrawable);
         quitBtn = new ImageButton(quitDrawable);
