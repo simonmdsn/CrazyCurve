@@ -20,7 +20,9 @@ public class PowerUpSpawner implements IEntityProcessingService {
         long numberOfPowerUps = world.getBoundedEntities(CommonPowerUp.class).size();
         if (numberOfPowerUps >= NUMBER_OF_POWER_UPS || commonPowerUps.isEmpty()) return;
         for (int i = 0; i < NUMBER_OF_POWER_UPS - numberOfPowerUps; i++) {
-            world.addEntity(commonPowerUps.get(ThreadLocalRandom.current().nextInt(commonPowerUps.size())).spawn());
+            CommonPowerUp commonPowerUp = commonPowerUps.get(ThreadLocalRandom.current().nextInt(commonPowerUps.size())).spawn();
+            commonPowerUp.setObstructing(false);
+            world.addEntity(commonPowerUp);
         }
     }
 
