@@ -20,7 +20,6 @@ public class EnemyControlSystem implements IEntityProcessingService {
             if (aiSPI != null) {
                 aiSPI.move(enemy, world, 10); //TODO Search radius?
             } else {
-                // TODO Update Movement Method
                 double randomMovement = (Math.random() * 100);
                 if (randomMovement < 40) {
                     movingPart.setLeft(true);

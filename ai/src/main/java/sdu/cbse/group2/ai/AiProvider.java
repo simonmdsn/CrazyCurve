@@ -8,6 +8,7 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.AiSPI;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,9 +42,9 @@ public class AiProvider implements AiSPI {
         }
 
         if (!goalList.isEmpty()) {
-            Node targetNode = goalList.get(0); //TODO Sort by closest coal/heuristic.
-            aStar.setSearchArea(nodes);
             final PositionPart positionPart = entity.getPart(PositionPart.class);
+            Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
+            aStar.setSearchArea(nodes);
             aStar.setStartNode(new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH));
             aStar.setTargetNode(targetNode);
             final List<Node> path = aStar.findPath();
@@ -56,33 +57,13 @@ public class AiProvider implements AiSPI {
         getTarget(entity, world, searchRadius).ifPresent(target -> {
             final Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
             final PositionPart part = entity.getPart(PositionPart.class);
-            final Vector startVector = new Vector(part.getX(), part.getY());
+            final Vector startVector = new Vector(part.getX(),  part.getY());
             final Vector inBetween = targetVector.subtract(startVector);
-            final Vector forward = startVector.getDirection(part.getRadians());
+            final Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
+            final double cross = inBetween.cross(direction);
             final MovingPart movingPart = entity.getPart(MovingPart.class);
-            final double v = inBetween.angle(forward);
-            System.out.println(inBetween.angle(forward));
-            if (v > Math.PI / 2) {
-                (movingPart).setRight(true);
-            }else (movingPart).setLeft(true);
-
-//            double radians = Math.atan2(targetVector.getX() - startVector.getX(), targetVector.getY() - startVector.getY());
-//            System.out.println("before " + radians);
-//            System.out.println(startVector + "   " + targetVector + "   " + radians);
-//            final MovingPart movingPart = entity.getPart(MovingPart.class);
-//            if (radians < 0) {
-//                (movingPart).setLeft(true);
-//            } else (movingPart).setRight(true);
+            movingPart.setRight(cross > 0);
+            movingPart.setLeft(cross <= 0);
         });
-
-//        final Vector inBetween = targetVector.subtract(startVector);
-//        final Vector forward = startVector.getDirection(part.getRadians());
-//        forward.angle()
-        //targetVector.
-        //startVector.
-        //tv subtract sv == inBetweenVector
-        //sv getDir == forward
-        //forward.angle(inBetween) / Math.PI * 180 == angle to dest.
-        //shouldTurnLeft = inbetween.crossProduct(forward) > 0;
     }
 }
