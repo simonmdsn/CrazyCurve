@@ -246,10 +246,9 @@ public class MapEditorState extends State {
         draw(spriteBatch);
         //Check if mouse is pressed, creates new entity based on the selected obstacle toggle button, uses the selected tile to specify the position part of the newly added obstacle.
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && mouseInPlayWindow() && selected()) {
-            Entity newEntity = new Entity(buttonObstacleService.get(buttonGroup.getChecked()).getGameSprite());
             Tile nearestTile = getGame().getWorld().getNearestTile(Gdx.input.getX(), getGame().getGameData().getDisplayHeight() - Gdx.input.getY());
             if (nearestTile != null) {
-                newEntity.add(nearestTile.getPositionPart());
+                Entity newEntity = buttonObstacleService.get(buttonGroup.getChecked()).create(nearestTile.getPositionPart().getX(), nearestTile.getPositionPart().getY());
                 nearestTile.getEntities().add(newEntity);
                 getGame().getWorld().addEntity(newEntity);
             }
