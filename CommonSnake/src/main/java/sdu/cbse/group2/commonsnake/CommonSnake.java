@@ -40,15 +40,9 @@ public class CommonSnake extends Entity {
 
     public void kill() {
         setAlive(false);
-        MovingPart movingPart = getPart(MovingPart.class);
-        movingPart.setMaxSpeed(0);
-        movingPart.setRotationSpeed(0);
     }
 
     public void revive(World world) {
-        MovingPart movingPart = getPart(MovingPart.class);
-        movingPart.setMaxSpeed(100);
-        movingPart.setRotationSpeed(3);
         deleteTail(world);
         setAlive(true);
     }

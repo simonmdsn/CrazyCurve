@@ -3,6 +3,7 @@ package sdu.cbse.group2.mapeditor.obstacles;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.services.ObstacleService;
+import sdu.cbse.group2.commonobstacle.CommonObstacle;
 
 public class Rock implements ObstacleService {
 
@@ -22,7 +23,7 @@ public class Rock implements ObstacleService {
         return "Rock";
     }
 
-    private class RockObstacle extends Obstacle {
+    private class RockObstacle extends CommonObstacle {
 
         public RockObstacle(GameSprite gameSprite, float x, float y) {
             super(gameSprite, x, y);

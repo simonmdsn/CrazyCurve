@@ -25,7 +25,7 @@ public class TailProcess implements IEntityProcessingService {
     }
 
     private void createTail(World world, CommonSnake snake) {
-        Tail tail = new Tail(snake.getTailSprite());
+        Tail tail = new Tail(snake.getTailSprite(), snake);
         PositionPart part = snake.getPart(PositionPart.class);
         tail.add(new PositionPart(part.getX(), part.getY(), part.getRadians()));
         snake.getTailList().add(tail);
