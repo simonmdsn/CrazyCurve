@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>sdu.cbse.group2</groupId>
-            <artifactId>spawn</artifactId>
+            <artifactId>common-obstacle</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

@@ -12,7 +12,6 @@ import java.util.Objects;
 
 public class MapEditorService implements EditorService {
 
-    private static final String FOLDER_PATH = "/maps";
     private static final String SER_SUFFIX = ".ser";
 
 

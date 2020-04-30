@@ -1,6 +1,5 @@
 package sdu.cbse.group2.turtlepowerup;
 
-import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
@@ -10,7 +9,6 @@ import sdu.cbse.group2.commonsnake.CommonSnake;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -20,9 +18,9 @@ public class TurtlePowerUp extends CommonPowerUp {
     private static final double SPEED_MULTIPLIER = -50;
     private ScheduledFuture<?> schedule;
 
-    public TurtlePowerUp(GameData gameData) {
+    public TurtlePowerUp(int x, int y) {
         super(new GameSprite("textures/powerup/turtle.png", 30, 30));
-        this.add(new PositionPart(ThreadLocalRandom.current().nextInt(gameData.getDisplayWidth()), ThreadLocalRandom.current().nextInt(gameData.getDisplayHeight()), 0));
+        this.add(new PositionPart(x, y, 0));
     }
 
     @Override
