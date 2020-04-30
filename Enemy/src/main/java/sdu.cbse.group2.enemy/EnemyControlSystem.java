@@ -4,20 +4,25 @@ import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.World;
 import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
+import sdu.cbse.group2.common.services.AiSPI;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 
 import java.util.stream.Collectors;
 
 public class EnemyControlSystem implements IEntityProcessingService {
 
+    private AiSPI aiSPI;
+
     @Override
     public void process(GameData gameData, World world) {
+
         for (Enemy enemy : world.getEntities(Enemy.class).stream().map(Enemy.class::cast).collect(Collectors.toList())) {
             if (enemy.isAlive()) {
-                PositionPart positionPart = enemy.getPart(PositionPart.class);
-                MovingPart movingPart = enemy.getPart(MovingPart.class);
-
-                // TODO Update Movement Method
+            PositionPart positionPart = enemy.getPart(PositionPart.class);
+            MovingPart movingPart = enemy.getPart(MovingPart.class);
+            if (aiSPI != null) {
+                aiSPI.move(enemy, world, 10); //TODO Search radius?
+            } else {
                 double randomMovement = (Math.random() * 100);
                 if (randomMovement < 40) {
                     movingPart.setLeft(true);
@@ -29,10 +34,14 @@ public class EnemyControlSystem implements IEntityProcessingService {
                     movingPart.setLeft(false);
                     movingPart.setRight(false);
                 }
-
+            }
                 movingPart.process(gameData, enemy);
                 positionPart.process(gameData, enemy);
             }
         }
+    }
+
+    public void setAiSPI(final AiSPI aiSPI) {
+        this.aiSPI = aiSPI;
     }
 }
