@@ -4,4 +4,8 @@
     <service>
         <provide interface="sdu.cbse.group2.common.services.IEntityProcessingService"/>
     </service>
+
+    <reference immedite="" bind="setAiSPI" cardinality="0..1"
+               interface="sdu.cbse.group2.common.services.AiSPI"
+               name="AiSPI" policy="dynamic"/>
 </scr:component>

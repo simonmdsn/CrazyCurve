@@ -1,0 +1,2 @@
+Bundle-SymbolicName: Ai
+Service-Component: META-INF/aiprovider.xml
