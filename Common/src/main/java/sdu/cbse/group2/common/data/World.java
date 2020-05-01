@@ -69,7 +69,7 @@ public class World {
         entityMap.remove(entity.getUuid());
         PositionPart part = entity.getPart(PositionPart.class);
         if (part != null) {
-            getNearestTile((int) part.getX(), (int) part.getY()).getEntities().remove(entity);
+            Optional.ofNullable(getNearestTile((int) part.getX(), (int) part.getY())).ifPresent(tile -> tile.getEntities().remove(entity));
         }
     }
 

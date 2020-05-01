@@ -90,6 +90,8 @@ public class SettingsState extends State {
                 while (!getGame().getGameStateManager().getStates().isEmpty()) {
                     getGame().getGameStateManager().pop();
                 }
+                getGame().getGameData().setDisplayWidth(1300);
+                getGame().getGamePluginList().forEach(iGamePluginService -> iGamePluginService.stop(getGame().getGameData(), getGame().getWorld()));
                 getGame().getGameStateManager().push(new MenuState(getGame()));
                 dispose();
             }

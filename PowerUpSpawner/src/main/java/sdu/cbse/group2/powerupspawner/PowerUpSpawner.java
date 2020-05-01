@@ -29,7 +29,7 @@ public class PowerUpSpawner implements IEntityProcessingService {
             }
         }
         if (powerUpEntities.size() >= NUMBER_OF_POWER_UPS || commonPowerUps.isEmpty()) return;
-        for (int i = 0; i < NUMBER_OF_POWER_UPS - commonPowerUps.size(); i++) {
+        for (int i = 0; i < NUMBER_OF_POWER_UPS - powerUpEntities.size(); i++) {
             PositionPart emptyTilePositionPart = world.getRandomEmptyTile().getPositionPart();
             CommonPowerUp commonPowerUp = commonPowerUps.get(ThreadLocalRandom.current().nextInt(commonPowerUps.size())).spawn((int)emptyTilePositionPart.getX(),(int)emptyTilePositionPart.getY());
             commonPowerUp.add(new TimerPart(getRandomExpirationTime(14,20)));
