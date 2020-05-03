@@ -69,6 +69,8 @@
         <module>Weapon</module>
         <module>Round</module>
         <module>Map</module>
+        <module>CommonObstacle</module>
+        <module>ai</module>
     </modules>
 
     <build>

@@ -8,12 +8,8 @@ import sdu.cbse.group2.commonpowerup.PowerUpSPI;
 
 public class SpeedPowerUpPlugin implements IGamePluginService, PowerUpSPI {
 
-
-    private GameData gameData;
-
     @Override
     public void start(GameData gameData, World world) {
-        this.gameData = gameData;
     }
 
     @Override
@@ -22,7 +18,7 @@ public class SpeedPowerUpPlugin implements IGamePluginService, PowerUpSPI {
     }
 
     @Override
-    public CommonPowerUp spawn() {
-        return new SpeedPowerUp(gameData);
+    public CommonPowerUp spawn(int x, int y) {
+        return new SpeedPowerUp(x,y);
     }
 }

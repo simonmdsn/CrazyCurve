@@ -3,6 +3,7 @@ package sdu.cbse.group2.mapeditor.obstacles;
 import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.services.ObstacleService;
+import sdu.cbse.group2.commonobstacle.CommonObstacle;
 
 //TODO different water textures?
 public class Water implements ObstacleService {
@@ -22,7 +23,7 @@ public class Water implements ObstacleService {
         return "Water";
     }
 
-    private static class WaterObstacle extends Obstacle {
+    private static class WaterObstacle extends CommonObstacle {
         public WaterObstacle(GameSprite gameSprite, float x, float y) {
             super(gameSprite, x, y);
         }

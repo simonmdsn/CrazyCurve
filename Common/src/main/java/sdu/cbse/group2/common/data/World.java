@@ -6,6 +6,7 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class World {
@@ -31,6 +32,15 @@ public class World {
         }
     }
 
+    public Tile getRandomEmptyTile() {
+        Tile tile = tiles[ThreadLocalRandom.current().nextInt(tiles.length - 1)][ThreadLocalRandom.current().nextInt(tiles.length - 1)];
+        if (tile.getEntities().isEmpty()) {
+            return tile;
+        } else {
+            return getRandomEmptyTile();
+        }
+    }
+
     public Tile getNearestTile(int x, int y) {
         try {
             return tiles[x / Tile.LENGTH][y / Tile.LENGTH];
@@ -53,7 +63,7 @@ public class World {
     }
 
     public void removeEntity(Entity entity) {
-        if(entity == null) {
+        if (entity == null) {
             return;
         }
         entityMap.remove(entity.getUuid());
