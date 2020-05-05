@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.assets.SoundPlayer">
+    <implementation class="sdu.cbse.group2.assets.SoundPlayer"/>
+    <service>
+        <provide interface="sdu.cbse.group2.common.services.SoundSPI"/>
+    </service>
+</scr:component>

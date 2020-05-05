@@ -2,6 +2,7 @@ package sdu.cbse.group2;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
@@ -34,6 +35,7 @@ public class Game implements ApplicationListener {
 
     private EditorService editorService;
     private TelnetSPI telnetSPI;
+    private Music music;
 
     public Game() {
         init();
@@ -61,6 +63,10 @@ public class Game implements ApplicationListener {
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
         cam.update();
+        music = Gdx.audio.newMusic(Gdx.files.internal("audio/glorious_morning.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.1f);
+        music.play();
 
         gameStateManager.push(new MenuState(this));
     }

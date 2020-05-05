@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.collision.soundplayer">
+    <implementation class="sdu.cbse.group2.collision.CollisionSound"/>
+
+    <reference bind="setSoundSPI" cardinality="1..1"
+               interface="sdu.cbse.group2.common.services.SoundSPI"
+               name="SoundSPI" policy="dynamic"/>
+</scr:component>
