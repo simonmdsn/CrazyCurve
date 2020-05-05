@@ -28,10 +28,9 @@ public class Weapon extends CommonWeapon {
         float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
 
-        //Sets weapons position
         MovingPart movingPart = shooter.getPart(MovingPart.class);
         add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
-        add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2),  by - (shooterGameSprite.getHeight() / 2), radians));
+        add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2), by - (shooterGameSprite.getHeight() / 2), radians));
         add(new TimerPart(2));
     }
 }

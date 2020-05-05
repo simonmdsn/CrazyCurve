@@ -16,7 +16,7 @@ public class WeaponProcessor implements IEntityProcessingService {
         for (Entity weaponEntity : world.getEntities(Weapon.class)) {
             Weapon weapon = (Weapon) weaponEntity;
             Entity shooter = world.getEntity(weapon.getShooterUUID());
-            if (shooter != null){
+            if (shooter != null) {
                 ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
 
                 TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
@@ -42,9 +42,9 @@ public class WeaponProcessor implements IEntityProcessingService {
         }
         world.getBoundedEntities(CommonSnake.class).forEach(snake -> {
             if (snake.getPart(ShootingPart.class) == null) {
-                    snake.getParts().put(ShootingPart.class, new ShootingPart());
-                    Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), snake);
-                    world.addEntity(weapon);
+                snake.getParts().put(ShootingPart.class, new ShootingPart());
+                Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), snake);
+                world.addEntity(weapon);
             }
         });
     }
