@@ -10,6 +10,7 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 @Setter
@@ -29,7 +30,7 @@ public class CommonSnake extends Entity {
         isAlive = true;
         activeTail = true;
         add(new MovingPart(getMaxSpeed(), getRotationSpeed()));
-        add(new PositionPart(0, 0, 0));
+        add(new PositionPart(0, ThreadLocalRandom.current().nextInt(1000), 0));
         this.name = name;
     }
 

@@ -4,10 +4,7 @@ import sdu.cbse.group2.common.data.Entity;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.MovingPart;
-import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.data.entityparts.ShootingPart;
-import sdu.cbse.group2.common.data.entityparts.TimerPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 
@@ -20,31 +17,9 @@ public class WeaponPlugin implements IGamePluginService {
         List<Entity> entities = world.getBoundedEntities(CommonSnake.class);
         entities.forEach(snake -> {
             snake.getParts().put(ShootingPart.class, new ShootingPart());
-            Weapon weapon = createWeapon(snake);
+            Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), snake);
             world.addEntity(weapon);
         });
-    }
-
-    public Weapon createWeapon(Entity shooter) {
-        PositionPart shooterPosition = shooter.getPart(PositionPart.class);
-        GameSprite shooterGameSprite = shooter.getGameSprite();
-
-        float x = shooterPosition.getX();
-        float y = shooterPosition.getY();
-        float radians = shooterPosition.getRadians();
-
-        Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), shooter.getUuid());
-        weapon.setRadius(14);
-
-        float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
-        float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
-
-        //Sets weapons position
-        MovingPart movingPart = shooter.getPart(MovingPart.class);
-        weapon.add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
-        weapon.add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2),  by - (shooterGameSprite.getHeight() / 2), radians));
-        weapon.add(new TimerPart(2));
-        return weapon;
     }
 
     @Override

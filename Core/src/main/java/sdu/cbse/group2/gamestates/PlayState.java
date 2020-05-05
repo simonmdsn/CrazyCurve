@@ -56,7 +56,6 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
-        //Reset everything in the game
     }
 
     private void draw(SpriteBatch spriteBatch) {
