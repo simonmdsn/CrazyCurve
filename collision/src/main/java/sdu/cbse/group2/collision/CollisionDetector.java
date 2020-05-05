@@ -26,7 +26,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 for (CommonSnake commonSnakeInner : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
                     List<Tail> tail = commonSnakeInner.getTailList();
                     for (Tail tailPart : tail) {
-                        if (tail.size() > 5 && !IntStream.rangeClosed(tail.size() - 6, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
+                        if (tail.size() > 1 && !IntStream.rangeClosed(tail.size() - 2, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
                             if (checkForCollision(commonSnakeOuter, tailPart)) {
                                 hasCollided = true;
                                 commonSnakeOuter.kill();
