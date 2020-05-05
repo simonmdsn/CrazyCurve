@@ -45,11 +45,21 @@ public class AiProvider implements AiSPI {
             final PositionPart positionPart = entity.getPart(PositionPart.class);
             Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
             aStar.setSearchArea(nodes);
-            aStar.setStartNode(new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH));
+            final Node currentPosition = new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH);
+            aStar.setStartNode(currentPosition);
             aStar.setTargetNode(targetNode);
             final List<Node> path = aStar.findPath();
-            return Optional.of(path.get(path.size() - 1));
-        } else return Optional.empty();
+            path.forEach(node -> AiDrawer.getDrawSPI().drawCircle(node.getRow() * Tile.LENGTH, node.getCol() * Tile.LENGTH, 3));
+            if (!path.isEmpty()) {
+                Node target;
+                int i = 0;
+                do {
+                    target = path.get(i++);
+                } while (currentPosition.equals(target) && i < path.size());
+                return Optional.of(path.get(Math.min(path.size() - 1, i + 3)));
+            }
+        }
+        return Optional.empty();
     }
 
     @Override

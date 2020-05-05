@@ -263,6 +263,10 @@ public class MapEditorState extends State {
                 }
             }
             shapeRenderer.end();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.circle(100, 100, 100);
+            shapeRenderer.end();
         }
     }
 

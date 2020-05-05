@@ -34,16 +34,12 @@ public class World {
 
     public Tile getRandomEmptyTile() {
         Tile tile = tiles[ThreadLocalRandom.current().nextInt(tiles.length - 1)][ThreadLocalRandom.current().nextInt(tiles.length - 1)];
-        if (tile.getEntities().isEmpty()) {
-            return tile;
-        } else {
-            return getRandomEmptyTile();
-        }
+        return tile.getEntities().isEmpty() ? tile : getRandomEmptyTile();
     }
 
     public Tile getNearestTile(int x, int y) {
         try {
-            return tiles[x / Tile.LENGTH][y / Tile.LENGTH];
+            return tiles[Math.max(0, x / Tile.LENGTH)][Math.max(0,y / Tile.LENGTH)];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }

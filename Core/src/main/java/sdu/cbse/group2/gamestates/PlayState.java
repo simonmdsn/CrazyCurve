@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 public class PlayState extends State {
+
     private boolean paused;
 
     public PlayState(Game game) {

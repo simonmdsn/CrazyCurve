@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import lombok.Getter;
 import sdu.cbse.group2.assets.Assets;
 import sdu.cbse.group2.common.data.GameData;
@@ -26,6 +28,7 @@ public class Game implements ApplicationListener {
     private final GameData gameData = new GameData();
     private final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private ShapeRenderer shapeRenderer;
     private Assets assets;
     private OrthographicCamera cam;
     private World world;
@@ -51,6 +54,8 @@ public class Game implements ApplicationListener {
         cfg.resizable = false;
 
         new LwjglApplication(this, cfg);
+
+        Gdx.app.postRunnable(() -> shapeRenderer =  new ShapeRenderer());
     }
 
     @Override
@@ -81,6 +86,11 @@ public class Game implements ApplicationListener {
         gameData.getKeys().update();
         gameStateManager.update(Gdx.graphics.getDeltaTime());
         gameStateManager.render((SpriteBatch) assets.getBatch());
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.RED);
+        LibGDXDraw.POINT_SET.forEach(point -> shapeRenderer.circle(point.getX(), point.getY(), point.getRadius()));
+        shapeRenderer.end();
+        LibGDXDraw.POINT_SET.clear();
     }
 
 

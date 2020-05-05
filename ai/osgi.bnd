@@ -1,2 +1,2 @@
 Bundle-SymbolicName: Ai
-Service-Component: META-INF/aiprovider.xml
+Service-Component: META-INF/aiprovider.xml, META-INF/aidrawer.xml

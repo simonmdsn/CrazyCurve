@@ -1,2 +1,2 @@
 Bundle-SymbolicName: Core
-Service-Component: META-INF/core.xml, META-INF/soundplayer.xml
+Service-Component: META-INF/core.xml, META-INF/soundplayer.xml, META-INF/libgdxdraw.xml

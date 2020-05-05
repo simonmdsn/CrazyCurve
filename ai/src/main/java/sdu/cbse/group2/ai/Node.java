@@ -42,8 +42,8 @@ public class Node {
     }
 
     @Override
-    public boolean equals(Object arg0) {
-        Node other = (Node) arg0;
+    public boolean equals(Object o) {
+        Node other = (Node) o;
         return row == other.row && col == other.col;
     }
 
