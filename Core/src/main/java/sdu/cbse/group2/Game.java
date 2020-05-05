@@ -65,7 +65,7 @@ public class Game implements ApplicationListener {
         cam.update();
         music = Gdx.audio.newMusic(Gdx.files.internal("audio/glorious_morning.mp3"));
         music.setLooping(true);
-        music.setVolume(0.1f);
+        music.setVolume(0.01f);
         music.play();
 
         gameStateManager.push(new MenuState(this));

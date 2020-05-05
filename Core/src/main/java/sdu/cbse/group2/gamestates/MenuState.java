@@ -27,6 +27,7 @@ public class MenuState extends State {
     private final Texture settingsBtnTexture;
     private final Texture quitBtnTexture;
     private final Texture titleTexture;
+    private final Texture mapEditorTexture;
     private final Button startBtn, settingsBtn, quitBtn;
     private final TextField nameTextField;
     private final Stage stage;
@@ -40,14 +41,15 @@ public class MenuState extends State {
         settingsBtnTexture = getGame().getAssets().getAssetManager().get("textures/menustate/settings button.PNG");
         quitBtnTexture = getGame().getAssets().getAssetManager().get("textures/menustate/quit button.PNG");
         titleTexture = getGame().getAssets().getAssetManager().get("textures/menustate/title.png");
+        mapEditorTexture = getGame().getAssets().getAssetManager().get("textures/menustate/map_editor.png");
         //Initiate buttons
         Drawable startDrawable = new TextureRegionDrawable(new TextureRegion(startBtnTexture));
         Drawable settingsDrawable = new TextureRegionDrawable(new TextureRegion(settingsBtnTexture));
         Drawable quitDrawable = new TextureRegionDrawable(new TextureRegion(quitBtnTexture));
-        Drawable mapEditorDrawable = new TextureRegionDrawable(new TextureRegion(titleTexture));
+        Drawable mapEditorDrawable = new TextureRegionDrawable(new TextureRegion(mapEditorTexture));
         ImageButton mapEditorBtn = new ImageButton(mapEditorDrawable);
         mapEditorBtn.setSize(200, 80);
-        mapEditorBtn.setPosition(100, 100);
+        mapEditorBtn.setPosition((getGame().getGameData().getDisplayWidth() / 2) - quitBtnTexture.getWidth()/2, getGame().getGameData().getDisplayHeight() / 2 - 200);
         mapEditorBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -64,7 +66,7 @@ public class MenuState extends State {
         quitBtn.setSize(200, 80);
         startBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - startBtn.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2);
         settingsBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - quitBtnTexture.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 - 100);
-        quitBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - settingsBtnTexture.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 - 200);
+        quitBtn.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - settingsBtnTexture.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 - 300);
         nameTextField = new TextField("", new TextField.TextFieldStyle(new BitmapFont(), Color.WHITE, null, null, new TextureRegionDrawable(new TextureRegion((Texture) getGame().getAssets().getAssetManager().get("textures/menustate/inputfield.png")))));
         nameTextField.setSize(100, 40);
         nameTextField.setPosition(((getGame().getGameData().getDisplayWidth() / 2) - nameTextField.getWidth() / 2), getGame().getGameData().getDisplayHeight() / 2 + 100);
