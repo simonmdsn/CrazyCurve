@@ -1,3 +1,2 @@
 Bundle-SymbolicName: Collision
-Bundle-ActivationPolicy: lazy
-Service-Component: META-INF/entitypostprocessingservice.xml
+Service-Component: META-INF/entitypostprocessingservice.xml, META-INF/soundplayer.xml

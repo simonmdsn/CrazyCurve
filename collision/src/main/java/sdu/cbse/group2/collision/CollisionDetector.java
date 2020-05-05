@@ -18,7 +18,6 @@ import java.util.stream.IntStream;
 public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-
         for (CommonSnake commonSnakeOuter : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
             boolean hasCollided = false;
             if (commonSnakeOuter.isAlive()) {
@@ -29,7 +28,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         if (tail.size() > 1 && !IntStream.rangeClosed(tail.size() - 2, tail.size()).boxed().collect(Collectors.toList()).contains(tail.indexOf(tailPart))) {
                             if (checkForCollision(commonSnakeOuter, tailPart)) {
                                 hasCollided = true;
-                                commonSnakeOuter.kill();
+                                kill(commonSnakeOuter);
                                 break;
                             }
                         }
@@ -41,7 +40,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 for (CommonObstacle obstacle : world.getBoundedEntities(CommonObstacle.class).stream().map(CommonObstacle.class::cast).collect(Collectors.toList())) {
                     if (checkForCollision(commonSnakeOuter, obstacle)) {
                         hasCollided = true;
-                        commonSnakeOuter.kill();
+                        kill(commonSnakeOuter);
                         break;
                     }
                 }
@@ -54,7 +53,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                             //If weapon hits a snake's head
                             if (!((CommonWeapon) weapon).getShooterUUID().equals(commonSnakeOuter.getUuid()) && checkForCollision(weapon, commonSnakeOuter)) {
                                 hasCollided = true;
-                                commonSnakeOuter.kill();
+                                kill(commonSnakeOuter);
                                 break;
                             }
                             //If weapon hits a snake's tail
@@ -83,7 +82,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 if (!hasCollided) {
                     PositionPart pos = commonSnakeOuter.getPart(PositionPart.class);
                     if (pos.getX() > gameData.getDisplayWidth() - 20 || pos.getX() < 0 || pos.getY() > gameData.getDisplayWidth() || pos.getY() < 0) {
-                        commonSnakeOuter.kill();
+                        kill(commonSnakeOuter);
                     }
                 }
             }
@@ -100,6 +99,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
             return true;
         }
         return false;
+    }
+
+    private void kill(CommonSnake commonSnake) {
+        CollisionSound.getSoundSPI().playSound("audio/death.mp3",.5f,false);
+        commonSnake.kill();
     }
 }
 
