@@ -37,7 +37,7 @@ public class TailProcess implements IEntityProcessingService {
         for (CommonSnake commonSnake : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
             if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE) {
                 if (commonSnake.isActiveTail()) {
-                    if (ThreadLocalRandom.current().nextInt(1000) > 910) {
+                    if (ThreadLocalRandom.current().nextInt(1000) > 950) {
                         disableActiveTail(commonSnake);
                     } else createTail(world, commonSnake);
                 }
@@ -49,9 +49,9 @@ public class TailProcess implements IEntityProcessingService {
     private void disableActiveTail(CommonSnake snake) {
         snake.setActiveTail(false);
         Executors.newSingleThreadScheduledExecutor().schedule(() -> {
-            snake.setActiveTail(true);
-        }
-        //The delay is set to the normal speed divided by the current speed mupltiplied with 4 times the normal speed to get the appropriate hole sizes independently of snake speed
-        , (long)((snake.getMaxSpeed() / ((MovingPart)snake.getPart(MovingPart.class)).getMaxSpeed() * (4 * snake.getMaxSpeed()))), TimeUnit.MILLISECONDS);
+                    snake.setActiveTail(true);
+                }
+                //The delay is set to the normal speed divided by the current speed mupltiplied with 4 times the normal speed to get the appropriate hole sizes independently of snake speed
+                , (long) ((snake.getMaxSpeed() / ((MovingPart) snake.getPart(MovingPart.class)).getMaxSpeed() * (6 * snake.getMaxSpeed()))), TimeUnit.MILLISECONDS);
     }
 }

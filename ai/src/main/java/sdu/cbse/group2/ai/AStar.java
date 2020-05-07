@@ -5,26 +5,12 @@ import java.util.*;
 public class AStar {
 
     public static final int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost
-    public static final int DEFAULT_DIAGONAL_COST = 14;
 
     private Node[][] searchArea;
     private PriorityQueue<Node> openList = new PriorityQueue<>(Comparator.comparingInt(Node::getTotalCost));
     private Set<Node> closedSet = new HashSet<>();
     private Node startNode;
     private Node targetNode;
-
-//    private void setNodes(int rows, int cols) {
-//        for (int i = 0; i < rows; i++) {
-//            for (int j = 0; j < cols; j++) {
-//                Node node = new Node(i, j);
-//                if (searchArea[i][j].isObstructed()) {
-//                    node.setObstructed(true);
-//                }
-//                node.calculateHeuristic(getTargetNode());
-//                searchArea[i][j] = node;
-//            }
-//        }
-//    }
 
     public List<Node> findPath() {
         openList.add(startNode);
@@ -62,12 +48,6 @@ public class AStar {
         int col = currentNode.getCol();
         int lowerRow = row + 1;
         if (lowerRow < getSearchArea().length) {
-            if (col - 1 >= 0) {
-                checkNode(currentNode, col - 1, lowerRow, DEFAULT_DIAGONAL_COST); // Comment this line if diagonal movements are not allowed
-            }
-            if (col + 1 < getSearchArea()[0].length) {
-                checkNode(currentNode, col + 1, lowerRow, DEFAULT_DIAGONAL_COST); // Comment this line if diagonal movements are not allowed
-            }
             checkNode(currentNode, col, lowerRow, DEFAULT_HV_COST);
         }
     }
@@ -75,12 +55,11 @@ public class AStar {
     private void addAdjacentMiddleRow(Node currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
-        int middleRow = row;
         if (col - 1 >= 0) {
-            checkNode(currentNode, col - 1, middleRow, DEFAULT_HV_COST);
+            checkNode(currentNode, col - 1, row, DEFAULT_HV_COST);
         }
         if (col + 1 < getSearchArea()[0].length) {
-            checkNode(currentNode, col + 1, middleRow, DEFAULT_HV_COST);
+            checkNode(currentNode, col + 1, row, DEFAULT_HV_COST);
         }
     }
 
@@ -89,12 +68,6 @@ public class AStar {
         int col = currentNode.getCol();
         int upperRow = row - 1;
         if (upperRow >= 0) {
-            if (col - 1 >= 0) {
-                checkNode(currentNode, col - 1, upperRow, DEFAULT_DIAGONAL_COST); // Comment this if diagonal movements are not allowed
-            }
-            if (col + 1 < getSearchArea()[0].length) {
-                checkNode(currentNode, col + 1, upperRow, DEFAULT_DIAGONAL_COST); // Comment this if diagonal movements are not allowed
-            }
             checkNode(currentNode, col, upperRow, DEFAULT_HV_COST);
         }
     }

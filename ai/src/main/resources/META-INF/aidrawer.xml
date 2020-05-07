@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="sdu.cbse.group2.aidrawer">
+    <implementation class="sdu.cbse.group2.ai.AiDrawer"/>
+
+    <reference bind="setDrawSPI" cardinality="1..1"
+               interface="sdu.cbse.group2.common.services.DrawSPI"
+               name="setDrawSPI" policy="dynamic"/>
+</scr:component>

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import lombok.Getter;
 import lombok.Setter;
 import sdu.cbse.group2.Game;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 public class PlayState extends State {
+
     private boolean paused;
 
     public PlayState(Game game) {
