@@ -31,6 +31,7 @@ public class AiProvider implements AiSPI {
             for (int c = 0; c < cols; c++) {
                 Tile tile = tiles[r][c];
                 final PositionPart positionPart = tile.getPositionPart();
+                AiDrawer.getDrawSPI().drawCircle((int) positionPart.getX(), (int) positionPart.getY(), 10);
                 Node node = new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH);
                 node.setObstructed(tile.isObstructing());
                 if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
@@ -67,7 +68,7 @@ public class AiProvider implements AiSPI {
         getTarget(entity, world, searchRadius).ifPresent(target -> {
             final Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
             final PositionPart part = entity.getPart(PositionPart.class);
-            final Vector startVector = new Vector(part.getX(),  part.getY());
+            final Vector startVector = new Vector(part.getX(), part.getY());
             final Vector inBetween = targetVector.subtract(startVector);
             final Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
             final double cross = inBetween.cross(direction);
