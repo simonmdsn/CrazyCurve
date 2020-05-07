@@ -3,7 +3,6 @@ package sdu.cbse.group2.player;
 import sdu.cbse.group2.common.data.GameData;
 import sdu.cbse.group2.common.data.GameSprite;
 import sdu.cbse.group2.common.data.World;
-import sdu.cbse.group2.common.data.entityparts.ShootingPart;
 import sdu.cbse.group2.common.services.IGamePluginService;
 
 import java.util.stream.Stream;
@@ -24,9 +23,7 @@ public class PlayerPlugin implements IGamePluginService {
     }
 
     private Player createPlayerSnake(GameData gameData) {
-        final Player player = new Player(new GameSprite("textures/player/player.png", 30, 30, 1), new GameSprite("textures/player/tail.png", 30, 30), gameData.getPlayerName());
-        player.add(new ShootingPart());
-        return player;
+        return new Player(new GameSprite("textures/player/player.png", 30, 30, 1), new GameSprite("textures/player/tail.png", 30, 30), gameData.getPlayerName());
     }
 }
 

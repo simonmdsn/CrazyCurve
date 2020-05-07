@@ -24,10 +24,6 @@ public class ShootingPart implements EntityPart{
         coolDown -= delta;
     }
 
-    public boolean canShoot() {
-        return coolDown <= 0;
-    }
-
     @Override
     public void process(GameData gameData, Entity entity) {
         reduceCoolDown(gameData.getDelta());

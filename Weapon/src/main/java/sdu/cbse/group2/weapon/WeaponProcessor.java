@@ -13,16 +13,16 @@ import sdu.cbse.group2.commonsnake.CommonSnake;
 public class WeaponProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity weaponEntity : world.getEntities(Weapon.class)) {
+        world.getEntities(Weapon.class).forEach(weaponEntity -> {
             Weapon weapon = (Weapon) weaponEntity;
             Entity shooter = world.getEntity(weapon.getShooterUUID());
             if (shooter != null) {
                 ShootingPart shootingPart = shooter.getPart(ShootingPart.class);
-
                 TimerPart weaponTimerPart = weapon.getPart(TimerPart.class);
 
                 if (shootingPart.isShooting() && shootingPart.getCoolDown() <= 0) {
-                    spawnAttack(weapon);
+                    weapon.setGameSprite(new GameSprite("textures/items/tongue-long.png", 60, 60));
+                    weapon.setShooting(true);
                     shootingPart.setCoolDown(5);
                     weaponTimerPart.setExpiration(2);
                 }
@@ -39,14 +39,8 @@ public class WeaponProcessor implements IEntityProcessingService {
             } else {
                 world.removeEntity(weaponEntity);
             }
-        }
-        world.getBoundedEntities(CommonSnake.class).forEach(snake -> {
-            if (snake.getPart(ShootingPart.class) == null) {
-                snake.getParts().put(ShootingPart.class, new ShootingPart());
-                Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), snake);
-                world.addEntity(weapon);
-            }
         });
+        addWeaponToNewCommonSnakes(world);
     }
 
     private void processPosition(Entity shooter, Weapon weapon) {
@@ -74,8 +68,13 @@ public class WeaponProcessor implements IEntityProcessingService {
         weaponPosition.setRadians(shooterPosition.getRadians());
     }
 
-    private void spawnAttack(Weapon weapon) {
-        weapon.setGameSprite(new GameSprite("textures/items/tongue-long.png", 60, 60));
-        weapon.setShooting(true);
+    private void addWeaponToNewCommonSnakes(World world) {
+        world.getBoundedEntities(CommonSnake.class).forEach(snake -> {
+            if (snake.getPart(ShootingPart.class) == null) {
+                snake.getParts().put(ShootingPart.class, new ShootingPart());
+                Weapon weapon = new Weapon(new GameSprite("textures/items/tongue-short.png", 60, 60), snake);
+                world.addEntity(weapon);
+            }
+        });
     }
 }

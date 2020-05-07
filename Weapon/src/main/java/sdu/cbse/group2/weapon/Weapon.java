@@ -23,8 +23,6 @@ public class Weapon extends CommonWeapon {
         float y = shooterPosition.getY();
         float radians = shooterPosition.getRadians();
 
-        setRadius(14);
-
         float bx = (float) (x + (shooterGameSprite.getWidth() / 2) * Math.cos(radians));
         float by = (float) (y + (shooterGameSprite.getHeight() / 2) * Math.sin(radians));
 
@@ -32,5 +30,7 @@ public class Weapon extends CommonWeapon {
         add(new MovingPart(movingPart.getMaxSpeed(), movingPart.getRotationSpeed()));
         add(new PositionPart(bx - (shooterGameSprite.getWidth() / 2), by - (shooterGameSprite.getHeight() / 2), radians));
         add(new TimerPart(2));
+
+        setRadius(14);
     }
 }
