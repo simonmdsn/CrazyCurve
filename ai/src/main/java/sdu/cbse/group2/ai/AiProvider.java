@@ -61,7 +61,7 @@ public class AiProvider implements AiSPI {
                 do {
                     target = path.get(i++);
                 } while (currentPosition.equals(target) && i < path.size());
-                return Optional.of(path.get(Math.min(path.size() - 1, i + 3)));
+                return Optional.of(path.get(Math.min(path.size() - 1, i + 1)));
             }
         }
         return Optional.empty();
