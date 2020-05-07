@@ -31,9 +31,14 @@ public class AiProvider implements AiSPI {
             for (int c = 0; c < cols; c++) {
                 Tile tile = tiles[r][c];
                 final PositionPart positionPart = tile.getPositionPart();
-                AiDrawer.getDrawSPI().drawCircle((int) positionPart.getX(), (int) positionPart.getY(), 10);
-                Node node = new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH);
+                Node node = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
+                if (r == 0 || c == cols - 1 || c == 0 || r == rows - 1) {
+                    node.setObstructed(true);
+                }
                 node.setObstructed(tile.isObstructing());
+//                if (node.isObstructed()) {
+//                    AiDrawer.getDrawSPI().drawCircle(Math.round(positionPart.getX()),Math.round(positionPart.getY()), 10);
+//                }
                 if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
                     goalList.add(node);
                 }
@@ -46,7 +51,7 @@ public class AiProvider implements AiSPI {
             final PositionPart positionPart = entity.getPart(PositionPart.class);
             Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
             aStar.setSearchArea(nodes);
-            final Node currentPosition = new Node((int) positionPart.getX() / Tile.LENGTH, (int) positionPart.getY() / Tile.LENGTH);
+            final Node currentPosition = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
             aStar.setStartNode(currentPosition);
             aStar.setTargetNode(targetNode);
             final List<Node> path = aStar.findPath();
@@ -57,7 +62,7 @@ public class AiProvider implements AiSPI {
                 do {
                     target = path.get(i++);
                 } while (currentPosition.equals(target) && i < path.size());
-                return Optional.of(path.get(Math.min(path.size() - 1, i + 3)));
+                return Optional.of(path.get(Math.min(path.size() - 1, i + 1)));
             }
         }
         return Optional.empty();

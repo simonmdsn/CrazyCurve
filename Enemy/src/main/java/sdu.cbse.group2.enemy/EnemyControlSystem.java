@@ -8,7 +8,6 @@ import sdu.cbse.group2.common.data.entityparts.TimerPart;
 import sdu.cbse.group2.common.services.AiSPI;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class EnemyControlSystem implements IEntityProcessingService {
@@ -42,9 +41,9 @@ public class EnemyControlSystem implements IEntityProcessingService {
                 }
                 aiTimerPart.process(gameData, enemy);
                 movingPart.process(gameData, enemy);
-                Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().remove(enemy));
+            //    Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().remove(enemy));
                 positionPart.process(gameData, enemy);
-                Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().add(enemy));
+                //   Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().add(enemy));
 
             }
         }

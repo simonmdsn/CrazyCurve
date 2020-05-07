@@ -33,13 +33,13 @@ public class World {
     }
 
     public Tile getRandomEmptyTile() {
-        Tile tile = tiles[ThreadLocalRandom.current().nextInt(tiles.length - 1)][ThreadLocalRandom.current().nextInt(tiles.length - 1)];
+        Tile tile = tiles[ThreadLocalRandom.current().nextInt(1, tiles.length - 2)][ThreadLocalRandom.current().nextInt(1, tiles.length - 2)];
         return tile.getEntities().isEmpty() ? tile : getRandomEmptyTile();
     }
 
     public Tile getNearestTile(int x, int y) {
         try {
-            return tiles[Math.max(0, x / Tile.LENGTH)][Math.max(0,y / Tile.LENGTH)];
+            return tiles[Math.max(0, Math.round((float) x / ((float) Tile.LENGTH)))][Math.max(0, Math.round(((float) y / ((float) Tile.LENGTH))))];
         } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
@@ -49,7 +49,7 @@ public class World {
         entityMap.put(entity.getUuid(), entity);
         PositionPart part = entity.getPart(PositionPart.class);
         if (part != null) {
-            getNearestTile((int) part.getX(), (int) part.getY()).getEntities().add(entity);
+            getNearestTile(Math.round(part.getX()), Math.round(part.getY())).getEntities().add(entity);
         }
         return entity.getUuid();
     }
@@ -65,7 +65,7 @@ public class World {
         entityMap.remove(entity.getUuid());
         PositionPart part = entity.getPart(PositionPart.class);
         if (part != null) {
-            Optional.ofNullable(getNearestTile((int) part.getX(), (int) part.getY())).ifPresent(tile -> tile.getEntities().remove(entity));
+            Optional.ofNullable(getNearestTile(Math.round(part.getX()), Math.round(part.getY()))).ifPresent(tile -> tile.getEntities().remove(entity));
         }
     }
 
