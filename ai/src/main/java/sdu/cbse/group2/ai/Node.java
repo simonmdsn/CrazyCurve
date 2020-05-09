@@ -3,6 +3,9 @@ package sdu.cbse.group2.ai;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import sdu.cbse.group2.common.data.entityparts.PositionPart;
+
+import java.util.Comparator;
 
 @Getter
 @Setter
@@ -16,10 +19,16 @@ public class Node {
     private int totalCost;
     private boolean obstructed;
     private Node parent;
+    private double closestObstructingDistance;
 
-    public void calculateHeuristic(Node finalNode) {
-        heuristicCost = Math.abs(finalNode.row - row) + Math.abs(finalNode.col - col);
+    public void calculateHeuristic(boolean hasPowerup) {
+        double heuristic = closestObstructingDistance ;
+        if(!hasPowerup) {
+            heuristic += 0;
+        }
+        this.heuristicCost = (int) heuristic;
     }
+
 
     public void setNodeData(Node currentNode, int cost) {
         int pathCost = currentNode.pathCost + cost;
@@ -51,4 +60,5 @@ public class Node {
     public String toString() {
         return "Node [row=" + row + ", col=" + col + "]";
     }
+
 }

@@ -7,10 +7,7 @@ import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.AiSPI;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class AiProvider implements AiSPI {
 
@@ -32,26 +29,56 @@ public class AiProvider implements AiSPI {
                 Tile tile = tiles[r][c];
                 final PositionPart positionPart = tile.getPositionPart();
                 Node node = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
+                node.setObstructed(tile.isObstructing());
                 if (r == 0 || c == cols - 1 || c == 0 || r == rows - 1) {
                     node.setObstructed(true);
                 }
-                node.setObstructed(tile.isObstructing());
 //                if (node.isObstructed()) {
 //                    AiDrawer.getDrawSPI().drawCircle(Math.round(positionPart.getX()),Math.round(positionPart.getY()), 10);
 //                }
-                if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
-                    goalList.add(node);
-                }
+                //if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
+                //Adding regardless for a streamable object
+                //}
                 //TODO Head goal. Safe Tile goal.
                 nodes[r][c] = node;
             }
         }
+        //Quad loop to set how close each node is to an obstructing entity
+        final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                //If it is obstructed it is not a potential goal tile, and we can skip it
+                if (!nodes[r][c].isObstructed()) {
+                    //Some high value that will not overflow when adding to it
+                    double closestDistance = 10000000;
+                    //For each non-obstructing node we need to check the distance to each other obstructing node and set the lowest one as closestObstructing
+                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart();
+                    for (int checkR = 0; checkR < rows; checkR++) {
+                        for (int checkC = 0; checkC < cols; checkC++) {
+                            //We want to find the closest obstructing, so if it isn't obstructing, we can skip it
+                            if (nodes[checkR][checkC].isObstructed()) {
+                                PositionPart checkTilePosPart = tiles[checkC][checkR].getPositionPart();
+                                //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
+                                double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
+                                double distanceToCurrentLocation =
+                                if (distanceToObstructing < closestDistance) {
+                                    closestDistance = distance;
+                                }
+                            }
+                        }
+                    }
+                    nodes[r][c].setClosestObstructingDistance(closestDistance);
+                    //Now calculate the heuristic so we can later compare on this to find the best target goal
+                    nodes[r][c].calculateHeuristic(!tiles[r][c].getEntities().isEmpty() && tiles[r][c].getEntities().stream().noneMatch(Entity::isObstructing));
+                    goalList.add(nodes[r][c]);
+                }
+            }
+        }
 
-        if (!goalList.isEmpty()) {
-            final PositionPart positionPart = entity.getPart(PositionPart.class);
-            Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
+            Node targetNode = goalList.stream().max(Comparator.comparingInt(Node::getHeuristicCost)).orElse(goalList.get(0));
             aStar.setSearchArea(nodes);
-            final Node currentPosition = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
+            final Node currentPosition = new Node(Math.round(entityPositionPart.getX() / Tile.LENGTH), Math.round(entityPositionPart.getY() / Tile.LENGTH));
+            System.out.println(targetNode.getRow() + " " + targetNode.getCol());
             aStar.setStartNode(currentPosition);
             aStar.setTargetNode(targetNode);
             final List<Node> path = aStar.findPath();
@@ -64,7 +91,7 @@ public class AiProvider implements AiSPI {
                 } while (currentPosition.equals(target) && i < path.size());
                 return Optional.of(path.get(Math.min(path.size() - 1, i + 1)));
             }
-        }
+
         return Optional.empty();
     }
 
