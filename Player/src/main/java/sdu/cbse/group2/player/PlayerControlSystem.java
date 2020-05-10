@@ -9,7 +9,6 @@ import sdu.cbse.group2.common.data.entityparts.ShootingPart;
 import sdu.cbse.group2.common.services.IEntityProcessingService;
 import sdu.cbse.group2.commonsnake.CommonSnake;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PlayerControlSystem implements IEntityProcessingService {
@@ -25,10 +24,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (shootingPart != null) {
                 shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
             }
-            Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().remove(player));
+            //Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().remove(player));
+
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
-            Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().add(player));
+
+            //Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().add(player));
         });
     }
 }

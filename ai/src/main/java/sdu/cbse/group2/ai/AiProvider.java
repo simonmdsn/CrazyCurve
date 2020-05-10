@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class AiProvider implements AiSPI {
 
-    private final AStar aStar = new AStar();
+    private final AStarAlgorithm aStar = new AStarAlgorithm();
     private Node[][] nodes;
 
     private Optional<Node> getTarget(Entity entity, World world, int searchRadius) {
@@ -50,11 +50,10 @@ public class AiProvider implements AiSPI {
         if (!goalList.isEmpty()) {
             final PositionPart positionPart = entity.getPart(PositionPart.class);
             Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
-            aStar.setSearchArea(nodes);
             final Node currentPosition = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
-            aStar.setStartNode(currentPosition);
-            aStar.setTargetNode(targetNode);
-            final List<Node> path = aStar.findPath();
+            aStar.setSearchSpace(nodes).setStart(currentPosition).setTarget(targetNode);
+            final List<Node> path = aStar.computePath();
+            System.out.println(path);
             path.forEach(node -> AiDrawer.getDrawSPI().drawCircle(node.getRow() * Tile.LENGTH, node.getCol() * Tile.LENGTH, 3));
             if (!path.isEmpty()) {
                 Node target;
