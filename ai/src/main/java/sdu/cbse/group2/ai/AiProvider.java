@@ -60,9 +60,8 @@ public class AiProvider implements AiSPI {
                                 PositionPart checkTilePosPart = tiles[checkC][checkR].getPositionPart();
                                 //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
                                 double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
-                                double distanceToCurrentLocation =
                                 if (distanceToObstructing < closestDistance) {
-                                    closestDistance = distance;
+                                    closestDistance = distanceToObstructing;
                                 }
                             }
                         }
