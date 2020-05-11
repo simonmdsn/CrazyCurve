@@ -21,12 +21,10 @@ public class Node {
     private Node parent;
     private double bestDistanceCost;
 
-    public void calculateHeuristic(boolean hasPowerup) {
-        double heuristic = bestDistanceCost ;
+    public void calculateBestDistanceCost(boolean hasPowerup) {
         if(!hasPowerup) {
-            heuristic += 300;
+            bestDistanceCost += 500;
         }
-        this.heuristicCost = (int) heuristic;
     }
 
 

@@ -51,7 +51,8 @@ public class AiProvider implements AiSPI {
                 if (!nodes[r][c].isObstructed()) {
 
                     //For each non-obstructing node we need to check the distance to each other obstructing node and set the lowest one as closestObstructing
-                    double clostestDistanceToObstructing = 100000;
+                    double penalty = 0;
+                    double closestDistanceToObstructing = 100000;
                     PositionPart mainTilePosPart = tiles[r][c].getPositionPart();
                     for (int checkR = 0; checkR < rows; checkR++) {
                         for (int checkC = 0; checkC < cols; checkC++) {
@@ -60,22 +61,26 @@ public class AiProvider implements AiSPI {
                                 PositionPart checkTilePosPart = tiles[checkC][checkR].getPositionPart();
                                 //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
                                 double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
-                                if(distanceToObstructing < clostestDistanceToObstructing){
-                                    clostestDistanceToObstructing = distanceToObstructing;
+                                if(distanceToObstructing < closestDistanceToObstructing){
+                                    closestDistanceToObstructing = distanceToObstructing;
                                 }
                                 //
-                                //If it is simply close to your own head, dont neglect it somehow
-                                //
+                                //If it is simply close to your own head, dont neglect it, somehow
+//
                             }
                         }
                     }
 
                     double distanceToCurrentLocation = Math.sqrt(Math.pow(mainTilePosPart.getX() - entityPositionPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - entityPositionPart.getY(), 2));
-                    double bestDistanceCost = distanceToCurrentLocation - 1.80 * clostestDistanceToObstructing;
+//                    if(distanceToCurrentLocation < 30){
+//                        //Not desirable
+//                        penalty += 200;
+//                    }
+                    double bestDistanceCost = (distanceToCurrentLocation - 1.15 * closestDistanceToObstructing) + penalty;
 
                     nodes[r][c].setBestDistanceCost(bestDistanceCost);
                     //Now calculate the heuristic so we can later compare on this to find the best target goal
-                    nodes[r][c].calculateHeuristic(!tiles[r][c].getEntities().isEmpty() && tiles[r][c].getEntities().stream().noneMatch(Entity::isObstructing));
+                    nodes[r][c].calculateBestDistanceCost(!tiles[r][c].getEntities().isEmpty() && tiles[r][c].getEntities().stream().noneMatch(Entity::isObstructing));
                     //Add this potential goal to the goalList
                     goalList.add(nodes[r][c]);
 
@@ -83,10 +88,9 @@ public class AiProvider implements AiSPI {
             }
         }
 
-            Node targetNode = goalList.stream().min(Comparator.comparingInt(Node::getHeuristicCost)).orElse(goalList.get(0));
+            Node targetNode = goalList.stream().min(Comparator.comparingDouble(Node::getBestDistanceCost)).orElse(goalList.get(0));
             aStar.setSearchArea(nodes);
             final Node currentPosition = new Node(Math.round(entityPositionPart.getX() / Tile.LENGTH), Math.round(entityPositionPart.getY() / Tile.LENGTH));
-            System.out.println(targetNode.getRow() + " " + targetNode.getCol());
             aStar.setStartNode(currentPosition);
             aStar.setTargetNode(targetNode);
             final List<Node> path = aStar.findPath();
