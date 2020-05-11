@@ -11,7 +11,7 @@ import java.util.*;
 
 public class AiProvider implements AiSPI {
 
-    private final AStar aStar = new AStar();
+    private final AStarAlgorithm aStar = new AStarAlgorithm();
     private Node[][] nodes;
 
     private Optional<Node> getTarget(Entity entity, World world, int searchRadius) {
