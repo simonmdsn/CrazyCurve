@@ -42,9 +42,8 @@ public class AiProvider implements AiSPI {
             }
         }
         //Quad loop to set how close each node is to an obstructing entity and to the entity
-        Node entityNode = getNearestNode((int)((PositionPart)entity.getPart(PositionPart.class)).getX(), (int)(((PositionPart) entity.getPart(PositionPart.class)).getY()));
         final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
-        for (int r = entityNode.getRow() - 5; r < ; entityNode.getRow()++) {
+        for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 //If it is obstructed it is not a potential goal tile, and we can skip it
                 if (!nodes[r][c].isObstructed()) {
@@ -111,13 +110,5 @@ public class AiProvider implements AiSPI {
             movingPart.setRight(cross > 0);
             movingPart.setLeft(cross <= 0);
         });
-    }
-
-    public Node getNearestNode(int x, int y) {
-        try {
-            return nodes[Math.max(0, Math.round((float) x / ((float) Tile.LENGTH)))][Math.max(0, Math.round(((float) y / ((float) Tile.LENGTH))))];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
     }
 }
