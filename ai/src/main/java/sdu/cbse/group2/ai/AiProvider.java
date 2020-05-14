@@ -18,7 +18,7 @@ public class AiProvider implements AiSPI {
     private Node[][] nodes;
 
     private Optional<Node> getTarget(Entity entity, World world, int searchRadius) {
-        final Tile[][] tiles = world.getTiles();
+        Tile[][] tiles = world.getTiles();
         int rows = tiles.length;
         int cols = tiles[0].length;
 
@@ -69,13 +69,13 @@ public class AiProvider implements AiSPI {
     @Override
     public void move(Entity entity, World world, int searchRadius) {
         getTarget(entity, world, searchRadius).ifPresent(target -> {
-            final Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
-            final PositionPart part = entity.getPart(PositionPart.class);
-            final Vector startVector = new Vector(part.getX(), part.getY());
-            final Vector inBetween = targetVector.subtract(startVector);
-            final Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
-            final double cross = inBetween.cross(direction);
-            final MovingPart movingPart = entity.getPart(MovingPart.class);
+            Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
+            PositionPart part = entity.getPart(PositionPart.class);
+            Vector startVector = new Vector(part.getX(), part.getY());
+            Vector inBetween = targetVector.subtract(startVector);
+            Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
+            double cross = inBetween.cross(direction);
+            MovingPart movingPart = entity.getPart(MovingPart.class);
             movingPart.setRight(cross > 0);
             movingPart.setLeft(cross <= 0);
         });
