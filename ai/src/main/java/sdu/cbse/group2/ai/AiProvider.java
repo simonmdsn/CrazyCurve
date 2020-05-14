@@ -8,6 +8,7 @@ import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.AiSPI;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AiProvider implements AiSPI {
 
@@ -36,47 +37,37 @@ public class AiProvider implements AiSPI {
 //                if (node.isObstructed()) {
 //                    AiDrawer.getDrawSPI().drawCircle(Math.round(positionPart.getX()),Math.round(positionPart.getY()), 10);
 //                }
-                //if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
-                //Adding regardless for a streamable object
-                //}
                 //TODO Head goal. Safe Tile goal.
                 nodes[r][c] = node;
             }
         }
         //Quad loop to set how close each node is to an obstructing entity and to the entity
+        Node entityNode = getNearestNode((int)((PositionPart)entity.getPart(PositionPart.class)).getX(), (int)(((PositionPart) entity.getPart(PositionPart.class)).getY()));
         final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
-        for (int r = 0; r < rows; r++) {
+        for (int r = entityNode.getRow() - 5; r < ; entityNode.getRow()++) {
             for (int c = 0; c < cols; c++) {
                 //If it is obstructed it is not a potential goal tile, and we can skip it
                 if (!nodes[r][c].isObstructed()) {
-
                     //For each non-obstructing node we need to check the distance to each other obstructing node and set the lowest one as closestObstructing
                     double penalty = 0;
-                    double closestDistanceToObstructing = 100000;
-                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart();
+                    double closestDistanceToObstructing = Double.MAX_VALUE;
+                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart();;
                     for (int checkR = 0; checkR < rows; checkR++) {
                         for (int checkC = 0; checkC < cols; checkC++) {
                             //We want to find the closest obstructing, so if it isn't obstructing, we can skip it
                             if (nodes[checkR][checkC].isObstructed()) {
-                                PositionPart checkTilePosPart = tiles[checkC][checkR].getPositionPart();
+                                PositionPart checkTilePosPart = tiles[checkR][checkC].getPositionPart();
                                 //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
                                 double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
                                 if(distanceToObstructing < closestDistanceToObstructing){
                                     closestDistanceToObstructing = distanceToObstructing;
                                 }
-                                //
-                                //If it is simply close to your own head, dont neglect it, somehow
-//
                             }
                         }
                     }
 
                     double distanceToCurrentLocation = Math.sqrt(Math.pow(mainTilePosPart.getX() - entityPositionPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - entityPositionPart.getY(), 2));
-//                    if(distanceToCurrentLocation < 30){
-//                        //Not desirable
-//                        penalty += 200;
-//                    }
-                    double bestDistanceCost = (distanceToCurrentLocation - 1.15 * closestDistanceToObstructing) + penalty;
+                    double bestDistanceCost = (distanceToCurrentLocation - 1.10 * closestDistanceToObstructing) + penalty;
 
                     nodes[r][c].setBestDistanceCost(bestDistanceCost);
                     //Now calculate the heuristic so we can later compare on this to find the best target goal
@@ -89,11 +80,11 @@ public class AiProvider implements AiSPI {
         }
 
             Node targetNode = goalList.stream().min(Comparator.comparingDouble(Node::getBestDistanceCost)).orElse(goalList.get(0));
-            aStar.setSearchArea(nodes);
+            aStar.setSearchSpace(nodes);
             final Node currentPosition = new Node(Math.round(entityPositionPart.getX() / Tile.LENGTH), Math.round(entityPositionPart.getY() / Tile.LENGTH));
-            aStar.setStartNode(currentPosition);
-            aStar.setTargetNode(targetNode);
-            final List<Node> path = aStar.findPath();
+            aStar.setStart(currentPosition);
+            aStar.setTarget(targetNode);
+            final List<Node> path = aStar.computePath();
             path.forEach(node -> AiDrawer.getDrawSPI().drawCircle(node.getRow() * Tile.LENGTH, node.getCol() * Tile.LENGTH, 3));
             if (!path.isEmpty()) {
                 Node target;
@@ -120,5 +111,13 @@ public class AiProvider implements AiSPI {
             movingPart.setRight(cross > 0);
             movingPart.setLeft(cross <= 0);
         });
+    }
+
+    public Node getNearestNode(int x, int y) {
+        try {
+            return nodes[Math.max(0, Math.round((float) x / ((float) Tile.LENGTH)))][Math.max(0, Math.round(((float) y / ((float) Tile.LENGTH))))];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
     }
 }
