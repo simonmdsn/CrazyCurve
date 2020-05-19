@@ -37,8 +37,8 @@ class AStarAlgorithm {
     }
 
     private void addAdjacent(Node node) {
-        final int col = node.getCol();
-        final int row = node.getRow();
+        int col = node.getCol();
+        int row = node.getRow();
 
         // Upper
         if (row >= 0) {
@@ -63,7 +63,7 @@ class AStarAlgorithm {
     private void checkNode(Node node, int col, int row) {
         try {
             Optional.of(searchSpace[row][col]).filter(adjacent -> !adjacent.isObstructed() && !exploredNodes.contains(adjacent)).ifPresent(adjacent -> {
-                final int horizontalVerticalCost = 10;
+                int horizontalVerticalCost = 10;
                 if (!fringe.contains(adjacent)) {
                     adjacent.setNodeData(node, horizontalVerticalCost);
                     fringe.add(adjacent);

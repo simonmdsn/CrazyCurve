@@ -23,7 +23,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
                 movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
                 movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
-                shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
+                if (shootingPart != null) {
+                    shootingPart.setShooting(gameData.getKeys().isDown(GameKeys.SPACE));
+                }
 
                 //Optional.ofNullable(world.getNearestTile((int) positionPart.getX(), (int) positionPart.getY())).ifPresent(tile -> tile.getEntities().remove(player));
 
