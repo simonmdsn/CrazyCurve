@@ -24,7 +24,7 @@ public class Node {
     public void calculateBestDistanceCost(boolean hasPowerup) {
         if(!hasPowerup) {
             //If a tile has a powerup it should be more attractive
-            bestDistanceCost += 375;
+            bestDistanceCost += 200;
         }
     }
 
