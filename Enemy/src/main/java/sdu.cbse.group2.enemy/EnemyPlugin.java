@@ -41,7 +41,7 @@ public class EnemyPlugin implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        Stream.generate(this::createEnemySnake).limit(3).forEach(world::addEntity);
+        Stream.generate(this::createEnemySnake).limit(1).forEach(world::addEntity);
     }
 
     @Override
