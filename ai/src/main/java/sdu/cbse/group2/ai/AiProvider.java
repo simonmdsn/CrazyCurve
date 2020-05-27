@@ -47,9 +47,69 @@ public class AiProvider implements AiSPI {
             }
         }
 
+
+          final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
+//        for (Node potentialGoalNode : nonObstructingNodes){
+//                int r = potentialGoalNode.getRow();
+//                int c = potentialGoalNode.getCol();
+//                double penalty = 0;
+//                double closestDistanceToObstructing = Double.MAX_VALUE;
+//                PositionPart mainTilePosPart = tiles[r][c].getPositionPart();
+//                //Calculating closest distance to obstructing
+//                for (Node obstructingNode : obstructingNodes){
+//                    PositionPart checkTilePosPart = tiles[obstructingNode.getRow()][obstructingNode.getCol()].getPositionPart();
+//                    double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
+//                    if(distanceToObstructing < closestDistanceToObstructing){
+//                        closestDistanceToObstructing = distanceToObstructing;
+//                    }
+//                }
+//                double distanceToCurrentLocation = Math.sqrt(Math.pow(mainTilePosPart.getX() - entityPositionPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - entityPositionPart.getY(), 2));
+//                double bestDistanceCost = (distanceToCurrentLocation - 1.10 * closestDistanceToObstructing) + penalty;
+//
+//                nodes[r][c].setBestDistanceCost(bestDistanceCost);
+//                //Now calculate the heuristic so we can later compare on this to find the best target goal
+//                nodes[r][c].calculateBestDistanceCost(!tiles[r][c].getEntities().isEmpty() && tiles[r][c].getEntities().stream().noneMatch(Entity::isObstructing));
+//                //Add this potential goal to the goalList
+//                goalList.add(nodes[r][c]);
+//       }
+
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                //If it is obstructed it is not a potential goal tile, and we can skip it
+                if (!nodes[r][c].isObstructed()) {
+                    //For each non-obstructing node we need to check the distance to each other obstructing node and set the lowest one as closestObstructing
+                    double penalty = 0;
+                    double closestDistanceToObstructing = Double.MAX_VALUE;
+                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart();;
+                    for (int checkR = 0; checkR < rows; checkR++) {
+                        for (int checkC = 0; checkC < cols; checkC++) {
+                            //We want to find the closest obstructing, so if it isn't obstructing, we can skip it
+                            if (nodes[checkR][checkC].isObstructed()) {
+                                PositionPart checkTilePosPart = tiles[checkR][checkC].getPositionPart();
+                                //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
+                                double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
+                                if(distanceToObstructing < closestDistanceToObstructing){
+                                    closestDistanceToObstructing = distanceToObstructing;
+                                }
+                            }
+                        }
+                    }
+
+                    double distanceToCurrentLocation = Math.sqrt(Math.pow(mainTilePosPart.getX() - entityPositionPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - entityPositionPart.getY(), 2));
+                    double bestDistanceCost = (distanceToCurrentLocation - 1.20 * closestDistanceToObstructing) + penalty;
+
+                    nodes[r][c].setBestDistanceCost(bestDistanceCost);
+                    //Now calculate the heuristic so we can later compare on this to find the best target goal
+                    nodes[r][c].calculateBestDistanceCost(!tiles[r][c].getEntities().isEmpty() && tiles[r][c].getEntities().stream().noneMatch(Entity::isObstructing));
+                    //Add this potential goal to the goalList
+                    goalList.add(nodes[r][c]);
+
+                }
+            }
+        }
         if (!goalList.isEmpty()) {
             final PositionPart positionPart = entity.getPart(PositionPart.class);
-            Node targetNode = goalList.stream().min(Comparator.comparingDouble(o1 -> Math.sqrt(Math.pow(o1.getRow() - (int) (positionPart.getX() / Tile.LENGTH), 2) + Math.pow(o1.getCol() - (int) (positionPart.getY() / Tile.LENGTH), 2)))).orElse(goalList.get(0));
+            Node targetNode = goalList.stream().min(Comparator.comparingDouble(Node::getBestDistanceCost)).orElse(goalList.get(0));
             final Node currentPosition = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
             aStarAlgorithm.setSearchSpace(nodes).setStart(currentPosition).setTarget(targetNode);
             final List<Node> path = aStarAlgorithm.computePath();
