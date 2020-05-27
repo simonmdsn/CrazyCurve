@@ -7,15 +7,15 @@ import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.AiSPI;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class AiProvider implements AiSPI {
 
     private final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm();
     private Node[][] nodes;
-    private ArrayList<Node> obstructingNodes = new ArrayList<>();
-    private ArrayList<Node> nonObstructingNodes = new ArrayList<>();
 
     private Optional<Node> getTarget(Entity entity, World world, int searchRadius) {
         Tile[][] tiles = world.getTiles();
@@ -32,20 +32,16 @@ public class AiProvider implements AiSPI {
                 Tile tile = tiles[r][c];
                 final PositionPart positionPart = tile.getPositionPart();
                 Node node = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
-                node.setObstructed(tile.isObstructing());
                 if (r == 0 || c == cols - 1 || c == 0 || r == rows - 1) {
                     node.setObstructed(true);
                 }
-                // Adding to lists for effective looping
-                if (node.isObstructed()){
-                    obstructingNodes.add(node);
-                }
-                else {
-                    nonObstructingNodes.add(node);
-                }
+                node.setObstructed(tile.isObstructing());
 //                if (node.isObstructed()) {
 //                    AiDrawer.getDrawSPI().drawCircle(Math.round(positionPart.getX()),Math.round(positionPart.getY()), 10);
 //                }
+                if (!tile.getEntities().isEmpty() && tile.getEntities().stream().noneMatch(Entity::isObstructing)) { // Contains power-up.
+                    goalList.add(node);
+                }
                 //TODO Head goal. Safe Tile goal.
                 nodes[r][c] = node;
             }
@@ -126,6 +122,7 @@ public class AiProvider implements AiSPI {
                 } while (currentPosition.equals(target) && i < path.size());
                 return Optional.of(path.get(Math.min(path.size() - 1, i + 1)));
             }
+        }
         return Optional.empty();
     }
 
