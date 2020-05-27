@@ -36,7 +36,7 @@ public class TailProcess implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (CommonSnake commonSnake : world.getBoundedEntities(CommonSnake.class).stream().map(CommonSnake.class::cast).collect(Collectors.toList())) {
-            if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().get(commonSnake.getTailList().size() - 1)) > DRAW_DISTANCE) {
+            if (commonSnake.getTailList().isEmpty() || commonSnake.isAlive() && distance(commonSnake, commonSnake.getTailList().getLast()) > DRAW_DISTANCE) {
                 if (commonSnake.isActiveTail()) {
                     if (ThreadLocalRandom.current().nextInt(1000) > 950) {
                         disableActiveTail(commonSnake);

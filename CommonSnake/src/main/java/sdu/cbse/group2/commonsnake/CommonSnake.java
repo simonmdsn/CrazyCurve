@@ -9,7 +9,6 @@ import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
@@ -17,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CommonSnake extends Entity {
 
     private final GameSprite tailSprite;
-    private final List<Tail> tailList = new LinkedList<>();
+    private final LinkedList<Tail> tailList = new LinkedList<>();
     private boolean isAlive;
     private boolean activeTail;
     private float maxSpeed = 100;

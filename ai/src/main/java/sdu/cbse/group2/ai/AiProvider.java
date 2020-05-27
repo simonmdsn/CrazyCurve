@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 
 public class AiProvider implements AiSPI {
 
-    private final AStarAlgorithm aStar = new AStarAlgorithm();
+    private final AStarAlgorithm aStarAlgorithm = new AStarAlgorithm();
     private Node[][] nodes;
     private ArrayList<Node> obstructingNodes = new ArrayList<>();
     private ArrayList<Node> nonObstructingNodes = new ArrayList<>();
 
     private Optional<Node> getTarget(Entity entity, World world, int searchRadius) {
-        final Tile[][] tiles = world.getTiles();
+        Tile[][] tiles = world.getTiles();
         int rows = tiles.length;
         int cols = tiles[0].length;
 
@@ -50,6 +50,7 @@ public class AiProvider implements AiSPI {
                 nodes[r][c] = node;
             }
         }
+
 
           final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
 //        for (Node potentialGoalNode : nonObstructingNodes){
@@ -110,13 +111,12 @@ public class AiProvider implements AiSPI {
                 }
             }
         }
-
+        if (!goalList.isEmpty()) {
+            final PositionPart positionPart = entity.getPart(PositionPart.class);
             Node targetNode = goalList.stream().min(Comparator.comparingDouble(Node::getBestDistanceCost)).orElse(goalList.get(0));
-            aStar.setSearchSpace(nodes);
-            final Node currentPosition = new Node(Math.round(entityPositionPart.getX() / Tile.LENGTH), Math.round(entityPositionPart.getY() / Tile.LENGTH));
-            aStar.setStart(currentPosition);
-            aStar.setTarget(targetNode);
-            final List<Node> path = aStar.computePath();
+            final Node currentPosition = new Node(Math.round(positionPart.getX() / Tile.LENGTH), Math.round(positionPart.getY() / Tile.LENGTH));
+            aStarAlgorithm.setSearchSpace(nodes).setStart(currentPosition).setTarget(targetNode);
+            final List<Node> path = aStarAlgorithm.computePath();
             path.forEach(node -> AiDrawer.getDrawSPI().drawCircle(node.getRow() * Tile.LENGTH, node.getCol() * Tile.LENGTH, 3));
             if (!path.isEmpty()) {
                 Node target;
@@ -132,13 +132,13 @@ public class AiProvider implements AiSPI {
     @Override
     public void move(Entity entity, World world, int searchRadius) {
         getTarget(entity, world, searchRadius).ifPresent(target -> {
-            final Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
-            final PositionPart part = entity.getPart(PositionPart.class);
-            final Vector startVector = new Vector(part.getX(), part.getY());
-            final Vector inBetween = targetVector.subtract(startVector);
-            final Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
-            final double cross = inBetween.cross(direction);
-            final MovingPart movingPart = entity.getPart(MovingPart.class);
+            Vector targetVector = new Vector(target.getRow() * Tile.LENGTH, target.getCol() * Tile.LENGTH);
+            PositionPart part = entity.getPart(PositionPart.class);
+            Vector startVector = new Vector(part.getX(), part.getY());
+            Vector inBetween = targetVector.subtract(startVector);
+            Vector direction = new Vector(Math.cos(part.getRadians()) * -1, Math.sin(part.getRadians()) * -1);
+            double cross = inBetween.cross(direction);
+            MovingPart movingPart = entity.getPart(MovingPart.class);
             movingPart.setRight(cross > 0);
             movingPart.setLeft(cross <= 0);
         });
