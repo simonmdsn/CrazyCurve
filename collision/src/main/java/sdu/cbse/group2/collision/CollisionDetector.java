@@ -97,7 +97,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
     }
 
     private void kill(CommonSnake commonSnake) {
-        CollisionSound.getSoundSPI().playSound("audio/death.mp3", .5f, false);
+        if (commonSnake.isAlive()) {
+            CollisionSound.getSoundSPI().playSound("audio/death.mp3", .5f, false);
+        }
         commonSnake.kill();
     }
 }

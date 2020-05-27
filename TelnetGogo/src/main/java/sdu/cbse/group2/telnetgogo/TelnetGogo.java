@@ -24,7 +24,7 @@ public class TelnetGogo implements TelnetSPI {
     private static final int TIME_OUT_MILLIS = 500;
 
     @Override
-    public synchronized void execute(String command, Consumer<List<String>> consumer) {
+    public synchronized void execute(String command, Consumer<List<String>> response) {
         Executors.newSingleThreadScheduledExecutor(runnable -> {
             Thread thread = new Thread(runnable);
             thread.setDaemon(true);
@@ -46,7 +46,7 @@ public class TelnetGogo implements TelnetSPI {
                     }
                 } catch (SocketTimeoutException ignored) {
                     // Thrown when the readLine waits for information that'll never arrive.
-                    consumer.accept(result);
+                    response.accept(result);
                     try {
                         closeConnection();
                     } catch (IOException e) {
