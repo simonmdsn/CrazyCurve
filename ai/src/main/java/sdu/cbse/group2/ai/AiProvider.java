@@ -7,8 +7,10 @@ import sdu.cbse.group2.common.data.entityparts.MovingPart;
 import sdu.cbse.group2.common.data.entityparts.PositionPart;
 import sdu.cbse.group2.common.services.AiSPI;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 public class AiProvider implements AiSPI {
 
@@ -37,10 +39,9 @@ public class AiProvider implements AiSPI {
                     node.setObstructed(true);
                 }
                 // Adding to lists for effective looping
-                if (node.isObstructed()){
+                if (node.isObstructed()) {
                     obstructingNodes.add(node);
-                }
-                else {
+                } else {
                     nonObstructingNodes.add(node);
                 }
 //                if (node.isObstructed()) {
@@ -52,7 +53,7 @@ public class AiProvider implements AiSPI {
         }
 
 
-          final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
+        final PositionPart entityPositionPart = entity.getPart(PositionPart.class);
 //        for (Node potentialGoalNode : nonObstructingNodes){
 //                int r = potentialGoalNode.getRow();
 //                int c = potentialGoalNode.getCol();
@@ -84,7 +85,7 @@ public class AiProvider implements AiSPI {
                     //For each non-obstructing node we need to check the distance to each other obstructing node and set the lowest one as closestObstructing
                     double penalty = 0;
                     double closestDistanceToObstructing = Double.MAX_VALUE;
-                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart();;
+                    PositionPart mainTilePosPart = tiles[r][c].getPositionPart(); ;
                     for (int checkR = 0; checkR < rows; checkR++) {
                         for (int checkC = 0; checkC < cols; checkC++) {
                             //We want to find the closest obstructing, so if it isn't obstructing, we can skip it
@@ -92,7 +93,7 @@ public class AiProvider implements AiSPI {
                                 PositionPart checkTilePosPart = tiles[checkR][checkC].getPositionPart();
                                 //Finding the distance by calculating the length of the hypotenuse of the triangle formed by the differences in x and y using pythagorean theorem (a^2 + b^2 = c^2)
                                 double distanceToObstructing = Math.sqrt(Math.pow(mainTilePosPart.getX() - checkTilePosPart.getX(), 2) + Math.pow(mainTilePosPart.getY() - checkTilePosPart.getY(), 2));
-                                if(distanceToObstructing < closestDistanceToObstructing){
+                                if (distanceToObstructing < closestDistanceToObstructing) {
                                     closestDistanceToObstructing = distanceToObstructing;
                                 }
                             }
@@ -126,6 +127,7 @@ public class AiProvider implements AiSPI {
                 } while (currentPosition.equals(target) && i < path.size());
                 return Optional.of(path.get(Math.min(path.size() - 1, i + 1)));
             }
+        }
         return Optional.empty();
     }
 

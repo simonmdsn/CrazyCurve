@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class PowerUpSpawner implements IEntityProcessingService {
 
     private static final int NUMBER_OF_POWER_UPS = 5;
-    private static final List<PowerUpSPI> commonPowerUps = new CopyOnWriteArrayList<>();
+    private final List<PowerUpSPI> commonPowerUps = new CopyOnWriteArrayList<>();
 
     @Override
     public void process(GameData gameData, World world) {

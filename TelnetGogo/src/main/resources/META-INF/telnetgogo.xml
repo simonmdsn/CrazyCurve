@@ -6,7 +6,7 @@
         <provide interface="sdu.cbse.group2.common.services.TelnetSPI"/>
     </service>
 
-    <reference immedite="" bind="telnetStarter" cardinality="1..1"
+    <reference bind="telnetStarter" cardinality="1..1"
                interface="org.apache.felix.service.command.CommandProcessor"
                name="TelnetStarter" policy="dynamic"/>
 </scr:component>
